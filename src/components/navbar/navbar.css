@@ -1,0 +1,22 @@
+.wd--navbar{
+ display: flex;
+ justify-content: space-between;  
+ align-items: center;
+ padding: 2rem 6rem;
+}
+
+.wd--navbar-links{
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.wd--navbar-links-logo{
+    margin-right: 2rem;
+}
+
+.wd--navbar-links-logo img{
+    width: 359px;
+    height: 76px;
+}
