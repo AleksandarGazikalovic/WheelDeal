@@ -1,10 +1,10 @@
-import React from 'react'
-import './whatWD.css'
+import React from "react";
+import "./whatWD.css";
 
 const WhatWD = () => {
-  return (
-    <div>WhatWD</div>
-  )
-}
+  return <div className="wd__whatwd section__margnin" id="whwd">
+    <div className="wd__whatwd-feature"></div>
+  </div>;
+};
 
-export default WhatWD
+export default WhatWD;
