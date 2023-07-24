@@ -1,25 +1,21 @@
-import React from 'react'
-import {Footer, Blog, Possibility, Features, WhatWD, Header} from './containers';
-import {CTA, Partners, Navbar} from './components';
+import React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {Home, SearchOptions} from './pages';
 
 const App = () => {
   return (
-    
     <div className="App">
       <div className="gradient_bg">
-        <Navbar/>
-        <Header/>
-        <Partners/>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/search-options" element={<SearchOptions />} />
+          </Routes>
+        </Router>
       </div>
-      <WhatWD/>
-      <Features/>
-      <Possibility/>
-      <CTA/>
-      <Blog/>
-      <Footer/>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

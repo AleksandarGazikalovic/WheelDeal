@@ -19,12 +19,13 @@ const Menu = () => (
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
-
   return (
     <div className="wd--navbar">
       <div className="wd--navbar-links">
         <div className="wd--navbar-links-logo">
-          <img src={logo} alt="logo" />
+          <a href="/">
+            <img src={logo} alt="logo" />
+          </a>
         </div>
         <div className="wd--navbar-links-container">
           <Menu />
