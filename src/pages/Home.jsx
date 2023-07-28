@@ -1,6 +1,5 @@
 import React from "react";
-import { Header } from "../containers";
-import { Partners, Navbar } from "../components";
+import { Partners, Navbar, ElementSkeleton, Header } from "../components";
 
 const Home = () => {
   return (

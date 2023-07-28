@@ -6,6 +6,7 @@ import {Home, SearchOptions} from './pages';
 const App = () => {
   return (
     <div className="App">
+    <React.StrictMode>
       <div className="gradient_bg">
         <Router>
           <Routes>
@@ -14,6 +15,7 @@ const App = () => {
           </Routes>
         </Router>
       </div>
+      </React.StrictMode>
     </div>
   );
 };

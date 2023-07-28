@@ -1,0 +1,103 @@
+.registration-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Semi-transparent overlay background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Higher z-index to show above other elements */
+}
+
+.registration-form {
+  width: 30%;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  z-index: 10000; /* Higher z-index to place the form on top of the overlay */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: inset 0 0 14px 0px rgba(0, 0, 0, 0.5);
+}
+
+.registration-logo {
+  width: 50%;
+}
+
+.registration-input {
+  padding: 0.5rem 1rem;
+  color: rgb(77, 77, 77);
+  background: white;
+  font-family: var(--font-family);
+  font-weight: normal;
+  font-size: 15px;
+  outline: none;
+  border-width: 1px;
+  display: flex;
+  width: 80%;
+}
+
+#username {
+  margin-top: 2rem;
+  border-radius: 5px 5px 0 0;
+}
+
+#repeat-password {
+  border-radius: 0 0 5px 5px;
+}
+
+.registration-input:focus {
+  border: 2px solid rgb(3, 28, 97);
+  background-color: rgb(220, 225, 240);
+}
+
+.registration-close {
+  color: rgb(85, 84, 84);
+  font-size: 3rem;
+  display: flex;
+  align-self: flex-end;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.registration-close:hover {
+  color: black;
+  transform: rotate(90deg);
+}
+
+.registration-line {
+  top: 75%;
+  position: absolute;
+  width: 70%;
+  height: 1px;
+  background-color: gray;
+}
+
+.registration-line span {
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  width: 70px;
+  color: gray;
+  background-color: white;
+  font-weight: 400;
+  text-align: center;
+  font-size: 18px;
+  z-index: 1;
+}
+
+.google-button {
+  margin-top: 4rem;
+  width: 70%;
+}
