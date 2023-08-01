@@ -26,24 +26,35 @@ const RegistrationForm = ({ onClose }) => {
       <form className="registration-form scale-up-center">
         <RiCloseLine onClick={onClose} className="registration-close" />
         <img src={logo} className="registration-logo" alt="" />
+        <label htmlFor="firstname">Ime</label>
         <input
           type="text"
           className="registration-input"
-          id="username"
-          placeholder="Korisničko ime"
+          id="firstname"
+          placeholder="Ime"
         />
+        <label htmlFor="lastname">Prezime</label>
+        <input
+          type="text"
+          className="registration-input"
+          id="lastname"
+          placeholder="Prezime"
+        />
+        <label htmlFor="email">Email adresa</label>
         <input
           type="Email"
           id="email"
           className="registration-input"
           placeholder="Email"
         />
+        <label htmlFor="password">Lozinka</label>
         <input
           type="Password"
           id="password"
           className="registration-input"
           placeholder="Lozinka"
         />
+        <label htmlFor="repeat-password">Ponovite lozinku</label>
         <input
           type="Password"
           id="repeat-password"

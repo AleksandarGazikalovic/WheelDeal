@@ -4,25 +4,25 @@
   padding: 4rem 6rem 15rem 6rem;
 }
 
-.wave {
+.wave2 {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   overflow: hidden;
   line-height: 0;
-  transform: rotate(180deg);
 }
 
-.wave svg {
+.wave2 svg {
   position: relative;
   display: block;
   width: calc(100% + 1.3px);
-  height: 161px;
+  height: 150px;
+  transform: rotateY(180deg);
 }
 
-.wave .shape-fill {
-  fill: #ffffff;
+.wave2 .shape-fill2 {
+  fill: #81e1fc;
 }
 
 .wd__header-content {
