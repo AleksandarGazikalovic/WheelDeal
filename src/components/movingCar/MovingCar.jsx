@@ -1,87 +1,163 @@
 import React from "react";
 import "./movingCar.css";
 import wdCar from "../../assets/wdCar.png";
+import wdCar2 from "../../assets/wdCar2.png";
 import wheel from "../../assets/wheel.png";
 import { useEffect, useState, useRef } from "react";
+import { useInView } from "react-intersection-observer";
+import road from "../../assets/road.svg";
+import {
+  PiNumberCircleOneLight,
+  PiNumberCircleTwoLight,
+  PiNumberCircleThreeLight,
+  PiNumberCircleFourLight,
+} from "react-icons/pi";
 
 const MovingCar = () => {
-  // const [isVisible, setIsVisible] = useState(false);
-  // const [scrollPosition, setScrollPosition] = useState(0);
-  // const imageRef = useRef(null);
-  // const animationRef = useRef(null);
+  const [scrollPercentage, setScrollPercentage] = useState(0);
+  const [isElementVisible, setIsElementVisible] = useState(false);
+  const carRef = useRef(null);
+  const { ref: textRef1, inView: inView1 } = useInView();
+  const { ref: textRef2, inView: inView2 } = useInView();
+  const { ref: textRef3, inView: inView3 } = useInView();
+  const { ref: textRef4, inView: inView4 } = useInView();
 
-  // const handleScroll = () => {
-  //   if (!animationRef.current) {
-  //     animationRef.current = requestAnimationFrame(() => {
-  //       setScrollPosition(window.scrollY);
-  //       animationRef.current = null;
-  //     });
-  //   }
-  // };
+  // Function to update the scroll percentage state based on the scroll position
+  const updateScrollPercentage = (pathEndY, carStartingY) => {
+    const totalScrollableDistance = pathEndY - carStartingY;
+    if (window.scrollY - carStartingY > 0) {
+      const currentScrollPercentage =
+        ((window.scrollY - carStartingY) / totalScrollableDistance) * 100;
+      setScrollPercentage(currentScrollPercentage);
+    }
+    console.log(window.scrollY - carStartingY);
+  };
 
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
+  // Calculate the total scrollable distance when the component mounts
+  useEffect(() => {
+    const carDiv = document.getElementById("car");
+    const carStartingY = carDiv.getBoundingClientRect().bottom;
 
-  // useEffect(() => {
-  //   const options = {
-  //     root: null,
-  //     rootMargin: "0px",
-  //     threshold: 0.5, // Adjust the threshold as needed (0 to 1)
-  //   };
+    const divPath = document.getElementById("path");
+    const pathEndY = divPath.getBoundingClientRect().bottom;
+    console.log(divPath.scrollY);
+    const pathHeight = divPath.offsetHeight;
 
-  //   const observer = new IntersectionObserver((entries) => {
-  //     entries.forEach((entry) => {
-  //       if (entry.isIntersecting) {
-  //         setIsVisible(true);
-  //       } else {
-  //         setIsVisible(false);
-  //       }
-  //     });
-  //   }, options);
+    updateScrollPercentage(pathEndY, carStartingY); // Initial call to set the initial scroll percentage
 
-  //   if (imageRef.current) {
-  //     observer.observe(imageRef.current);
-  //   }
+    const handleScroll = () => {
+      const bottomViewportY = window.innerHeight + window.scrollY;
+      const scrolledDistance = carStartingY - bottomViewportY;
 
-  //   return () => {
-  //     if (imageRef.current) {
-  //       observer.unobserve(imageRef.current);
-  //     }
-  //   };
-  // }, [useRef]);
+      if (scrolledDistance <= 0) {
+        // You have reached the div
+        setIsElementVisible(true);
+      } else {
+        setIsElementVisible(false);
+        // Amount of scrolling needed to reach the div
+        console.log("Scroll remaining:", scrolledDistance);
+      }
+      updateScrollPercentage(pathEndY, carStartingY);
+    };
+
+    // Attach the event listener to update the scroll percentage on scroll
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // Function to handle intersection changes
+  const handleIntersection = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setIsElementVisible(true);
+      } else {
+        setIsElementVisible(false);
+      }
+    });
+  };
+
+  // Set up the Intersection Observer when the component mounts
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersection, {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0,
+    });
+
+    if (carRef.current) {
+      observer.observe(carRef.current);
+    }
+
+    // Clean up the Intersection Observer on component unmount
+    return () => {
+      if (carRef.current) {
+        observer.unobserve(carRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="wd--moving-car-section section__padding">
-      <div className="wd--moving-car-section--content">
-        <div
-          // ref={imageRef}
-          className="wd--car slide-right"
-          // style={{
-          //   transform: isVisible
-          //     ? `translateY(${scrollPosition * 0.5}px)`
-          //     : "none",
-          //   transition: "transform 0.2s ease",
-          // }}
-        >
-          <img src={wdCar} alt="" />
-          <div className="wd--car-wheel">
-            <div className="wd--car-wheel-left">
-              <img src={wheel} alt="" />
-            </div>
-            <div className="wd--car-wheel-right">
-              <img src={wheel} alt="" />
-            </div>
-          </div>
+      <div
+        ref={carRef}
+        className="wd--car"
+        id="car"
+        style={{
+          offsetDistance: isElementVisible ? `${scrollPercentage}%` : "",
+        }}
+      >
+        <img src={wdCar} alt="" />
+      </div>
+      <div className="wd--moving-car-section--content" id="path">
+        <div className="wd--path" id="path-top-right">
+          <p ref={textRef1} className={`${inView1 ? "slide-right" : ""}`}>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse neque
+            voluptate nihil optio ipsam fugit accusamus fugiat repellat, error
+            quis, enim dignissimos sit rem laboriosam at explicabo earum iste
+            aspernatur.
+          </p>
+          <PiNumberCircleOneLight
+            className={`${inView1 ? "icon13 scale-up-center" : "icon13"}`}
+          ></PiNumberCircleOneLight>
         </div>
-        <div className="wd--path" id="path-top-right"></div>
-        <div className="wd--path" id="path-top-left"></div>
-        <div className="wd--path" id="path-top-right"></div>
-        <div className="wd--path" id="path-top-left"></div>
-        <div className="wd--path" id="path-top-right"></div>
+        <div className="wd--path" id="path-top-left">
+          <PiNumberCircleTwoLight
+            className={`${inView2 ? "icon24 scale-up-center" : "icon24"}`}
+          ></PiNumberCircleTwoLight>
+
+          <p ref={textRef2} className={`${inView2 ? "slide-left" : ""}`}>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse neque
+            voluptate nihil optio ipsam fugit accusamus fugiat repellat, error
+            quis, enim dignissimos sit rem laboriosam at explicabo earum iste
+            aspernatur.
+          </p>
+        </div>
+        <div className="wd--path" id="path-top-right">
+          <p ref={textRef3} className={`${inView3 ? "slide-right" : ""}`}>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse neque
+            voluptate nihil optio ipsam fugit accusamus fugiat repellat, error
+            quis, enim dignissimos sit rem laboriosam at explicabo earum iste
+            aspernatur.
+          </p>
+          <PiNumberCircleThreeLight
+            className={`${inView3 ? "icon13 scale-up-center" : "icon13"}`}
+          ></PiNumberCircleThreeLight>
+        </div>
+        <div className="wd--path" id="path-top-left">
+          <PiNumberCircleFourLight
+            className={`${inView4 ? "icon24 scale-up-center" : "icon24"}`}
+          ></PiNumberCircleFourLight>
+          <p ref={textRef4} className={`${inView4 ? "slide-left" : ""}`}>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse neque
+            voluptate nihil optio ipsam fugit accusamus fugiat repellat, error
+            quis, enim dignissimos sit rem laboriosam at explicabo earum iste
+            aspernatur.
+          </p>
+        </div>
       </div>
 
       <div className="wave">

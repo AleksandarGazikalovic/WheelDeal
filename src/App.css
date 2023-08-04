@@ -66,9 +66,9 @@ a {
 }
 
 .scale-up-center {
-  -webkit-animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1)
+  -webkit-animation: scale-up-center 1.5s cubic-bezier(0.39, 0.575, 0.565, 1)
     both;
-  animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: scale-up-center 1.5s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
 
 @-webkit-keyframes scale-up-center {
@@ -199,27 +199,81 @@ a {
 } */
 
 .slide-right {
-  -webkit-animation: slide-right 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  animation: slide-right 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  -webkit-animation: slide-right 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-right 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 @-webkit-keyframes slide-right {
   0% {
+    filter: blur(5px);
     -webkit-transform: translateX(-1000px);
     transform: translateX(-1000px);
+    opacity: 0;
+  }
+  70% {
+    filter: blur(3px);
+    opacity: 0.3;
   }
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
+    opacity: 1;
   }
 }
 @keyframes slide-right {
   0% {
+    filter: blur(5px);
     -webkit-transform: translateX(-1000px);
     transform: translateX(-1000px);
+    opacity: 0;
+  }
+  55% {
+    filter: blur(3px);
+    opacity: 0.3;
   }
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-left {
+  -webkit-animation: slide-left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@-webkit-keyframes slide-left {
+  0% {
+    filter: blur(5px);
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  55% {
+    filter: blur(3px);
+    opacity: 0.3;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-left {
+  0% {
+    filter: blur(5px);
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  70% {
+    filter: blur(3px);
+    opacity: 0.3;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
   }
 }

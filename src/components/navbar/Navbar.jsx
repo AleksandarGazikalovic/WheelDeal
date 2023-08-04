@@ -55,7 +55,7 @@ const Navbar = () => {
         </div>
         <div className="wd--navbar-sign">
           <button type="button" id="login" onClick={handleShowLoginForm}>
-            Prijavi se
+            Prijava
           </button>
           <button
             type="button"
@@ -86,7 +86,7 @@ const Navbar = () => {
               </div>
               <div className="wd--navbar-menu-container-links-sign">
                 <button type="button" id="login" onClick={handleShowLoginForm}>
-                  Prijavi se
+                  Prijava
                 </button>
                 <button
                   type="button"

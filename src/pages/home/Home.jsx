@@ -5,7 +5,8 @@ import {
   ElementSkeleton,
   Header,
   MovingCar,
-} from "../components";
+  Footer,
+} from "../../components";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <Header />
       <MovingCar />
       <Partners />
+      <Footer />
     </div>
   );
 };

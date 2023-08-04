@@ -1,7 +1,7 @@
 .wd--moving-car-section {
   display: flex;
   position: relative;
-  padding: 4rem 6rem 15rem 6rem;
+  padding: 7rem 6rem 7rem 6rem;
   background-color: #81e1fc;
 }
 
@@ -9,39 +9,39 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
-  width: 50%;
+  background-image: url("../../assets/road.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .wd--car {
-  width: 300px;
-  transform: translateX(-50%);
+  width: 10%;
   z-index: 2;
-  position: relative;
+  position: absolute;
+  offset-rotate: auto;
+  top: 9%;
   offset-path: path(
-    "M 150,300 L150,300 L150,500 L1400,500 L1400,700 L150,700 L150,900 L1400,900 L1400,1100 L150,1100 L150,1300 L1400,1300"
+    "M970 39c436-4 871-27 871 134s-454 210-871 210c-419 0-871-22-871 144s456 201 871 205c401-4 871-15 871 147s-486 222-871 222c-427 0-883-16-879 156s447 164 879 164"
   );
-  offset-rotate: 0deg;
-  animation: move 14000ms infinite alternate linear;
-}
-
-@keyframes move {
-  0% {
-    offset-distance: 0%;
-  }
-  100% {
-    offset-distance: 100%;
-  }
 }
 
 .wd--car img {
   height: 100%;
   width: 100%;
-  animation: wdCar 1s linear infinite;
 }
 
-.wd--car-wheel {
+@keyframes move {
+  100% {
+    offset-distance: 100%;
+  }
+  0% {
+    offset-distance: 0%;
+  }
+}
+
+/* .wd--car-wheel {
   display: flex;
   transform: translateX(-50%);
   width: 106%;
@@ -75,13 +75,24 @@
 .wd--car-wheel-left img {
   width: 100%;
   height: 100%;
-}
+} */
 
 .wd--path {
+  display: flex;
   width: 100%;
   height: 200px;
-  border: 10px dashed #031b34;
   overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
+
+.wd--path p {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  letter-spacing: -0.04em;
+  color: black;
 }
 
 #path-top-right {
@@ -89,9 +100,27 @@
   border-right: none;
 }
 
+#path-top-right p {
+}
+
 #path-top-left {
   border-top: none;
   border-left: none;
+}
+
+#path-top-left p {
+}
+
+.icon13 {
+  margin-right: 15rem;
+  font-size: 180px;
+  color: grey;
+}
+
+.icon24 {
+  margin-left: 15rem;
+  font-size: 180px;
+  color: grey;
 }
 
 .wave {
