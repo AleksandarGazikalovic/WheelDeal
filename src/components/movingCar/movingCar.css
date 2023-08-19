@@ -22,9 +22,10 @@
   position: absolute;
   offset-rotate: auto;
   top: 9%;
-  offset-path: path(
+  left: 50%;
+  /* offset-path: path(
     "M970 39c436-4 871-27 871 134s-454 210-871 210c-419 0-871-22-871 144s456 201 871 205c401-4 871-15 871 147s-486 222-871 222c-427 0-883-16-879 156s447 164 879 164"
-  );
+  ); */
 }
 
 .wd--car img {
