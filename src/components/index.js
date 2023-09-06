@@ -1,9 +1,5 @@
-export { default as Article } from "./article/Article";
 export { default as Partners } from "./partners/Partners";
-export { default as CTA } from "./cta/CTA";
-export { default as Feature } from "./feature/Feature";
 export { default as Navbar } from "./navbar/Navbar";
-export { default as ElementSkeleton } from "./skeleton/ElementSkeleton";
 export { default as Header } from "./header/Header";
 export { default as RegistrationForm } from "./registrationForm/RegistrationForm";
 export { default as LoginForm } from "./loginForm/LoginForm";

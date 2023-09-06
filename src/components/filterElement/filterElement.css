@@ -1,6 +1,14 @@
 .wd--search-content--elements-element {
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+}
+
+.wd--search-content--elements-element:hover {
+  transform: scale(1.03);
+  transition: all 0.3s ease-in-out;
 }
 
 .wd--search-content--elements-element-image {
@@ -21,9 +29,74 @@
   transition: all 0.3s ease-in-out;
 }
 
+.wd--search-content--elements-element-image--like-icon {
+  position: absolute;
+  color: black;
+  top: 10px; /* Adjust this value to position the heart vertically */
+  right: 25px; /* Adjust this value to position the heart horizontally */
+  width: 30px; /* Set the width of the heart icon */
+  height: 30px; /* Set the height of the heart icon */
+  transition: all 0.3s ease-in-out;
+}
+
 .wd--search-content--elements-element-text {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 1rem 2rem 1rem;
+}
+
+.wd--search-content--elements-element-text--left-model {
+  font-weight: 600;
+  color: black;
+  margin-bottom: 0.5rem;
+}
+
+.wd--search-content--elements-element-text--left-price {
+  font-weight: 600;
+  color: black;
+}
+
+.wd--search-content--elements-element-text--left-location {
+  font-weight: 300;
+  color: #535252;
+}
+
+.wd--search-content--elements-element-text--left-date {
+  font-weight: 300;
+  color: #535252;
+}
+
+.wd--search-content--elements-element-text--right {
+  display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.wd--search-content--elements-element-text--right-profile {
+  width: 40px;
+  height: 40px;
+  border-color: #cdcdcd;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(227, 227, 227);
+}
+
+.wd--search-content--elements-element-text--right-profile-img {
+  width: 80%;
+  display: flex;
+}
+
+.wd--search-content--elements-element-text--right-rating {
+  font-weight: 600;
+  color: black;
+  display: flex;
   justify-content: center;
   align-items: center;
 }

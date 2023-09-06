@@ -59,6 +59,7 @@
   line-height: 0;
   transform: rotate(180deg);
   height: 101%;
+  pointer-events: none;
 }
 
 .wave3 svg {

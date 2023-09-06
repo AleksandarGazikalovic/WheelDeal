@@ -4,6 +4,7 @@ import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import logo from "../../assets/Logo.png";
 import RegistrationForm from "../registrationForm/RegistrationForm";
 import LoginForm from "../loginForm/LoginForm";
+import { Link } from "react-router-dom";
 
 const Menu = () => (
   <>
@@ -45,9 +46,9 @@ const Navbar = () => {
       <div className="wd--navbar">
         <div className="wd--navbar-links">
           <div className="wd--navbar-links-logo">
-            <a href="/">
+            <Link to="/">
               <img src={logo} alt="logo" />
-            </a>
+            </Link>
           </div>
           <div className="wd--navbar-links-container">
             <Menu />
