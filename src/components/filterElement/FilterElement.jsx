@@ -43,12 +43,7 @@ const FilterElement = ({ post, isLoading }) => {
           setIsLiked(true);
           console.log("liked");
         }
-      } catch (error) {
-        console.error(
-          "Error fetching user data or checking liked posts:",
-          error
-        );
-      }
+      } catch (error) {}
     };
 
     fetchPosts();
@@ -60,17 +55,13 @@ const FilterElement = ({ post, isLoading }) => {
         <Skeleton height={300} />
       ) : (
         <div key={post._id} className="wd--search-content--elements-element">
-          <FaHeart
-            onClick={handleHeartClick}
-            style={{ color: isLiked ? "red" : "black" }}
-            className="wd--search-content--elements-element-image--like-icon"
-          />
-
           <div className="wd--search-content--elements-element-image">
-            <img
-              src={post.img || noAvatar}
-              alt={post.model + " " + post.year}
+            <FaHeart
+              onClick={handleHeartClick}
+              style={{ color: isLiked ? "red" : "black" }}
+              className="wd--search-content--elements-element-image--like-icon"
             />
+            <img src={noAvatar} alt={post.model + " " + post.year} />
           </div>
           <div className="wd--search-content--elements-element-text">
             <div className="wd--search-content--elements-element-text--left">
@@ -89,11 +80,7 @@ const FilterElement = ({ post, isLoading }) => {
             </div>
             <div className="wd--search-content--elements-element-text--right">
               <div className="wd--search-content--elements-element-text--right-profile">
-                <img
-                  className="wd--search-content--elements-element-text--right-profile-img"
-                  src={user.img || noAvatar}
-                  alt=""
-                />
+                <img src={user.img || noAvatar} alt="" />
               </div>
               <div className="wd--search-content--elements-element-text--right-rating">
                 {} <AiFillStar />

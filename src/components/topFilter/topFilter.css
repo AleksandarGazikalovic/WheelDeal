@@ -1,0 +1,107 @@
+.wd--search--top-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.wd--search--top-filter-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.wd--search--top-filter-btns {
+  display: flex;
+  flex-wrap: nowrap;
+  border-radius: 50px 50px 50px 50px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.wd--search--top-filter-btns:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 2.95px 2.95px 3.6px;
+}
+
+.wd--search--top-filter button {
+  width: 120px;
+  height: 40px;
+  font-family: var(--font-family);
+  font-size: 15px;
+  outline: none;
+  cursor: pointer;
+}
+
+.wd--search--top-filter button:hover {
+  background-color: #ff6b00;
+  border-color: #ff6b00;
+  color: white;
+}
+
+.wd--search--top-filter button:focus {
+  background-color: #ff6b00;
+  border-color: #ff6b00;
+  color: white;
+}
+
+.where-btn {
+  border: 1px solid #e5e5e5;
+  background-color: #fff;
+  border-right: none;
+  border-radius: 50px 0 0 50px;
+  font-weight: 300;
+}
+
+.how-much-btn {
+  border: 1px solid #e5e5e5;
+  background-color: #fff;
+  border-left: none;
+  border-right: none;
+  font-weight: 300;
+}
+
+.how-long-btn {
+  border: 1px solid #e5e5e5;
+  background-color: #fff;
+  border-left: none;
+  border-right: none;
+  font-weight: 300;
+}
+
+.model-btn {
+  border: 1px solid #e5e5e5;
+  background-color: #fff;
+  border-left: none;
+  border-right: none;
+  font-weight: 300;
+}
+
+.rent-btn {
+  border: 1px solid #ff6b00;
+  border-left: none;
+  color: white;
+  border-radius: 0 50px 50px 0;
+  background-color: #ff6b00;
+  font-weight: 800;
+}
+
+@media screen and (max-width: 650px) {
+  .wd--search--top-filter-btns {
+    flex-direction: column;
+    width: 300px;
+  }
+
+  .wd--search--top-filter button {
+    width: 300px;
+  }
+
+  .where-btn {
+    border-radius: 50px 50px 0 0;
+  }
+  .rent-btn {
+    border-radius: 0 0 50px 50px;
+  }
+}

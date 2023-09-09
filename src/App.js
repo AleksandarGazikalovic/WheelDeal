@@ -7,25 +7,23 @@ import {
   Switch,
 } from "react-router-dom";
 import { Home, SearchOptions } from "./pages";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 const App = () => {
   return (
-    <div className="App">
-      <React.StrictMode>
-        <div className="gradient_bg">
-          <Router>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route
-                path="/search-options"
-                element={<SearchOptions filter={1} />}
-              />
-              <Route path="/profile/:username" />
-            </Routes>
-          </Router>
-        </div>
-      </React.StrictMode>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/search-options"
+            element={<SearchOptions filter={1} />}
+          />
+          <Route path="/profile/:username" />
+        </Routes>
+      </Router>
+    </Provider>
   );
 };
 

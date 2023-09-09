@@ -1,10 +1,54 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./registrationForm.css";
 import { RiCloseLine } from "react-icons/ri";
 import GoogleButton from "react-google-button";
 import logo from "../../assets/Logo.png";
+import { useSelector, useDispatch } from "react-redux";
+import { registerUser } from "../../redux/userSlice";
+import { ReactComponent as Loader } from "../../assets/spinner.svg";
 
 const RegistrationForm = ({ onClose }) => {
+  const name = useRef();
+  const surname = useRef();
+  const email = useRef();
+  const password = useRef();
+  const repeatPassword = useRef();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const { userInfo, pending, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  console.log(userInfo);
+
+  const handleRegistration = (e) => {
+    e.preventDefault();
+
+    // Check if any of the fields is empty
+    if (
+      name.current.value === "" ||
+      surname.current.value === "" ||
+      email.current.value === "" ||
+      password.current.value === "" ||
+      repeatPassword.current.value === ""
+    ) {
+      setErrorMessage("Please fill in all the fields.");
+    } else if (password.current.value !== repeatPassword.current.value) {
+      // Check if passwords match
+      setErrorMessage("Passwords do not match.");
+    } else {
+      dispatch(
+        registerUser({
+          name: name.current.value,
+          surname: surname.current.value,
+          email: email.current.value,
+          password: password.current.value,
+        })
+      );
+      setErrorMessage(null);
+      if (!error) {
+        onClose();
+      }
+    }
+  };
+
   useEffect(() => {
     const handleEscapeKey = (event) => {
       if (event.key === "Escape") {
@@ -23,48 +67,78 @@ const RegistrationForm = ({ onClose }) => {
 
   return (
     <div className="registration-form-overlay">
-      <form className="registration-form scale-up-center">
-        <RiCloseLine onClick={onClose} className="registration-close" />
-        <img src={logo} className="registration-logo" alt="" />
-        <label htmlFor="firstname">Ime</label>
+      <form
+        className="registration-form slide-top"
+        id="style-7"
+        onSubmit={handleRegistration}
+      >
+        <div className="form-div">
+          <h1 className="registration-welcome">Come Deal the Wheel with us!</h1>
+          <RiCloseLine onClick={onClose} className="registration-close" />
+        </div>
+
+        <label htmlFor="firstname">Name</label>
         <input
           type="text"
           className="registration-input"
           id="firstname"
-          placeholder="Ime"
+          placeholder="Name"
+          minLength={3}
+          ref={name}
         />
-        <label htmlFor="lastname">Prezime</label>
+        <label htmlFor="surname">Surname</label>
         <input
           type="text"
           className="registration-input"
-          id="lastname"
-          placeholder="Prezime"
+          id="surname"
+          placeholder="Surname"
+          minLength={3}
+          ref={surname}
         />
-        <label htmlFor="email">Email adresa</label>
+        <label htmlFor="email">Email address</label>
         <input
-          type="Email"
+          type="email"
           id="email"
           className="registration-input"
           placeholder="Email"
+          ref={email}
         />
-        <label htmlFor="password">Lozinka</label>
+        <label htmlFor="password">Password</label>
         <input
           type="Password"
           id="password"
           className="registration-input"
-          placeholder="Lozinka"
+          placeholder="Password"
+          minLength={6}
+          ref={password}
         />
-        <label htmlFor="repeat-password">Ponovite lozinku</label>
+        <label htmlFor="repeat-password">Repeat password</label>
         <input
           type="Password"
           id="repeat-password"
           className="registration-input"
-          placeholder="Ponovite lozinku"
+          placeholder="Password"
+          minLength={6}
+          ref={repeatPassword}
         />
-        <div className="registration-line">
+        {error && (
+          <span className="error-msg">
+            Account with this email address already exists!
+          </span>
+        )}
+        {errorMessage && <span className="error-msg">{errorMessage}</span>}
+        <button
+          className="registration-button"
+          type="submit"
+          disabled={pending}
+        >
+          {!pending ? "Sign up" : <Loader className="spinner" />}
+        </button>
+
+        {/* <div className="registration-line">
           <span>ili</span>
         </div>
-        <GoogleButton className="google-button" />
+        <GoogleButton className="google-button" /> */}
       </form>
     </div>
   );

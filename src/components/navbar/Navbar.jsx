@@ -1,21 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./navbar.css";
-import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
+import {
+  RiMenu3Line,
+  RiCloseLine,
+  RiAccountCircleFill,
+  RiArrowDownSLine,
+} from "react-icons/ri";
 import logo from "../../assets/Logo.png";
 import RegistrationForm from "../registrationForm/RegistrationForm";
 import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
+import noAvatar from "../../assets/noAvatar.png";
+import picture1 from "../../assets/TestImages/picture1.jpg";
+import { useSelector, useDispatch } from "react-redux";
+import { GoPlus } from "react-icons/go";
 
 const Menu = () => (
   <>
     <p>
-      <a href="#whatWD">Kako radi WheelDeal?</a>
+      <a href="#whatWD">How does WheelDeal work?</a>
     </p>
     <p>
-      <a href="#podrska">Podrška</a>
+      <a href="#podrska">Support</a>
     </p>
     <p>
-      <a href="#politika">Politika privatnosti</a>
+      <a href="#politika">Privacy Policy</a>
     </p>
   </>
 );
@@ -24,6 +33,7 @@ const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const user = useSelector((state) => state.user.userInfo);
 
   const handleShowRegistrationForm = () => {
     setShowRegistrationForm(true);
@@ -55,28 +65,56 @@ const Navbar = () => {
           </div>
         </div>
         <div className="wd--navbar-sign">
-          <button type="button" id="login" onClick={handleShowLoginForm}>
-            Prijava
-          </button>
-          <button
-            type="button"
-            id="register"
-            onClick={handleShowRegistrationForm}
-          >
-            Registracija
-          </button>
+          {user.name ? (
+            <>
+              <Link to="/add-post">
+                <GoPlus
+                  style={{ color: "white" }}
+                  className="wd--navbar-sign--add-post"
+                  size="40"
+                />
+              </Link>
+              <div className="wd--navbar-sign--account">
+                {user.img ? (
+                  <div className="wd--navbar-sign--account-avatar">
+                    <img src={user.img} alt="" />
+                  </div>
+                ) : (
+                  <RiAccountCircleFill color="#5e5e5e" size="50" />
+                )}
+                <RiArrowDownSLine color="5e5e5e" size="50" />
+              </div>
+            </>
+          ) : (
+            <div>
+              <button
+                type="button"
+                id="login-navbar"
+                onClick={handleShowLoginForm}
+              >
+                Log in
+              </button>
+              <button
+                type="button"
+                id="register-navbar"
+                onClick={handleShowRegistrationForm}
+              >
+                Sign up
+              </button>
+            </div>
+          )}
         </div>
         <div className="wd--navbar-menu">
           {toggleMenu ? (
             <RiCloseLine
-              color="#fff"
-              size="27"
+              color="#3e3e3e"
+              size="35"
               onClick={() => setToggleMenu(false)}
             />
           ) : (
             <RiMenu3Line
-              color="#fff"
-              size="27"
+              color="#3e3e3e"
+              size="35"
               onClick={() => setToggleMenu(true)}
             />
           )}
@@ -86,15 +124,19 @@ const Navbar = () => {
                 <Menu />
               </div>
               <div className="wd--navbar-menu-container-links-sign">
-                <button type="button" id="login" onClick={handleShowLoginForm}>
-                  Prijava
+                <button
+                  type="button"
+                  id="login-navbar"
+                  onClick={handleShowLoginForm}
+                >
+                  Log in
                 </button>
                 <button
                   type="button"
-                  id="register"
+                  id="register-navbar"
                   onClick={handleShowRegistrationForm}
                 >
-                  Registracija
+                  Sign up
                 </button>
               </div>
             </div>

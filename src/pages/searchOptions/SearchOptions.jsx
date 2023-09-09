@@ -1,36 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { Footer, Navbar } from "../../components";
+import { Footer, Navbar, TopFilter } from "../../components";
 import "./searchOptions.css";
 import axios from "axios";
 import FilterElement from "../../components/filterElement/FilterElement";
+import { useSelector } from "react-redux";
 
-const SearchOptions = ({ filter }) => {
+const SearchOptions = () => {
   //const [images, setImages] = useState([]);
   //const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const mounted = React.useRef(true);
+  const { fromDate, toDate, fromPrice, toPrice, location, model } = useSelector(
+    (state) => state.filter
+  );
 
   useEffect(() => {
     const fetchPosts = async () => {
       const res = await axios.get(
-        `posts/filter/all?startDate=2023-05-20&endDate=2023-09-31&startPrice=10&endPrice=500`
+        `posts/filter/all?startDate=${fromDate}&endDate=${toDate}&startPrice=${fromPrice}&endPrice=${toPrice}&location=${location}&model=${model}`
       );
       setPosts(res.data);
       setIsLoading(false);
     };
     fetchPosts();
-  }, []);
+  }, [fromDate, toDate, fromPrice, toPrice, location, model]);
 
+  console.log(posts);
   return (
-    <div className="gradient_bg">
+    <div className="gradient_bg2">
       <Navbar />
-      <div className="wd--search section__padding">
+      <TopFilter setPosts={setPosts} />
+      <div className="wd--search section_padding">
         <div className="wd--search-content">
           <div className="wd--search-content--elements">
-            {posts.map((p) => (
-              <FilterElement post={p} key={p._id} isLoading={isLoading} />
-            ))}
+            {posts.length !== 0 ? (
+              posts.map((p) => (
+                <FilterElement post={p} key={p._id} isLoading={isLoading} />
+              ))
+            ) : (
+              <div className="wd--search-content--elements-title">
+                <h1>Sorry, there are no results for this search.</h1>
+              </div>
+            )}
           </div>
         </div>
         <div className="wave3">

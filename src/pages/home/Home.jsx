@@ -11,9 +11,8 @@ import {
 const Home = () => {
   return (
     <div className="gradient_bg">
-      <Navbar />
       <Header />
-      <MovingCar />
+      {/* <MovingCar /> */}
       <Partners />
       <Footer />
     </div>

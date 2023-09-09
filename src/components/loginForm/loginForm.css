@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh; /* Full height */
   background-color: rgba(
     0,
     0,
@@ -24,28 +24,64 @@
   z-index: 10000; /* Higher z-index to place the form on top of the overlay */
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   position: relative;
   box-shadow: inset 0 0 14px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.5);
+  scroll-behavior: smooth;
+  overflow: hidden;
 }
 
-.login-logo {
-  width: 50%;
+.form-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.login-welcome {
+  font-family: var(--font-family);
+  font-size: 25px;
+  font-weight: bold;
+  color: rgb(77, 77, 77);
+  margin-top: 1rem;
+  text-align: center;
+  width: 100%;
+  margin-left: 2rem;
 }
 
 .login-input {
   padding: 0.5rem 1rem;
   color: rgb(77, 77, 77);
-  margin-top: 2rem;
   background: white;
   font-family: var(--font-family);
   font-weight: normal;
   font-size: 15px;
-  outline: none;
-  border-radius: 5px;
   display: flex;
-  width: 50%;
+  width: 80%;
+  border-radius: 5px;
+  border: 2px solid #e0e0e0;
+  outline: none;
+}
+
+.login-body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form label {
+  margin-top: 1rem;
+  font-family: var(--font-family);
+  display: flex;
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 1rem;
 }
 
 .login-input:focus {
@@ -53,14 +89,19 @@
   background-color: rgb(220, 225, 240);
 }
 
+/* .login-input:required:invalid {
+  border: 2px solid red;
+  background-color: rgb(240, 220, 220);
+} */
+
 .login-close {
   color: rgb(85, 84, 84);
-  font-size: 3rem;
   display: flex;
-  align-self: flex-end;
+  align-self: flex-start;
   transform: rotate(0deg);
   transition: transform 0.3s ease;
   cursor: pointer;
+  font-size: 30px;
 }
 
 .login-close:hover {
@@ -68,8 +109,33 @@
   transform: rotate(90deg);
 }
 
+.login-button {
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  background: #007bff;
+  font-family: var(--font-family);
+  color: white;
+  font-weight: 800;
+  font-size: 15px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(5, 42, 142);
+  }
+}
+
+.login-button:disabled {
+  cursor: not-allowed;
+}
+
 .login-line {
-  top: 75%;
+  top: 85%;
   position: absolute;
   width: 70%;
   height: 1px;
@@ -80,15 +146,107 @@
   display: block;
   position: relative;
   margin: 0 auto;
-  width: 70px;
-  color: gray;
+  width: 30px;
+  color: rgb(88, 88, 88);
   background-color: white;
-  font-weight: 400;
+  font-weight: bold;
   text-align: center;
-  font-size: 18px;
+  font-size: 15px;
   z-index: 1;
 }
 
 .google-button {
   margin-top: 4rem;
+  width: 70%;
+}
+
+.spinner {
+  animation-name: spin;
+  animation-duration: 500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.error-msg {
+  color: red;
+  margin-top: 1rem;
+  font-size: 12px;
+  font-family: var(--font-family);
+  font-weight: bold;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#style-7::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+#style-7::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+}
+
+#style-7::-webkit-scrollbar-thumb {
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.44, rgb(122, 153, 217)),
+    color-stop(0.72, rgb(73, 125, 189)),
+    color-stop(0.86, rgb(28, 58, 148))
+  );
+}
+
+@media screen and (max-width: 1050px) {
+  .login-form {
+    width: 40%;
+  }
+  .login-button {
+    margin-top: 1rem;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .login-form {
+    width: 50%;
+  }
+  .login-button {
+    margin-top: 1rem;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .login-form {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .login-form {
+    width: 70%;
+  }
+
+  .login-welcome {
+    font-size: 20px;
+  }
+
+  .login-form label {
+    margin-left: 0;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .login-form {
+    width: 80%;
+  }
 }
