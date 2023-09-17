@@ -9,8 +9,7 @@ import CurrencyInput from "react-currency-input-field";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
-import Container from "@mui/material/Container";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setFilter } from "../../redux/filterSlice";
 
 function WhereFilter({ onChange, location }) {

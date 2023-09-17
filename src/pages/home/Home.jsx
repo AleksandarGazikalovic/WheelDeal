@@ -10,12 +10,12 @@ import {
 
 const Home = () => {
   return (
-    <div className="gradient_bg">
+    <>
       <Header />
       {/* <MovingCar /> */}
       <Partners />
       <Footer />
-    </div>
+    </>
   );
 };
 

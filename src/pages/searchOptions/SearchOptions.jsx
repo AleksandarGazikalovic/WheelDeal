@@ -4,29 +4,29 @@ import "./searchOptions.css";
 import axios from "axios";
 import FilterElement from "../../components/filterElement/FilterElement";
 import { useSelector } from "react-redux";
+import { setPosts } from "../../redux/postsSlice";
+import { useDispatch } from "react-redux";
 
 const SearchOptions = () => {
-  //const [images, setImages] = useState([]);
-  //const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [posts, setPosts] = useState([]);
   const mounted = React.useRef(true);
+  const dispatch = useDispatch();
   const { fromDate, toDate, fromPrice, toPrice, location, model } = useSelector(
     (state) => state.filter
   );
+  const posts = useSelector((state) => state.posts.posts);
 
   useEffect(() => {
     const fetchPosts = async () => {
       const res = await axios.get(
         `posts/filter/all?startDate=${fromDate}&endDate=${toDate}&startPrice=${fromPrice}&endPrice=${toPrice}&location=${location}&model=${model}`
       );
-      setPosts(res.data);
+      dispatch(setPosts(res.data));
       setIsLoading(false);
     };
     fetchPosts();
   }, [fromDate, toDate, fromPrice, toPrice, location, model]);
 
-  console.log(posts);
   return (
     <div className="gradient_bg2">
       <Navbar />

@@ -19,6 +19,7 @@
     "framer-motion": "^10.15.0",
     "meanderer": "^0.0.1",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-content-loader": "^6.2.1",
     "react-currency-input-field": "^3.6.11",
     "react-date-range": "^1.4.0",
@@ -31,6 +32,7 @@
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
     "react-spring": "^9.7.2",
+    "react-transition-group": "^4.4.5",
     "redux": "^4.2.1",
     "web-vitals": "^2.1.4"
   },

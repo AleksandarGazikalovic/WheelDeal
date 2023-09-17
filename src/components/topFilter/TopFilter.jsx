@@ -33,7 +33,7 @@ const TopFilter = ({ posts }) => {
     const res = await axios.get(
       `posts/filter/all?startDate=${fromDate}&endDate=${toDate}&startPrice=${fromPrice}&endPrice=${toPrice}&location=${location}&model=${model}`
     );
-    setPosts(res.data);
+    dispatch(setPosts(res.data));
   };
 
   const handleFilterChange = (formName) => {

@@ -11,28 +11,29 @@ import {
   RiAccountCircleFill,
   RiArrowDownSLine,
 } from "react-icons/ri";
-import logo from "../../assets/Logo.png";
+import logo from "../../assets/Logo2.png";
 import RegistrationForm from "../registrationForm/RegistrationForm";
 import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
 import noAvatar from "../../assets/noAvatar.png";
 import picture1 from "../../assets/TestImages/picture1.jpg";
+import Blend from "../../assets/Blend.png";
 
 const Menu = () => (
   <>
     <p>
-      <a href="#whatWD">Kako radi WheelDeal?</a>
+      <a href="#whatWD">How does WheelDeal work?</a>
     </p>
     <p>
-      <a href="#podrska">Podrška</a>
+      <a href="#podrska">Support</a>
     </p>
     <p>
-      <a href="#politika">Politika privatnosti</a>
+      <a href="#politika">Privacy Policy</a>
     </p>
   </>
 );
 
-const Header = (toggleSign) => {
+const Header = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -75,8 +76,8 @@ const Header = (toggleSign) => {
   };
 
   return (
-    <>
-      <div className="wd--header">
+    <header className="wd--header" id="home">
+      <div className="wd--header-1 ">
         <div className="wd--header-links">
           <div className="wd--header-links-logo">
             <Link to="/">
@@ -102,14 +103,14 @@ const Header = (toggleSign) => {
           ) : (
             <div>
               <button type="button" id="login" onClick={handleShowLoginForm}>
-                Prijava
+                Log in
               </button>
               <button
                 type="button"
                 id="register"
                 onClick={handleShowRegistrationForm}
               >
-                Registracija
+                Sign up
               </button>
             </div>
           )}
@@ -135,14 +136,14 @@ const Header = (toggleSign) => {
               </div>
               <div className="wd--header-menu-container-links-sign">
                 <button type="button" id="login" onClick={handleShowLoginForm}>
-                  Prijava
+                  Log in
                 </button>
                 <button
                   type="button"
                   id="register"
                   onClick={handleShowRegistrationForm}
                 >
-                  Registracija
+                  Sign up
                 </button>
               </div>
             </div>
@@ -153,20 +154,18 @@ const Header = (toggleSign) => {
         <RegistrationForm onClose={handleCloseRegistrationForm} />
       )}
       {showLoginForm && <LoginForm onClose={handleCloseLoginForm} />}
-      <div className="wd__header" id="home">
-        <div className="wd__header-content">
-          <h1 className="gradient__text">
+      <div className="wd--header-2">
+        <div className="wd--header-content">
+          <h1 className="gradient--text">
             Najpovoljnije rentiranje vozila u Srbiji
           </h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor,
-            necessitatibus illum exercitationem adipisci culpa minus fuga
+            lorem Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Dolor, necessitatibus illum exercitationem adipisci culpa minus fuga
             blanditiis unde eum nisi numquam iusto voluptates debitis aspernatur
             sint porro earum, ut nobis?
           </p>
-          <form className="wd__header-content__input" onSubmit={filterHandler}>
-            {/* <input type="search" placeholder="Cena od:" />
-          <input type="search" placeholder="Cena do:" /> */}
+          <form className="wd--header-content--input" onSubmit={filterHandler}>
             <input
               type="date"
               placeholder="Datum od:"
@@ -177,24 +176,21 @@ const Header = (toggleSign) => {
             <button type="submit">Search</button>
           </form>
         </div>
-        <div className="wd__header-image">
-          <img src={firstCar} alt="car" />
-        </div>
-        <div className="wave2">
-          <svg
-            data-name="Layer 1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
-              className="shape-fill2"
-            ></path>
-          </svg>
-        </div>
       </div>
-    </>
+      {/* <div className="wave2">
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
+            className="shape-fill2"
+          ></path>
+        </svg>
+      </div> */}
+    </header>
   );
 };
 

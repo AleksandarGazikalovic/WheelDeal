@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./registrationForm.css";
 import { RiCloseLine } from "react-icons/ri";
-import GoogleButton from "react-google-button";
-import logo from "../../assets/Logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "../../redux/userSlice";
 import { ReactComponent as Loader } from "../../assets/spinner.svg";

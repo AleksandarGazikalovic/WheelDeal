@@ -22,7 +22,6 @@
 //   const { ref: textRef3, inView: inView3 } = useInView();
 //   const { ref: textRef4, inView: inView4 } = useInView();
 
-//   // Function to update the scroll percentage state based on the scroll position
 //   const updateScrollPercentage = (pathEndY, carStartingY) => {
 //     const totalScrollableDistance = pathEndY - carStartingY;
 //     if (window.scrollY - carStartingY > 0) {
@@ -33,7 +32,6 @@
 //     console.log(window.scrollY - carStartingY);
 //   };
 
-//   // Calculate the total scrollable distance when the component mounts
 //   useEffect(() => {
 //     const carDiv = document.getElementById("car");
 //     const carStartingY = carDiv.getBoundingClientRect().bottom;
@@ -43,33 +41,28 @@
 //     console.log(divPath.scrollY);
 //     const pathHeight = divPath.offsetHeight;
 
-//     updateScrollPercentage(pathEndY, carStartingY); // Initial call to set the initial scroll percentage
+//     updateScrollPercentage(pathEndY, carStartingY);
 
 //     const handleScroll = () => {
 //       const bottomViewportY = window.innerHeight + window.scrollY;
 //       const scrolledDistance = carStartingY - bottomViewportY;
 
 //       if (scrolledDistance <= 0) {
-//         // You have reached the div
 //         setIsElementVisible(true);
 //       } else {
 //         setIsElementVisible(false);
-//         // Amount of scrolling needed to reach the div
 //         console.log("Scroll remaining:", scrolledDistance);
 //       }
 //       updateScrollPercentage(pathEndY, carStartingY);
 //     };
 
-//     // Attach the event listener to update the scroll percentage on scroll
 //     window.addEventListener("scroll", handleScroll);
 
-//     // Clean up the event listener on component unmount
 //     return () => {
 //       window.removeEventListener("scroll", handleScroll);
 //     };
 //   }, []);
 
-//   // Function to handle intersection changes
 //   const handleIntersection = (entries) => {
 //     entries.forEach((entry) => {
 //       if (entry.isIntersecting) {
@@ -80,7 +73,6 @@
 //     });
 //   };
 
-//   // Set up the Intersection Observer when the component mounts
 //   useEffect(() => {
 //     const observer = new IntersectionObserver(handleIntersection, {
 //       root: null,
@@ -92,7 +84,6 @@
 //       observer.observe(carRef.current);
 //     }
 
-//     // Clean up the Intersection Observer on component unmount
 //     return () => {
 //       if (carRef.current) {
 //         observer.unobserve(carRef.current);
@@ -163,7 +154,7 @@
 //       <div className="wave">
 //         <svg
 //           data-name="Layer 1"
-//           xmlns="http://www.w3.org/2000/svg"
+//           xmlns="http:www.w3.org/2000/svg"
 //           viewBox="0 0 1200 120"
 //           preserveAspectRatio="none"
 //         >

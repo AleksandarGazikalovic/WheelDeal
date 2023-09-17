@@ -51,14 +51,14 @@
 #register-navbar {
   padding: 0.5rem 1rem;
   color: #fff;
-  background: #ff6b00;
+  background: #f77f00;
   font-family: var(--font-family);
   font-weight: 800;
   font-size: 15px;
   line-height: 25px;
   border: none;
   outline: none;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
 }
 
@@ -78,7 +78,7 @@
 }
 
 .wd--navbar-sign--add-post {
-  background-color: #ff6b00;
+  background-color: #f77f00;
   border-radius: 5px;
   cursor: pointer;
   margin-right: 1rem;

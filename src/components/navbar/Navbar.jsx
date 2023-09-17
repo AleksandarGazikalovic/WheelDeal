@@ -6,7 +6,7 @@ import {
   RiAccountCircleFill,
   RiArrowDownSLine,
 } from "react-icons/ri";
-import logo from "../../assets/Logo.png";
+import logo from "../../assets/Logo2.png";
 import RegistrationForm from "../registrationForm/RegistrationForm";
 import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
@@ -33,7 +33,20 @@ const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const user = useSelector((state) => state.user.userInfo);
+
+  useEffect(() => {
+    console.log("user", user);
+    console.log(user.id !== "");
+    console.log(user.id != "");
+    console.log(user.id != null);
+    console.log(user.id !== null);
+
+    if (user.id !== "") {
+      setLoggedIn(true);
+    }
+  }, [user]);
 
   const handleShowRegistrationForm = () => {
     setShowRegistrationForm(true);
@@ -65,7 +78,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="wd--navbar-sign">
-          {user.name ? (
+          {loggedIn ? (
             <>
               <Link to="/add-post">
                 <GoPlus
@@ -86,24 +99,33 @@ const Navbar = () => {
               </div>
             </>
           ) : (
-            <div>
-              <button
-                type="button"
-                id="login-navbar"
+            <>
+              <GoPlus
+                style={{ color: "white" }}
+                className="wd--navbar-sign--add-post"
+                size="40"
                 onClick={handleShowLoginForm}
-              >
-                Log in
-              </button>
-              <button
-                type="button"
-                id="register-navbar"
-                onClick={handleShowRegistrationForm}
-              >
-                Sign up
-              </button>
-            </div>
+              />
+              <div>
+                <button
+                  type="button"
+                  id="login-navbar"
+                  onClick={handleShowLoginForm}
+                >
+                  Log in
+                </button>
+                <button
+                  type="button"
+                  id="register-navbar"
+                  onClick={handleShowRegistrationForm}
+                >
+                  Sign up
+                </button>
+              </div>
+            </>
           )}
         </div>
+
         <div className="wd--navbar-menu">
           {toggleMenu ? (
             <RiCloseLine

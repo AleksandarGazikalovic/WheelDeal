@@ -36,14 +36,14 @@
 }
 
 .wd--search--top-filter button:hover {
-  background-color: #ff6b00;
-  border-color: #ff6b00;
+  background-color: #f77f00;
+  border-color: #f77f00;
   color: white;
 }
 
 .wd--search--top-filter button:focus {
-  background-color: #ff6b00;
-  border-color: #ff6b00;
+  background-color: #f77f00;
+  border-color: #f77f00;
   color: white;
 }
 
@@ -80,11 +80,11 @@
 }
 
 .rent-btn {
-  border: 1px solid #ff6b00;
+  border: 1px solid #f77f00;
   border-left: none;
   color: white;
   border-radius: 0 50px 50px 0;
-  background-color: #ff6b00;
+  background-color: #f77f00;
   font-weight: 800;
 }
 

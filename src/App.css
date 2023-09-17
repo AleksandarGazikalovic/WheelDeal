@@ -14,51 +14,11 @@ a {
 }
 
 .gradient_bg {
-  /* ff 3.6+ */
-  background: -moz-radial-gradient(
-    circle at 3% 25%,
-    rgba(0, 11, 43, 1) 0%,
-    rgba(3, 28, 97, 1) 100%
-  );
-
-  /* safari 5.1+,chrome 10+ */
-  background: -webkit-radial-gradient(
-    circle at 3% 25%,
-    rgba(0, 11, 43, 1) 0%,
-    rgba(3, 28, 97, 1) 100%
-  );
-
-  /* opera 11.10+ */
-  background: -o-radial-gradient(
-    circle at 3% 25%,
-    rgba(0, 11, 43, 1) 0%,
-    rgba(3, 28, 97, 1) 100%
-  );
-
-  /* ie 10+ */
-  background: -ms-radial-gradient(
-    circle at 3% 25%,
-    rgba(0, 11, 43, 1) 0%,
-    rgba(3, 28, 97, 1) 100%
-  );
-
-  /* global 92%+ browsers support */
-  background: radial-gradient(
-    circle at 3% 25%,
-    rgba(0, 11, 43, 1) 0%,
-    rgba(3, 28, 97, 1) 100%
-  );
+  background-color: #003049;
 }
 
 .gradient_bg2 {
   background-color: white;
-}
-
-.gradient__text {
-  background: var(--gradient-text);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .section__padding {

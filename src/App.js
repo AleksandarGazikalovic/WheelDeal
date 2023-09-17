@@ -6,7 +6,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import { Home, SearchOptions } from "./pages";
+import { Home, SearchOptions, NewPosts } from "./pages";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
@@ -20,6 +20,7 @@ const App = () => {
             path="/search-options"
             element={<SearchOptions filter={1} />}
           />
+          <Route path="/add-post" element={<NewPosts />} />
           <Route path="/profile/:username" />
         </Routes>
       </Router>
