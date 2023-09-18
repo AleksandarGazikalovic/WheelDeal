@@ -87,16 +87,18 @@ const Navbar = () => {
                   size="40"
                 />
               </Link>
-              <div className="wd--navbar-sign--account">
-                {user.img ? (
-                  <div className="wd--navbar-sign--account-avatar">
-                    <img src={user.img} alt="" />
-                  </div>
-                ) : (
-                  <RiAccountCircleFill color="#5e5e5e" size="50" />
-                )}
-                <RiArrowDownSLine color="5e5e5e" size="50" />
-              </div>
+              <Link to="/profile">
+                <div className="wd--navbar-sign--account">
+                  {user.img ? (
+                    <div className="wd--navbar-sign--account-avatar">
+                      <img src={user.img} alt="" />
+                    </div>
+                  ) : (
+                    <RiAccountCircleFill color="#5e5e5e" size="50" />
+                  )}
+                  <RiArrowDownSLine color="5e5e5e" size="50" />
+                </div>
+              </Link>
             </>
           ) : (
             <>

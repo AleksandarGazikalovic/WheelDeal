@@ -1,5 +1,5 @@
 import React from "react";
-import { Footer, Navbar } from "../../components";
+import { Footer, Navbar, Loading } from "../../components";
 import { useState } from "react";
 import "./newPosts.css";
 import { GoPlus } from "react-icons/go";
@@ -11,6 +11,7 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { useSelector, useDispatch } from "react-redux";
 import { createPost } from "../../redux/postSlice";
+import { useNavigate } from "react-router-dom";
 
 function ImageItem({ image, onClick }) {
   return (
@@ -45,7 +46,8 @@ const NewPosts = () => {
   const [price, setPrice] = useState(0);
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
-  console.log(userInfo);
+  const [filled, setFilled] = useState(true);
+  const navigate = useNavigate();
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -53,7 +55,7 @@ const NewPosts = () => {
       key: "selection",
     },
   ]);
-  const { postInfo, pending, error } = useSelector((state) => state.user);
+  const { postInfo, pending, error } = useSelector((state) => state.post);
   const [postValues, setPostValues] = useState({
     userId: userInfo._id,
     img: "1122.jpg",
@@ -164,6 +166,7 @@ const NewPosts = () => {
 
   const handleBack = () => {
     if (secondPage) {
+      setFilled(true);
       setIsFadingOut(true); // Apply "fade-out" class
       setTimeout(() => {
         setSecondPage(false);
@@ -171,6 +174,7 @@ const NewPosts = () => {
         setIsFadingOut(false); // Remove "fade-out" class
       }, 1000); // Delay the transition for 0.5 seconds (adjust as needed)
     } else if (thirdPage) {
+      setFilled(true);
       setIsFadingOut(true); // Apply "fade-out" class
       setTimeout(() => {
         setThirdPage(false);
@@ -190,6 +194,8 @@ const NewPosts = () => {
         setIsFadingOut(false); // Remove "fade-out" class
       }, 1000); // Delay the transition for 0.5 seconds (adjust as needed)
     } else if (secondPage) {
+      if (handleError1()) return;
+      setFilled(true);
       setIsFadingOut(true); // Apply "fade-out" class
       setTimeout(() => {
         setSecondPage(false);
@@ -199,11 +205,45 @@ const NewPosts = () => {
     }
   };
 
-  const handleCreatePost = () => {
-    dispatch(createPost(postValues));
+  const handleError1 = () => {
+    if (
+      postValues.brand === "" ||
+      postValues.model === "" ||
+      postValues.year === "" ||
+      postValues.mileage === "" ||
+      postValues.transmission === "" ||
+      postValues.fuel === "" ||
+      postValues.drive === "" ||
+      postValues.engine === "" ||
+      postValues.location === "" ||
+      postValues.casco === ""
+    ) {
+      setFilled(false);
+      return true;
+    }
+    return false;
   };
 
-  console.log(postValues);
+  const handleError2 = () => {
+    if (
+      postValues.price === "" ||
+      postValues.from === "" ||
+      postValues.to === ""
+    ) {
+      setFilled(false);
+      return true;
+    }
+    return false;
+  };
+
+  const handleCreatePost = () => {
+    if (handleError2()) return;
+    dispatch(createPost(postValues)).then(() => {
+      if (!error && !pending) {
+        navigate("/profile");
+      }
+    });
+  };
 
   return (
     <div className="gradient_bg2">
@@ -285,6 +325,9 @@ const NewPosts = () => {
                       required
                       className="wd--new-post--container-details-section1-div-input2 style-7"
                       name="brand"
+                      value={
+                        postValues.brand === "" ? "none" : postValues.brand
+                      }
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
@@ -306,6 +349,9 @@ const NewPosts = () => {
                       className="wd--new-post--container-details-section1-div-input2 style-7"
                       name="model"
                       id="model"
+                      value={
+                        postValues.model === "" ? "none" : postValues.model
+                      }
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
@@ -329,6 +375,7 @@ const NewPosts = () => {
                       type="number"
                       id="year"
                       name="year"
+                      value={postValues.year}
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
@@ -344,6 +391,7 @@ const NewPosts = () => {
                       type="number"
                       name="mileage"
                       id="mileage"
+                      value={postValues.mileage}
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
@@ -360,6 +408,7 @@ const NewPosts = () => {
                     type="text"
                     placeholder="Description"
                     name="description"
+                    value={postValues.description}
                     onChange={(e) =>
                       handleInputChange(e.target.name, e.target.value)
                     }
@@ -373,6 +422,11 @@ const NewPosts = () => {
                       className="wd--new-post--container-details-section1-div-input2 style-7"
                       name="transmission"
                       id="transmission"
+                      value={
+                        postValues.transmission === ""
+                          ? "none"
+                          : postValues.transmission
+                      }
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
@@ -390,6 +444,9 @@ const NewPosts = () => {
                       className="wd--new-post--container-details-section1-div-input2 style-7"
                       name="drive"
                       id="drive"
+                      value={
+                        postValues.drive === "" ? "none" : postValues.drive
+                      }
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
@@ -410,6 +467,7 @@ const NewPosts = () => {
                       className="wd--new-post--container-details-section1-div-input2 style-7"
                       name="fuel"
                       id="fuel"
+                      value={postValues.fuel === "" ? "none" : postValues.fuel}
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
@@ -432,6 +490,7 @@ const NewPosts = () => {
                       type="number"
                       name="engine"
                       id="engine"
+                      value={postValues.engine}
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
@@ -448,6 +507,9 @@ const NewPosts = () => {
                       className="wd--new-post--container-details-section1-div-input2 style-7"
                       name="casco"
                       id="casco"
+                      value={
+                        postValues.casco === "" ? "none" : postValues.casco
+                      }
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
@@ -466,6 +528,7 @@ const NewPosts = () => {
                       type="text"
                       name="location"
                       id="location"
+                      value={postValues.location}
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
@@ -513,6 +576,7 @@ const NewPosts = () => {
               {!firstPage ? (
                 <button
                   style={{ visibility: "visible" }}
+                  disabled={isFadingOut}
                   type="button"
                   className="wd--new-post--back-btn"
                   onClick={handleBack}
@@ -561,9 +625,12 @@ const NewPosts = () => {
                   Add Photo
                 </label>
               )}
+              {!filled ? <span>"Please fill in all the fields!"</span> : null}
+
               {thirdPage ? (
                 <button
                   type="button"
+                  disabled={pending}
                   className="wd--new-post--finish-btn"
                   onClick={handleCreatePost}
                 >
@@ -581,6 +648,7 @@ const NewPosts = () => {
             </div>
           ) : null}
         </div>
+        {pending && <Loading />}
         <div className="wave3">
           <svg
             data-name="Layer 1"

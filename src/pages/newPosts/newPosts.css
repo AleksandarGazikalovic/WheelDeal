@@ -326,6 +326,20 @@
   margin-bottom: 10rem;
 }
 
+.wd--new-post--container-buttons span {
+  display: flex;
+  position: absolute;
+  justify-self: center;
+  font-size: 18px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  color: red;
+  background-color: #fff;
+  border: none;
+  outline: none;
+  animation: horizontal-shaking 0.5s;
+}
+
 .wd--new-post--back-btn {
   display: flex;
   justify-self: flex-start;
@@ -591,5 +605,23 @@ input[type="number"] {
   }
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes horizontal-shaking {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
