@@ -37,12 +37,6 @@ const Navbar = () => {
   const user = useSelector((state) => state.user.userInfo);
 
   useEffect(() => {
-    console.log("user", user);
-    console.log(user.id !== "");
-    console.log(user.id != "");
-    console.log(user.id != null);
-    console.log(user.id !== null);
-
     if (user.id !== "") {
       setLoggedIn(true);
     }

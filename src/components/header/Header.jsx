@@ -4,7 +4,7 @@ import drivingCar from "../../assets/drivingCar.gif";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter } from "../../redux/filterSlice";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   RiMenu3Line,
   RiCloseLine,
@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import noAvatar from "../../assets/noAvatar.png";
 import picture1 from "../../assets/TestImages/picture1.jpg";
 import Blend from "../../assets/Blend.png";
+import { AiOutlineMinus } from "react-icons/ai";
 
 const Menu = () => (
   <>
@@ -37,6 +38,7 @@ const Header = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const user = useSelector((state) => state.user.userInfo);
 
   const handleShowRegistrationForm = () => {
@@ -75,6 +77,12 @@ const Header = () => {
     navigate(`/search-options`);
   };
 
+  useEffect(() => {
+    if (user.id !== "") {
+      setLoggedIn(true);
+    }
+  }, [user]);
+
   return (
     <header className="wd--header" id="home">
       <div className="wd--header-1 ">
@@ -89,17 +97,19 @@ const Header = () => {
           </div>
         </div>
         <div className="wd--header-sign">
-          {user.name ? (
-            <div className="wd--header-sign--account">
-              {user.img ? (
-                <div className="wd--header-sign--account-avatar">
-                  <img src={user.img} alt="" />
-                </div>
-              ) : (
-                <RiAccountCircleFill color="#fff" size="50" />
-              )}
-              <RiArrowDownSLine color="#fff" size="50" />
-            </div>
+          {loggedIn ? (
+            <Link to="/profile">
+              <div className="wd--header-sign--account">
+                {user.img ? (
+                  <div className="wd--header-sign--account-avatar">
+                    <img src={user.img} alt="" />
+                  </div>
+                ) : (
+                  <RiAccountCircleFill color="#fff" size="50" />
+                )}
+                <RiArrowDownSLine color="#fff" size="50" />
+              </div>
+            </Link>
           ) : (
             <div>
               <button type="button" id="login" onClick={handleShowLoginForm}>
@@ -172,6 +182,7 @@ const Header = () => {
               id="dateFrom"
               ref={fromDateRef}
             />
+            <AiOutlineMinus className="minus" />
             <input type="date" placeholder="Datum do:" ref={toDateRef} />
             <button type="submit">Search</button>
           </form>

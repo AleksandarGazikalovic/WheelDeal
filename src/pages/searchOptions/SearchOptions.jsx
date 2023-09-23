@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Footer, Navbar, TopFilter } from "../../components";
 import "./searchOptions.css";
 import axios from "axios";
-import FilterElement from "../../components/filterElement/FilterElement";
+import { FilterElement } from "../../components";
 import { useSelector } from "react-redux";
 import { setPosts } from "../../redux/postsSlice";
 import { useDispatch } from "react-redux";
