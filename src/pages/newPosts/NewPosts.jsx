@@ -12,6 +12,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { useSelector, useDispatch } from "react-redux";
 import { createPost } from "../../redux/postSlice";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 
 function ImageItem({ image, onClick }) {
   return (
@@ -254,7 +255,7 @@ const NewPosts = () => {
             {selectedImages.length === 0 ? (
               <div className="wd--new-post--container-upload-photo">
                 <label>
-                  <GoPlus size={70} />
+                  <AiOutlineCloudUpload size={80} />
                   <span>Add up to 10 images</span>
                   <input
                     className="wd--new-post--container-upload-photo-input"

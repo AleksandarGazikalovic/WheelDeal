@@ -360,6 +360,24 @@
     font-size: 16px;
     line-height: 24px;
   }
+
+  .minus {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: #fff;
+    padding: 0;
+    margin: 0;
+  }
+
+  #dateTo {
+    margin-top: 0;
+  }
 }
 
 @media screen and (max-width: 650px) {

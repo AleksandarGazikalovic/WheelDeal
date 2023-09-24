@@ -161,9 +161,17 @@ const Header = () => {
         </div>
       </div>
       {showRegistrationForm && (
-        <RegistrationForm onClose={handleCloseRegistrationForm} />
+        <RegistrationForm
+          onClose={handleCloseRegistrationForm}
+          showLogin={handleShowLoginForm}
+        />
       )}
-      {showLoginForm && <LoginForm onClose={handleCloseLoginForm} />}
+      {showLoginForm && (
+        <LoginForm
+          onClose={handleCloseLoginForm}
+          showRegistration={handleShowRegistrationForm}
+        />
+      )}
       <div className="wd--header-2">
         <div className="wd--header-content">
           <h1 className="gradient--text">
@@ -183,7 +191,12 @@ const Header = () => {
               ref={fromDateRef}
             />
             <AiOutlineMinus className="minus" />
-            <input type="date" placeholder="Datum do:" ref={toDateRef} />
+            <input
+              type="date"
+              placeholder="Datum do:"
+              ref={toDateRef}
+              id="dateTo"
+            />
             <button type="submit">Search</button>
           </form>
         </div>

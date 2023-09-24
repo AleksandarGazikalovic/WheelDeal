@@ -10,8 +10,6 @@ import logo from "../../assets/Logo2.png";
 import RegistrationForm from "../registrationForm/RegistrationForm";
 import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
-import noAvatar from "../../assets/noAvatar.png";
-import picture1 from "../../assets/TestImages/picture1.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { GoPlus } from "react-icons/go";
 

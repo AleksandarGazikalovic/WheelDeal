@@ -4,40 +4,47 @@ import { RiCloseLine } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "../../redux/userSlice";
 import { ReactComponent as Loader } from "../../assets/spinner.svg";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 
-const RegistrationForm = ({ onClose }) => {
-  const name = useRef();
-  const surname = useRef();
-  const email = useRef();
-  const password = useRef();
-  const repeatPassword = useRef();
+const RegistrationForm = ({ onClose, showLogin }) => {
   const [errorMessage, setErrorMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log(userInfo);
+  const [account, setAccount] = useState({
+    name: undefined,
+    surname: undefined,
+    email: undefined,
+    password: undefined,
+  });
+
+  const handleInputChange = (name, value) => {
+    setAccount({
+      ...account,
+      [name]: value,
+    });
+  };
 
   const handleRegistration = (e) => {
     e.preventDefault();
 
     // Check if any of the fields is empty
     if (
-      name.current.value === "" ||
-      surname.current.value === "" ||
-      email.current.value === "" ||
-      password.current.value === "" ||
-      repeatPassword.current.value === ""
+      account.name === "" ||
+      account.surname === "" ||
+      account.email === "" ||
+      account.password === ""
     ) {
       setErrorMessage("Please fill in all the fields.");
-    } else if (password.current.value !== repeatPassword.current.value) {
-      // Check if passwords match
-      setErrorMessage("Passwords do not match.");
     } else {
       dispatch(
         registerUser({
-          name: name.current.value,
-          surname: surname.current.value,
-          email: email.current.value,
-          password: password.current.value,
+          name: account.name,
+          surname: account.surname,
+          email: account.email,
+          password: account.password,
         })
       );
       setErrorMessage(null);
@@ -46,6 +53,7 @@ const RegistrationForm = ({ onClose }) => {
       }
     }
   };
+  console.log(account);
 
   useEffect(() => {
     const handleEscapeKey = (event) => {
@@ -75,50 +83,77 @@ const RegistrationForm = ({ onClose }) => {
           <RiCloseLine onClick={onClose} className="registration-close" />
         </div>
 
-        <label htmlFor="firstname">Name</label>
-        <input
-          type="text"
-          className="registration-input"
-          id="firstname"
-          placeholder="Name"
-          minLength={3}
-          ref={name}
-        />
-        <label htmlFor="surname">Surname</label>
-        <input
-          type="text"
-          className="registration-input"
-          id="surname"
-          placeholder="Surname"
-          minLength={3}
-          ref={surname}
-        />
-        <label htmlFor="email">Email address</label>
-        <input
-          type="email"
-          id="email"
-          className="registration-input"
-          placeholder="Email"
-          ref={email}
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="Password"
-          id="password"
-          className="registration-input"
-          placeholder="Password"
-          minLength={6}
-          ref={password}
-        />
-        <label htmlFor="repeat-password">Repeat password</label>
-        <input
-          type="Password"
-          id="repeat-password"
-          className="registration-input"
-          placeholder="Password"
-          minLength={6}
-          ref={repeatPassword}
-        />
+        <section>
+          <div className="wd--registration-form--div">
+            <input
+              required
+              className="wd--registration-form--div-input"
+              type="text"
+              name="name"
+              id="name"
+              minLength={3}
+              value={account.name}
+              placeholder="Name"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+            />
+            <label className="wd--registration-form--div-label">Name</label>
+          </div>
+
+          <div className="wd--registration-form--div">
+            <input
+              required
+              className="wd--registration-form--div-input"
+              type="text"
+              name="surname"
+              id="surname"
+              minLength={3}
+              placeholder="Surname"
+              value={account.surname}
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+            />
+            <label className="wd--registration-form--div-label">Surname</label>
+          </div>
+        </section>
+        <div className="wd--registration-form--div">
+          <input
+            required
+            className="wd--registration-form--div-input"
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            value={account.email}
+            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+          />
+          <label className="wd--registration-form--div-label">Email</label>
+        </div>
+        <div className="wd--registration-form--div">
+          <input
+            required
+            className="wd--registration-form--div-input"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            id="password"
+            minLength={6}
+            placeholder="Password"
+            value={account.password}
+            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+          />
+          <label className="wd--registration-form--div-label">Password</label>
+          {showPassword ? (
+            <AiOutlineEye
+              className="wd--registration-form--div-eye"
+              onClick={() => setShowPassword(!showPassword)}
+              size={30}
+            />
+          ) : (
+            <AiOutlineEyeInvisible
+              className="wd--registration-form--div-eye"
+              onClick={() => setShowPassword(!showPassword)}
+              size={30}
+            />
+          )}
+        </div>
         {error && (
           <span className="error-msg">
             Account with this email address already exists!
@@ -133,10 +168,27 @@ const RegistrationForm = ({ onClose }) => {
           {!pending ? "Sign up" : <Loader className="spinner" />}
         </button>
 
-        {/* <div className="registration-line">
-          <span>ili</span>
+        <div className="or-line">
+          <span></span>
+          <span>or</span>
+          <span></span>
         </div>
-        <GoogleButton className="google-button" /> */}
+        <div className="social-icons">
+          <FcGoogle size={40} className="icon" />
+          <FaFacebook size={40} className="icon" />
+        </div>
+        <p className="login">
+          Already have an account? &nbsp;
+          <button
+            type="button"
+            onClick={() => {
+              showLogin();
+              onClose();
+            }}
+          >
+            Log in
+          </button>
+        </p>
       </form>
     </div>
   );
