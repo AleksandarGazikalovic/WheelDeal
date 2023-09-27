@@ -13,6 +13,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { createPost } from "../../redux/postSlice";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+import {
+  PiNumberOneBold,
+  PiNumberTwoBold,
+  PiNumberThreeBold,
+} from "react-icons/pi";
 
 function ImageItem({ image, onClick }) {
   return (
@@ -59,7 +64,7 @@ const NewPosts = () => {
   const { postInfo, pending, error } = useSelector((state) => state.post);
   const [postValues, setPostValues] = useState({
     userId: userInfo._id,
-    img: "1122.jpg",
+    images: "",
     brand: "",
     model: "",
     year: "",
@@ -115,17 +120,31 @@ const NewPosts = () => {
 
   const onSelectFile = (event) => {
     const selectedFiles = event.target.files;
+    const formData = new FormData();
+
     const selectedFilesArray = Array.from(selectedFiles);
+
+    selectedFilesArray.forEach((file, index) => {
+      formData.append(`images[]`, file); // You can use a unique name for each file
+    });
 
     const imagesArray = selectedFilesArray.map((file) => {
       return URL.createObjectURL(file);
     });
 
+    console.log(...formData);
+
     setSelectedImages((previousImages) => previousImages.concat(imagesArray));
 
-    // FOR BUG IN CHROME
+    setPostValues({
+      ...postValues,
+      images: formData.getAll("images[]"),
+    });
+
     event.target.value = "";
   };
+
+  console.log(postValues);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -208,6 +227,7 @@ const NewPosts = () => {
 
   const handleError1 = () => {
     if (
+      postValues.images === "" ||
       postValues.brand === "" ||
       postValues.model === "" ||
       postValues.year === "" ||
@@ -251,6 +271,28 @@ const NewPosts = () => {
       <Navbar />
       <div className="wd--new-post">
         <div className="wd--new-post--wrapper">
+          {selectedImages.length > 0 && (
+            <div className="wd--new-posts--page-numbers">
+              <PiNumberOneBold
+                size={30}
+                className={`wd--new-posts--page-numbers-one ${
+                  firstPage ? "active-page" : ""
+                }`}
+              />
+              <PiNumberTwoBold
+                size={30}
+                className={`wd--new-posts--page-numbers-two ${
+                  secondPage ? "active-page" : ""
+                }`}
+              />
+              <PiNumberThreeBold
+                size={30}
+                className={`wd--new-posts--page-numbers-three ${
+                  thirdPage ? "active-page" : ""
+                }`}
+              />
+            </div>
+          )}
           <div className="wd--new-post--container">
             {selectedImages.length === 0 ? (
               <div className="wd--new-post--container-upload-photo">
@@ -279,6 +321,7 @@ const NewPosts = () => {
                     <img src={selectedImages[0]} alt="" />
                   )}
                 </div>
+
                 {selectedImages.length > 1 && (
                   <ImageGallery
                     selectedImages={selectedImages.slice(1)}

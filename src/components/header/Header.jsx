@@ -100,14 +100,14 @@ const Header = () => {
           {loggedIn ? (
             <Link to="/profile">
               <div className="wd--header-sign--account">
-                {user.img ? (
+                {user.profileImage ? (
                   <div className="wd--header-sign--account-avatar">
-                    <img src={user.img} alt="" />
+                    <img src={user.profileImage} alt="" />
                   </div>
                 ) : (
                   <RiAccountCircleFill color="#fff" size="50" />
                 )}
-                <RiArrowDownSLine color="#fff" size="50" />
+                <RiArrowDownSLine color="#003049" size="50" />
               </div>
             </Link>
           ) : (

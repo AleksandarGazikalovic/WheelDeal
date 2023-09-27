@@ -2,7 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const createPost = createAsyncThunk("post/createPost", async (post) => {
-  const res = await axios.post("/posts/", post);
+  const res = await axios.post("/posts/", post, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return res.data;
 });
 
@@ -19,6 +21,7 @@ export const postSlice = createSlice({
       from: "",
       to: "",
       location: "",
+      profileImage: "",
     },
     pending: null,
     error: false,

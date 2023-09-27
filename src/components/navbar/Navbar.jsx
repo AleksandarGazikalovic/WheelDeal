@@ -27,10 +27,9 @@ const Menu = () => (
   </>
 );
 
-const Navbar = () => {
+const Navbar = ({ showLoginForm, setShowLoginForm }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
-  const [showLoginForm, setShowLoginForm] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const user = useSelector((state) => state.user.userInfo);
 
@@ -81,9 +80,9 @@ const Navbar = () => {
               </Link>
               <Link to="/profile">
                 <div className="wd--navbar-sign--account">
-                  {user.img ? (
+                  {user.profileImage ? (
                     <div className="wd--navbar-sign--account-avatar">
-                      <img src={user.img} alt="" />
+                      <img src={user.profileImage} alt="" />
                     </div>
                   ) : (
                     <RiAccountCircleFill color="#5e5e5e" size="50" />
@@ -160,9 +159,17 @@ const Navbar = () => {
         </div>
       </div>
       {showRegistrationForm && (
-        <RegistrationForm onClose={handleCloseRegistrationForm} />
+        <RegistrationForm
+          onClose={handleCloseRegistrationForm}
+          showLogin={handleShowLoginForm}
+        />
       )}
-      {showLoginForm && <LoginForm onClose={handleCloseLoginForm} />}
+      {showLoginForm && (
+        <LoginForm
+          onClose={handleCloseLoginForm}
+          showRegistration={handleShowRegistrationForm}
+        />
+      )}
     </>
   );
 };

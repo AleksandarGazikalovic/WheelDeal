@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 const SearchOptions = () => {
   const [isLoading, setIsLoading] = useState(true);
   const mounted = React.useRef(true);
+  const [showLoginForm, setShowLoginForm] = useState(false);
   const dispatch = useDispatch();
   const { fromDate, toDate, fromPrice, toPrice, location, model } = useSelector(
     (state) => state.filter
@@ -29,14 +30,22 @@ const SearchOptions = () => {
 
   return (
     <div className="gradient_bg2">
-      <Navbar />
+      <Navbar
+        showLoginForm={showLoginForm}
+        setShowLoginForm={setShowLoginForm}
+      />
       <TopFilter setPosts={setPosts} />
       <div className="wd--search section_padding">
         <div className="wd--search-content">
           <div className="wd--search-content--elements">
             {posts.length !== 0 ? (
               posts.map((p) => (
-                <FilterElement post={p} key={p._id} isLoading={isLoading} />
+                <FilterElement
+                  post={p}
+                  key={p._id}
+                  isLoading={isLoading}
+                  setShowLoginForm={setShowLoginForm}
+                />
               ))
             ) : (
               <div className="wd--search-content--elements-title">

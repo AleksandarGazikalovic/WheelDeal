@@ -249,6 +249,40 @@ body {
   display: none;
 }
 
+.wd--profile-page--container--profile-info--save {
+  display: flex;
+  justify-self: center;
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  color: #fff;
+  background-color: #ff6b00;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+.wd--profile-page--container--profile-info--save:hover {
+  background-color: #ff6b00;
+  box-shadow: 0px 15px 20px #ffbc8c;
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+.wd--profile-page--container--profile-info--save:active {
+  transform: translateY(-1px);
+}
+
+.wd--profile-page--container--profile-info--save-input {
+  display: none;
+}
+
 .wd--profile-page--container--settings {
   display: flex;
   flex-direction: column;

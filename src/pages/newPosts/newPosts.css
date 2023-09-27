@@ -59,6 +59,45 @@
   animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
+.wd--new-posts--page-numbers {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 150px;
+  top: 2%;
+  right: 45%;
+}
+
+.wd--new-posts--page-numbers-one {
+  color: black;
+  border: 1px solid #e5e5e5;
+  border-radius: 50px;
+  width: 40px;
+}
+
+.wd--new-posts--page-numbers-two {
+  color: black;
+  border: 1px solid #e5e5e5;
+  border-radius: 50px;
+  width: 40px;
+}
+
+.wd--new-posts--page-numbers-three {
+  color: black;
+  border: 1px solid #e5e5e5;
+  border-radius: 50px;
+  width: 40px;
+}
+
+.active-page {
+  color: #fff;
+  background-color: #f77f00;
+  border: 1px solid #f77f00;
+  transition: all 0.5s ease 0s;
+}
+
 .wd--new-post--container-main-photo {
   display: flex;
   flex-direction: column;
@@ -187,6 +226,7 @@
   width: 40%;
   height: 100%;
   animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  margin-top: 3rem;
 }
 
 .wd--new-post--container-details-section1-title {
@@ -275,6 +315,7 @@
   justify-content: flex-start;
   align-items: center;
   animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  margin-top: 3rem;
 }
 
 .wd--new-post--container-details-section2 section {

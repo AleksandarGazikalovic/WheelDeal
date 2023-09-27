@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { AiFillCamera } from "react-icons/ai";
+import { updateProfileImage, updateUser } from "../../redux/userSlice";
+import { useDispatch } from "react-redux";
 
 const Profile = () => {
   const user = useSelector((state) => state.user.userInfo);
@@ -16,7 +18,10 @@ const Profile = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [activeTopbar, setActiveTopbar] = useState("yourPosts");
   const [activeSidebar, setActiveSidebar] = useState("profileInfo");
-  console.log("user", user);
+  const [userData, setUserData] = useState({});
+  const [profileImage, setProfileImage] = useState(null);
+  const [showSaveBtn, setShowSaveBtn] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchUserPosts = async () => {
@@ -31,6 +36,49 @@ const Profile = () => {
     fetchLikedPosts();
   }, [user]);
 
+  const onSelectFile = (event) => {
+    const selectedFile = event.target.files[0];
+    const formData = new FormData();
+
+    formData.append(`image`, selectedFile);
+
+    const imageUrl = URL.createObjectURL(selectedFile);
+
+    setProfileImage(imageUrl);
+
+    handleUserChange("profileImage", formData.getAll("image")[0]);
+
+    event.target.value = "";
+  };
+
+  useEffect(() => {
+    setUserData(user);
+  }, []);
+
+  console.log(userData);
+
+  const handleUserChange = (name, value) => {
+    setShowSaveBtn(true);
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
+  const handleUpdate = async () => {
+    try {
+      await dispatch(updateProfileImage(userData));
+      setShowSaveBtn(false);
+      // If the update is successful, refresh the page
+      //window.location.reload();
+    } catch (error) {
+      // If there is an error, you can handle it here
+      console.error("Error updating user:", error);
+      // You can also set a state variable to store and display the error message
+      // For example: setError(error.message);
+    }
+  };
+
   return (
     <div className="gradient_bg2">
       <div className="wd--profile-navbar">
@@ -43,9 +91,9 @@ const Profile = () => {
         </div>
         <div className="wd--profile-navbar-sign">
           <Link to="/profile">
-            {user.img ? (
+            {user.profileImage ? (
               <div className="wd--profile-navbar-sign--account">
-                <img src={user.img} alt="" />
+                <img src={user.profileImage} alt="" />
               </div>
             ) : (
               <RiAccountCircleFill color="#5e5e5e" size="50" />
@@ -84,8 +132,10 @@ const Profile = () => {
           {activeSidebar === "profileInfo" ? (
             <div className="wd--profile-page--container--profile-info">
               <div className="wd--profile-page--container--profile-info--image">
-                {user.img ? (
-                  <img src={user.img} alt="" />
+                {profileImage ? (
+                  <img src={profileImage} alt="" />
+                ) : user.profileImage ? (
+                  <img src={user.profileImage} alt="" />
                 ) : (
                   <RiAccountCircleFill color="#5e5e5e" size="200" />
                 )}
@@ -93,8 +143,9 @@ const Profile = () => {
                   <label>
                     <input
                       type="file"
-                      name="profilePic"
+                      name="profileImage"
                       accept="image/png , image/jpeg, image/webp"
+                      onChange={onSelectFile}
                     />
                     <AiFillCamera size="40" />
                   </label>
@@ -114,6 +165,14 @@ const Profile = () => {
                   <label>{user.city}</label>
                 </div>
               </div>
+              {showSaveBtn && (
+                <button
+                  className="wd--profile-page--container--profile-info--save"
+                  onClick={handleUpdate}
+                >
+                  Save
+                </button>
+              )}
             </div>
           ) : null}
           {activeSidebar === "settings" ? (
@@ -162,8 +221,10 @@ const Profile = () => {
                   </div>
                 ) : null}
                 {activeTopbar === "yourPosts" &&
+                  userPosts !== 0 &&
                   userPosts.map((p) => <FilterElement post={p} key={p._id} />)}
                 {activeTopbar === "likedPosts" &&
+                  likedPosts !== 0 &&
                   likedPosts.map((p) => <FilterElement post={p} key={p._id} />)}
               </div>
             </div>

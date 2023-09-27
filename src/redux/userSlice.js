@@ -13,8 +13,31 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk("user/loginUser", async (user) => {
   console.log(user);
   const res = await axios.post("/auth/login", user);
+  // if (res.data.token) {
+  //   localStorage.setItem("token", res.data.token);
+  // }
+
+  if (res.data) {
+    localStorage.setItem("user", JSON.stringify(res.data));
+  }
+
   return res.data;
 });
+
+export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
+  const res = await axios.put(`/users/${user._id}`, user);
+  return res.data;
+});
+
+export const updateProfileImage = createAsyncThunk(
+  "user/updateProfileImage",
+  async (user) => {
+    const res = await axios.post(`/users/${user._id}/upload`, user, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return res.data;
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
@@ -32,7 +55,7 @@ export const userSlice = createSlice({
       driverLicense: "",
       phone: "",
       address: "",
-      profileImg: "",
+      profileImage: "",
     },
     pending: null,
     error: false,
