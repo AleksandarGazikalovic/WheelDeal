@@ -15,32 +15,79 @@ const LoginForm = ({ onClose, showRegistration }) => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [isShaking, setIsShaking] = useState(false);
   const [account, setAccount] = useState({
-    email: undefined,
-    password: undefined,
+    email: "",
+    password: "",
   });
 
   const handleInputChange = (name, value) => {
+    validateInput(name, value);
     setAccount({
       ...account,
       [name]: value,
     });
   };
 
+  const validateInput = (fieldName, value) => {
+    switch (fieldName) {
+      case "email":
+        if (!value.trim()) {
+          setErrorMessage("Email is required");
+          setIsEmailValid(false);
+        } else if (!/^\S+@\S+\.\S+$/.test(value)) {
+          setErrorMessage("Invalid email format");
+          setIsEmailValid(false);
+        } else {
+          setErrorMessage(null);
+          setIsEmailValid(true);
+        }
+        break;
+
+      case "password":
+        if (!value.trim()) {
+          setErrorMessage("Password is required");
+          setIsPasswordValid(false);
+        } else {
+          setErrorMessage(null);
+          setIsPasswordValid(true);
+        }
+        break;
+
+      default:
+        break;
+    }
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
 
+    if (!isPasswordValid) {
+      validateInput("password", account.password);
+    }
+    if (!isEmailValid) {
+      validateInput("email", account.email);
+    }
+
+    if (!isEmailValid || !isPasswordValid) return;
+
     // Check if any of the fields is empty
-    if (account.email === "" || account.password === "") {
-      setErrorMessage("Please fill in all the fields.");
+    dispatch(
+      loginUser({
+        email: account.email,
+        password: account.password,
+      })
+    );
+
+    while (pending) {}
+    if (error) {
+      onClose();
     } else {
-      dispatch(
-        loginUser({
-          email: account.email,
-          password: account.password,
-        })
-      );
-      setErrorMessage(null);
+      setErrorMessage("Failed to log in! Please check your credentials.");
     }
   };
 
@@ -60,6 +107,13 @@ const LoginForm = ({ onClose, showRegistration }) => {
     };
   }, [onClose]);
 
+  const handleShake = () => {
+    setIsShaking(true);
+    setTimeout(() => {
+      setIsShaking(false);
+    }, 300);
+  };
+
   return (
     <div className="login-form-overlay">
       <form
@@ -71,41 +125,78 @@ const LoginForm = ({ onClose, showRegistration }) => {
           <h1 className="login-welcome">Login</h1>
           <RiCloseLine onClick={onClose} className="login-close" />
         </div>
-        <div className="wd--login-form--div">
+        <div className="wd--registration-form--div">
           <input
-            required
-            className="wd--login-form--div-input"
+            className={`wd--registration-form--div-input  ${
+              isEmailFocused ? "focus" : ""
+            }`}
             type="email"
             name="email"
             id="email"
-            placeholder="Email"
             value={account.email}
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+            onFocus={() => setIsEmailFocused(true)}
+            onBlur={() => setIsEmailFocused(false)}
+            onChange={(e) => {
+              const value = e.target.value;
+              handleInputChange("email", value);
+            }}
           />
-          <label className="wd--login-form--div-label">Email</label>
+          <label
+            className={`wd--registration-form--div-label  ${
+              !isEmailFocused && !account.email
+                ? ""
+                : !isEmailFocused
+                ? "invalid"
+                : !isEmailFocused
+                ? "valid"
+                : isEmailValid
+                ? "valid"
+                : "invalid"
+            }`}
+          >
+            Email
+          </label>
         </div>
-        <div className="wd--login-form--div">
+        <div className="wd--registration-form--div">
           <input
-            required
-            className="wd--login-form--div-input"
+            className={`wd--registration-form--div-input  ${
+              isPasswordFocused ? "focus" : ""
+            }`}
             type={showPassword ? "text" : "password"}
             name="password"
             id="password"
-            minLength={6}
-            placeholder="Password"
             value={account.password}
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+            onFocus={() => setIsPasswordFocused(true)}
+            onBlur={() => setIsPasswordFocused(false)}
+            onChange={(e) => {
+              const value = e.target.value;
+              handleInputChange("password", value);
+            }}
           />
-          <label className="wd--login-form--div-label">Password</label>
+          <label
+            className={`wd--registration-form--div-label  ${
+              !isPasswordFocused && !account.password
+                ? ""
+                : !isPasswordFocused && !isPasswordValid
+                ? "invalid"
+                : !isPasswordFocused && isPasswordValid
+                ? "valid"
+                : isPasswordValid
+                ? "valid"
+                : "invalid"
+            }`}
+          >
+            Password
+          </label>
           {showPassword ? (
             <AiOutlineEye
-              className="wd--login-form--div-eye"
+              className="wd--registration-form--div-eye"
               onClick={() => setShowPassword(!showPassword)}
               size={30}
             />
           ) : (
             <AiOutlineEyeInvisible
-              className="wd--login-form--div-eye"
+              className="wd--registration-form--div-eye"
               onClick={() => setShowPassword(!showPassword)}
               size={30}
             />
@@ -117,12 +208,21 @@ const LoginForm = ({ onClose, showRegistration }) => {
           </a>
         </div>
         {error && (
-          <span className="error-msg">
-            Failed to log in! Please check your credentials.
+          <span className={`error-msg-login ${isShaking ? "shaking" : ""}`}>
+            {errorMessage}
           </span>
         )}
-        {errorMessage && <span className="error-msg">{errorMessage}</span>}
-        <button className="login-button" type="submit" disabled={pending}>
+        {errorMessage && (
+          <span className={`error-msg-login ${isShaking ? "shaking" : ""}`}>
+            {errorMessage}
+          </span>
+        )}
+        <button
+          className="login-button"
+          type="submit"
+          onClick={handleShake}
+          disabled={pending}
+        >
           {!pending ? "Log in" : <Loader className="spinner" />}
         </button>
 

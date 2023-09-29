@@ -178,6 +178,7 @@
   width: 100%;
   transition: background-color 0.3s ease;
   user-select: none;
+  margin-top: 1rem;
 
   &:hover {
     background-color: #fa972d;
@@ -218,12 +219,16 @@
   animation-timing-function: linear;
 }
 
-.error-msg {
+.error-msg-login {
   color: red;
+  position: absolute;
+  bottom: 43%;
   margin-top: 1rem;
   font-size: 12px;
   font-family: var(--font-family);
   font-weight: bold;
+  text-align: center;
+  width: 100%;
 }
 
 @keyframes spin {
@@ -233,6 +238,33 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Add a shaking animation */
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.shaking {
+  animation: shake 0.3s;
+  animation-timing-function: ease-in-out;
 }
 
 #style-7::-webkit-scrollbar-track {

@@ -40,6 +40,7 @@ const Header = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const user = useSelector((state) => state.user.userInfo);
+  const [toggleDropdown, setToggleDropdown] = useState(false);
 
   const handleShowRegistrationForm = () => {
     setShowRegistrationForm(true);
@@ -98,18 +99,48 @@ const Header = () => {
         </div>
         <div className="wd--header-sign">
           {loggedIn ? (
-            <Link to="/profile">
-              <div className="wd--header-sign--account">
-                {user.profileImage ? (
-                  <div className="wd--header-sign--account-avatar">
-                    <img src={user.profileImage} alt="" />
-                  </div>
+            <div className="wd--header-sign--account">
+              {user.profileImage ? (
+                <div className="wd--header-sign--account-avatar">
+                  <img src={user.profileImage} alt="" />
+                </div>
+              ) : (
+                <RiAccountCircleFill color="#fff" size="50" />
+              )}
+              <div className="wd--header--sign-dropdown">
+                {toggleDropdown ? (
+                  <RiCloseLine
+                    color="#003049"
+                    size="45"
+                    onClick={() => setToggleDropdown(false)}
+                  />
                 ) : (
-                  <RiAccountCircleFill color="#fff" size="50" />
+                  <RiArrowDownSLine
+                    color="#003049"
+                    size="45"
+                    onClick={() => setToggleDropdown(true)}
+                  />
                 )}
-                <RiArrowDownSLine color="#003049" size="50" />
+                {toggleDropdown && (
+                  <div className="wd--header--sign-dropdown-container slide-buttom">
+                    <div className="wd--header--sign-dropdown-container-links">
+                      <p>
+                        <a href="#profile">Profile</a>
+                      </p>
+                      <p>
+                        <a href="#posts">Posts</a>
+                      </p>
+                      <p>
+                        <a href="#settings">Settings</a>
+                      </p>
+                      <button className="wd--header--sign-dropdown-container-button">
+                        Sign out
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
-            </Link>
+            </div>
           ) : (
             <div>
               <button type="button" id="login" onClick={handleShowLoginForm}>
@@ -125,6 +156,7 @@ const Header = () => {
             </div>
           )}
         </div>
+
         <div className="wd--header-menu">
           {toggleMenu ? (
             <RiCloseLine

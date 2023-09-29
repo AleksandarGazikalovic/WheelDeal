@@ -106,7 +106,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid #f77f00;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 

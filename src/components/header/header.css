@@ -151,7 +151,6 @@
   justify-content: flex-end;
   align-items: flex-end;
   flex-direction: column;
-
   text-align: end;
   background: var(--color-footer);
   padding: 2rem;
@@ -170,6 +169,65 @@
 
 .wd--header-menu-container-links-sign {
   display: none;
+}
+
+.wd--header--sign-dropdown {
+  position: relative;
+  z-index: 9999;
+}
+
+.wd--header--sign-dropdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: end;
+  flex-direction: column;
+  background: #d0e5f2cc;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  margin-top: 0.6rem;
+  width: 100px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+}
+
+.wd--header--sign-dropdown-container-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: end;
+  width: 100%;
+}
+
+.wd--header--sign-dropdown-container-links p {
+  color: #003049;
+  width: 100%;
+}
+
+.wd--header--sign-dropdown-container-links:hover p {
+  color: #003049;
+  border-radius: 0;
+}
+
+.wd--header--sign-dropdown-container-button {
+  padding: 0.5rem 1rem;
+  color: #fff;
+  background: #f77f00;
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 25px;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-self: flex-end;
+  align-self: flex-end;
+  margin-top: 1rem;
 }
 
 .wd--header-2 {
