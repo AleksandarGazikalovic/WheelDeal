@@ -3,7 +3,6 @@
   flex-direction: row;
   font-family: var(--font-family);
   position: relative;
-  height: 800px;
   justify-content: center;
   align-items: center;
 }
@@ -27,11 +26,12 @@
 }
 
 .wd--new-post--container-upload-photo {
-  width: 70%;
-  height: 50%;
+  width: 50%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 8rem 0 12rem 0;
 }
 
 .wd--new-post--container-upload-photo label {
@@ -44,9 +44,10 @@
   border: 2px dashed #1d1d1d;
   border-radius: 10px;
   cursor: pointer;
-  padding: 2rem;
+  padding: 5rem;
   width: 100%;
   height: 100%;
+  text-align: center;
 }
 
 .wd--new-post--container-wrapper {
@@ -55,19 +56,18 @@
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 50%;
+  height: 100%;
   animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  margin: 3rem;
 }
 
 .wd--new-posts--page-numbers {
-  position: absolute;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 150px;
-  top: 2%;
-  right: 45%;
+  margin-top: 1rem;
 }
 
 .wd--new-posts--page-numbers-one {
@@ -75,6 +75,7 @@
   border: 1px solid #e5e5e5;
   border-radius: 50px;
   width: 40px;
+  height: 30px;
 }
 
 .wd--new-posts--page-numbers-two {
@@ -82,6 +83,7 @@
   border: 1px solid #e5e5e5;
   border-radius: 50px;
   width: 40px;
+  height: 30px;
 }
 
 .wd--new-posts--page-numbers-three {
@@ -89,6 +91,7 @@
   border: 1px solid #e5e5e5;
   border-radius: 50px;
   width: 40px;
+  height: 30px;
 }
 
 .active-page {
@@ -106,7 +109,7 @@
   border-radius: 30px;
   cursor: pointer;
   width: 70%;
-  height: 120%;
+  height: 100%;
 }
 
 .wd--new-post--container-main-photo img {
@@ -226,7 +229,6 @@
   width: 40%;
   height: 100%;
   animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  margin-top: 3rem;
 }
 
 .wd--new-post--container-details-section1-title {
@@ -261,7 +263,7 @@
 
 .wd--new-post--container-details-section1-div-input {
   border: 1.5px solid rgb(167, 166, 166);
-  width: 140px;
+  width: 137px;
   border-radius: 1rem;
   background: none;
   padding: 1rem;
@@ -287,7 +289,7 @@
 
 .wd--new-post--container-details-section1-div-label {
   position: absolute;
-  left: 15px;
+  left: 20px;
   font-family: var(--font-family);
   pointer-events: none;
   transform: translateY(1rem);
@@ -315,7 +317,8 @@
   justify-content: flex-start;
   align-items: center;
   animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  margin-top: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 .wd--new-post--container-details-section2 section {
@@ -350,6 +353,7 @@
   padding: 1rem;
   font-size: 7rem;
   text-align: center;
+  width: 100%;
 }
 
 .wd--new-post--container-details-section2-price-input:focus {
@@ -664,5 +668,132 @@ input[type="number"] {
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .wd--new-post--container-details-section1 {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .wd--new-post--container-details-section2 {
+    width: 120%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .wd--new-post--container-details-section1 {
+    width: 60%;
+  }
+  .wd--new-post--container-details-section2 {
+    width: 130%;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .wd--new-post--container-details-section1 {
+    width: 70%;
+  }
+  .wd--new-post--container-details-section2-price-input {
+    font-size: 5rem;
+  }
+  .wd--new-post--container-details-section2 {
+    width: 120%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .wd--new-post--container-details-section1 {
+    width: 80%;
+  }
+  .wd--new-post--container-details-section2 {
+    width: 130%;
+  }
+  .wd--new-post--container-details-section2-price-input {
+    font-size: 4rem;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .wd--new-post--next-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  .wd--new-post--back-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  .wd--new-post--finish-btn {
+    padding: 10px 15px;
+    font-size: 12px;
+  }
+
+  .wd--new-post--add-btn {
+    padding: 1.3em 2.5em;
+    font-size: 10px;
+  }
+
+  .wd--new-post--container-main-photo {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .wd--new-post--container-upload-photo {
+    width: 100%;
+    height: 50%;
+  }
+  .wd--new-post--container-details-section1 {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .wd--new-post--container-details-section1-div-input {
+    width: 100px;
+  }
+  .wd--new-post--container-details-section1-div-input2 {
+    width: 133px;
+  }
+  .wd--new-post--container-buttons span {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .wd--new-post--container-upload-photo {
+    width: 100%;
+    height: 30%;
+  }
+  .wd--new-post--back-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  .wd--new-post--next-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  .wd--new-post--finish-btn {
+    padding: 8px 12px;
+    font-size: 10px;
+  }
+  .wd--new-post--add-btn {
+    padding: 1em 2em;
+    font-size: 10px;
+  }
+
+  .wd--new-post--container-details-section1 section {
+    flex-direction: column;
+  }
+
+  .wd--new-post--container-details-section1-div-input {
+    width: 100%;
+  }
+  .wd--new-post--container-details-section1-div-input2 {
+    width: 100%;
   }
 }

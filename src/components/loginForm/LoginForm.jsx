@@ -84,7 +84,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
     );
 
     while (pending) {}
-    if (error) {
+    if (!error) {
       onClose();
     } else {
       setErrorMessage("Failed to log in! Please check your credentials.");
@@ -145,9 +145,9 @@ const LoginForm = ({ onClose, showRegistration }) => {
             className={`wd--registration-form--div-label  ${
               !isEmailFocused && !account.email
                 ? ""
-                : !isEmailFocused
+                : !isEmailFocused && !isEmailValid
                 ? "invalid"
-                : !isEmailFocused
+                : !isEmailFocused && isEmailValid
                 ? "valid"
                 : isEmailValid
                 ? "valid"

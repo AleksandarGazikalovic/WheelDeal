@@ -608,6 +608,8 @@ const NewPosts = () => {
                     editableDateInputs={true}
                     onChange={(item) => setState([item.selection])}
                     moveRangeOnFirstSelection={false}
+                    minDate={new Date()}
+                    dragSelectionEnabled={true}
                     ranges={state}
                   />
                 </section>
