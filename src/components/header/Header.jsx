@@ -15,9 +15,6 @@ import logo from "../../assets/Logo2.png";
 import RegistrationForm from "../registrationForm/RegistrationForm";
 import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
-import noAvatar from "../../assets/noAvatar.png";
-import picture1 from "../../assets/TestImages/picture1.jpg";
-import Blend from "../../assets/Blend.png";
 import { AiOutlineMinus } from "react-icons/ai";
 
 const Menu = () => (
@@ -206,14 +203,11 @@ const Header = () => {
       )}
       <div className="wd--header-2">
         <div className="wd--header-content">
-          <h1 className="gradient--text">
-            Najpovoljnije rentiranje vozila u Srbiji
-          </h1>
+          <h1 className="gradient--text">Cheapest car rental in Serbia</h1>
           <p>
-            lorem Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Dolor, necessitatibus illum exercitationem adipisci culpa minus fuga
-            blanditiis unde eum nisi numquam iusto voluptates debitis aspernatur
-            sint porro earum, ut nobis?
+            Discover seamless car sharing and rentals with WheelDeal, connecting
+            you to a wide range of vehicles and a trusted community of owners
+            for all your transportation needs.
           </p>
           <form className="wd--header-content--input" onSubmit={filterHandler}>
             <input

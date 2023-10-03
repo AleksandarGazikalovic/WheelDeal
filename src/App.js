@@ -1,12 +1,7 @@
 import React from "react";
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Switch,
-} from "react-router-dom";
-import { Home, SearchOptions, NewPosts, Profile } from "./pages";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Home, SearchOptions, NewPosts, Profile, CarPost } from "./pages";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
@@ -22,6 +17,7 @@ const App = () => {
           />
           <Route path="/add-post" element={<NewPosts />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/post/:postId" element={<CarPost />} />
         </Routes>
       </Router>
     </Provider>
