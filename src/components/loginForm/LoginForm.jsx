@@ -87,7 +87,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
 
     while (pending) {}
     if (!error) {
-      navigate("/profile");
+      navigate("/");
     } else {
       setErrorMessage("Failed to log in! Please check your credentials.");
     }

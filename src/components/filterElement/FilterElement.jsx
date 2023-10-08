@@ -6,17 +6,19 @@ import { FaHeart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { likePost } from "../../redux/userSlice";
 
 const FilterElement = ({ post, isLoading, setShowLoginForm }) => {
   const [isLiked, setIsLiked] = useState(false);
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const fromDate = new Date(post.from);
   const toDate = new Date(post.to);
-
   const options = { month: "short", day: "numeric" };
   const formattedFromDate = fromDate.toLocaleDateString(undefined, options);
   const formattedToDate = toDate.toLocaleDateString(undefined, options);
   const [owner, setOwner] = useState({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchOwner = async () => {
@@ -30,9 +32,12 @@ const FilterElement = ({ post, isLoading, setShowLoginForm }) => {
     try {
       if (userInfo._id !== undefined) {
         setIsLiked(!isLiked); // Toggle the like state
-        await axios.put(`/posts/${post._id}/like`, {
-          userId: userInfo._id,
-        });
+        dispatch(
+          likePost({
+            postId: post._id,
+            userId: userInfo._id,
+          })
+        );
       } else setShowLoginForm(true);
     } catch (error) {
       console.error("Error liking post:", error);

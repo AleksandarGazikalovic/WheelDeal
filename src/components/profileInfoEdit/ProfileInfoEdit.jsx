@@ -46,8 +46,9 @@ const ProfileInfoEdit = ({ setShowProfileInfoEdit }) => {
   const handleUpdate = async () => {
     try {
       if (profileImage !== null) {
+        // await dispatch(updateUser(userData));
         await dispatch(updateProfileImage(userData));
-        await dispatch(updateUser(userData));
+        setProfileImage(null);
       } else {
         await dispatch(updateUser(userData));
       }

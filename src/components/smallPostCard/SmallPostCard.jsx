@@ -1,12 +1,17 @@
 import React from "react";
 import "./smallPostCard.css";
+import { Link } from "react-router-dom";
 
 const SmallPostCard = ({ post }) => {
   const options = { month: "short", day: "numeric" };
   const fromDate = new Date(post.from).toLocaleDateString(undefined, options);
   const toDate = new Date(post.to).toLocaleDateString(undefined, options);
   return (
-    <div className="wd-profile--liked-posts-post">
+    <Link
+      to={`/post/${post._id}`}
+      key={post._id}
+      className="wd-profile--liked-posts-post"
+    >
       <div className="wd-profile--liked-posts-post-image">
         <img src={post.images[0]} alt="post" />
       </div>
@@ -21,7 +26,7 @@ const SmallPostCard = ({ post }) => {
           {post.price}€ / dan
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -26,7 +26,12 @@ export const loginUser = createAsyncThunk("user/loginUser", async (user) => {
 
 export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
   const res = await axios.put(`/users/${user._id}`, user);
-  return res.data;
+  const updatedUser = res.data;
+
+  // Remove the profileImage property from the response
+  const { profileImage, ...userWithoutProfileImage } = updatedUser;
+
+  return userWithoutProfileImage;
 });
 
 export const updateProfileImage = createAsyncThunk(
@@ -38,6 +43,11 @@ export const updateProfileImage = createAsyncThunk(
     return res.data;
   }
 );
+
+export const likePost = createAsyncThunk("post/like", async (post) => {
+  const res = await axios.put(`/posts/${post.postId}/like`, post);
+  return res.data;
+});
 
 export const userSlice = createSlice({
   name: "user",
@@ -83,6 +93,42 @@ export const userSlice = createSlice({
       state.userInfo = action.payload;
     },
     [loginUser.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = action.error.message;
+    },
+    [updateUser.pending]: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    [updateUser.fulfilled]: (state, action) => {
+      state.pending = false;
+      state.userInfo = action.payload;
+    },
+    [updateUser.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = action.error.message;
+    },
+    [updateProfileImage.pending]: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    [updateProfileImage.fulfilled]: (state, action) => {
+      state.pending = false;
+      state.userInfo.profileImage = action.payload;
+    },
+    [updateProfileImage.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = action.error.message;
+    },
+    [likePost.pending]: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    [likePost.fulfilled]: (state, action) => {
+      state.pending = false;
+      state.userInfo.likedPosts = action.payload;
+    },
+    [likePost.rejected]: (state, action) => {
       state.pending = false;
       state.error = action.error.message;
     },

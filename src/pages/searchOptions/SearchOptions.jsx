@@ -29,8 +29,6 @@ const SearchOptions = () => {
     }
   }, [fromDate, toDate, fromPrice, toPrice, location, model]);
 
-  console.log(posts);
-
   return (
     <div className="gradient_bg2">
       <Navbar
