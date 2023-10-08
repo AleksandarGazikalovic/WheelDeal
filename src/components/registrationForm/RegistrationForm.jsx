@@ -160,7 +160,6 @@ const RegistrationForm = ({ onClose, showLogin }) => {
     <div className="registration-form-overlay">
       <form
         className="registration-form slide-top"
-        id="style-7"
         onSubmit={handleRegistration}
       >
         <div className="form-div">

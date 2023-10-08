@@ -11,6 +11,7 @@ import { setFilter } from "../../redux/filterSlice";
 const TopFilter = ({ posts }) => {
   const [activeFilter, setActiveFilter] = useState(""); // Initial form value
   const [isSlideDown, setIsSlideDown] = useState(false);
+  const [resetFilters, setResetFilters] = useState(false); // Initial form value
   const topFilterRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const TopFilter = ({ posts }) => {
       `posts/filter/all?startDate=${fromDate}&endDate=${toDate}&startPrice=${fromPrice}&endPrice=${toPrice}&location=${location}&model=${model}`
     );
     dispatch(setPosts(res.data));
+    setResetFilters(true);
   };
 
   const handleFilterChange = (formName) => {
@@ -94,7 +96,12 @@ const TopFilter = ({ posts }) => {
         </div>
         {
           activeFilter ? (
-            <Filters activeFilter={activeFilter} isSlideDown={isSlideDown} />
+            <Filters
+              activeFilter={activeFilter}
+              isSlideDown={isSlideDown}
+              resetFilters={resetFilters}
+              setResetFilters={setResetFilters}
+            />
           ) : null // If the activeFilter is empty, don't render the form
         }
       </div>

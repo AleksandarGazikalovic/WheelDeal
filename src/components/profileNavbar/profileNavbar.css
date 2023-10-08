@@ -1,0 +1,84 @@
+.wd-profile--navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 1rem;
+  border-bottom: 2px solid #f1f2f3;
+  padding-bottom: 0.5rem;
+  grid-area: 1 / 1 / 2 / 13;
+}
+
+.wd-profile--navbar-search {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.wd-profile--navbar-search svg {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: absolute;
+  margin-left: 0.5rem;
+  color: #a6adb9;
+}
+
+.wd-profile--navbar-search input {
+  display: flex;
+  width: 100%;
+  height: 30px;
+  border-radius: 15px;
+  border: none;
+  padding: 0.5rem 5rem 0.5rem 2rem;
+  background-color: #fff;
+  outline: none;
+  color: #a6adb9;
+}
+
+.wd-profile--navbar-search input::placeholder {
+  color: #a6adb9;
+}
+
+.wd-profile--navbar-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 10%;
+  margin-right: 1rem;
+}
+
+.wd-profile--navbar-profile {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  border-radius: 50%;
+  overflow: hidden;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid #fff;
+}
+
+.wd-profile--navbar-profile img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.wd-profile--navbar-profile:hover {
+  border: 2px solid #ff6b00;
+}
+
+.wd-profile--navbar-notifications {
+  border-radius: 50%;
+  background-color: #fff;
+  padding: 0.5rem 0.6rem 0.3rem 0.6rem;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.wd-profile--navbar-notifications:hover {
+  color: #ff6b00;
+}

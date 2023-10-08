@@ -9,6 +9,7 @@ import { ReactComponent as Loader } from "../../assets/spinner.svg";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = ({ onClose, showRegistration }) => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -20,6 +21,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
+  const navigate = useNavigate();
   const [account, setAccount] = useState({
     email: "",
     password: "",
@@ -85,7 +87,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
 
     while (pending) {}
     if (!error) {
-      onClose();
+      navigate("/profile");
     } else {
       setErrorMessage("Failed to log in! Please check your credentials.");
     }
@@ -116,11 +118,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
 
   return (
     <div className="login-form-overlay">
-      <form
-        className="login-form slide-top"
-        id="style-7"
-        onSubmit={handleLogin}
-      >
+      <form className="login-form slide-top" onSubmit={handleLogin}>
         <div className="form-div">
           <h1 className="login-welcome">Login</h1>
           <RiCloseLine onClick={onClose} className="login-close" />

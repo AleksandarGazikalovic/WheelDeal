@@ -1,13 +1,11 @@
 import React from "react";
 import "./filterElement.css";
 import axios from "axios";
-import noAvatar from "../../assets/noAvatar.png";
-import { AiFillStar } from "react-icons/ai";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
-import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 import { RiAccountCircleFill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const FilterElement = ({ post, isLoading, setShowLoginForm }) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -57,15 +55,19 @@ const FilterElement = ({ post, isLoading, setShowLoginForm }) => {
     <div>
       <div key={post._id} className="wd--search-content--elements-element">
         <div className="wd--search-content--elements-element-image">
-          <FaHeart
-            onClick={handleHeartClick}
-            style={{ color: isLiked ? "red" : "black" }}
-            className="wd--search-content--elements-element-image--like-icon"
-          />
-          <img
-            src={post.images[0]}
-            alt={post.brand + " " + post.model + " " + post.year}
-          />
+          {userInfo._id === post.userId ? null : (
+            <FaHeart
+              onClick={handleHeartClick}
+              style={{ color: isLiked ? "red" : "black" }}
+              className="wd--search-content--elements-element-image--like-icon"
+            />
+          )}
+          <Link to={`/post/${post._id}`} key={post._id}>
+            <img
+              src={post.images[0]}
+              alt={post.brand + " " + post.model + " " + post.year}
+            />
+          </Link>
         </div>
         <div className="wd--search-content--elements-element-text">
           <div className="wd--search-content--elements-element-text--left">

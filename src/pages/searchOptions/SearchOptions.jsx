@@ -6,7 +6,6 @@ import { FilterElement } from "../../components";
 import { useSelector } from "react-redux";
 import { setPosts } from "../../redux/postsSlice";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 
 const SearchOptions = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,6 +29,8 @@ const SearchOptions = () => {
     }
   }, [fromDate, toDate, fromPrice, toPrice, location, model]);
 
+  console.log(posts);
+
   return (
     <div className="gradient_bg2">
       <Navbar
@@ -42,14 +43,12 @@ const SearchOptions = () => {
           <div className="wd--search-content--elements">
             {posts.length !== 0 ? (
               posts.map((p) => (
-                <Link to={`/post/${p._id}`} key={p._id}>
-                  <FilterElement
-                    post={p}
-                    key={p._id}
-                    isLoading={isLoading}
-                    setShowLoginForm={setShowLoginForm}
-                  />
-                </Link>
+                <FilterElement
+                  post={p}
+                  key={p._id}
+                  isLoading={isLoading}
+                  setShowLoginForm={setShowLoginForm}
+                />
               ))
             ) : (
               <div className="wd--search-content--elements-title">

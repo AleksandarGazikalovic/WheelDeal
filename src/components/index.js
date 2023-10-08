@@ -9,3 +9,8 @@ export { default as TopFilter } from "./topFilter/TopFilter";
 export { default as Filters } from "./filters/Filters";
 export { default as Loading } from "./loading/Loading";
 export { default as FilterElement } from "./filterElement/FilterElement";
+export { default as SmallPostCard } from "./smallPostCard/SmallPostCard";
+export { default as ProfileInfo } from "./profileInfo/ProfileInfo";
+export { default as ProfileInfoEdit } from "./profileInfoEdit/ProfileInfoEdit";
+export { default as ProfileNavbar } from "./profileNavbar/ProfileNavbar";
+export { default as ProfileStatistics } from "./profileStatistics/ProfileStatistics";

@@ -1,0 +1,240 @@
+.wd-profile--profile-info-edit-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Full height */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Semi-transparent overlay background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Higher z-index to show above other elements */
+}
+
+.wd-profile--profile-info-edit--close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1rem;
+  cursor: pointer;
+  color: #243550;
+  font-weight: 600;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.wd-profile--profile-info-edit--close:hover {
+  transform: rotate(90deg);
+}
+
+.wd-profile--profile-info-edit {
+  width: 350px;
+  background-color: white;
+  z-index: 10000; /* Higher z-index to place the form on top of the overlay */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: inset 0 0 14px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.5);
+  padding: 10px 50px 10px 50px;
+  border-radius: 20px;
+}
+
+.wd-profile--profile-info-edit--image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.wd-profile--profile-info-edit--image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.wd-profile--profile-info-edit--image-upload {
+  bottom: 3%;
+  position: absolute;
+}
+
+.wd-profile--profile-info-edit--image-upload label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.wd-profile--profile-info-edit--image-upload input {
+  display: none;
+}
+
+.wd-profile--profile-info-edit--image-upload svg {
+  background-color: #000;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0rem 0.4rem 0rem 0.4rem;
+}
+
+.wd-profile--profile-info-edit--name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #243550;
+  text-transform: capitalize;
+  margin: 1rem 0;
+}
+
+.wd-profile--profile-info-edit--top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #d9d9d9;
+  padding-top: 2rem;
+}
+
+.wd-profile--profile-info-edit--details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 3rem;
+  color: #243550;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.wd-profile--profile-info-edit--details-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.wd-profile--profile-info-edit--details-values {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.wd-profile--profile-info-edit--details-div {
+  --width-of-input: 150px;
+  --border-height: 1px;
+  --border-before-color: #d9d9d9;
+  --border-after-color: #ff6b00;
+  --input-hovered-color: #4985e01f;
+  position: relative;
+  width: var(--width-of-input);
+  display: flex;
+  justify-content: flex-start;
+}
+/* styling of Input */
+.wd-profile--profile-info-edit--details-div input {
+  color: #243550;
+  font-size: 0.9rem;
+  background-color: transparent;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: var(--border-height) solid var(--border-before-color);
+}
+/* styling of animated border */
+.wd-profile--profile-info-edit--details-border {
+  position: absolute;
+  background: var(--border-after-color);
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  transition: 0.3s;
+}
+/* Hover on Input */
+.wd-profile--profile-info-edit--details-div input:hover {
+  background: var(--input-hovered-color);
+}
+
+.wd-profile--profile-info-edit--details-div input:focus {
+  outline: none;
+}
+/* here is code of animated border */
+.wd-profile--profile-info-edit--details-div
+  input:focus
+  ~ .wd-profile--profile-info-edit--details-border {
+  width: 100%;
+}
+
+.wd-profile--profile-info-edit--bottom {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.wd-profile--profile-info-edit--details-socials {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  gap: 0.5rem;
+  color: #1976d2;
+}
+
+.wd-profile--profile-info-edit--details-socials svg {
+  border-radius: 50%;
+  background-color: #f7f3fc;
+  padding: 0.5rem;
+}
+
+.wd-profile--profile-info-edit--details-socials-input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  gap: 1.5rem;
+  color: #1976d2;
+}
+
+.wd-profile--profile-info-edit--save {
+  display: flex;
+  justify-self: center;
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  color: #fff;
+  background-color: #ff6b00;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+.wd-profile--profile-info-edit--save:hover {
+  box-shadow: 0px 15px 20px #ffbc8c;
+}

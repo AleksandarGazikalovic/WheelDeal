@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -11,6 +11,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { setFilter } from "../../redux/filterSlice";
+import axios from "axios";
+import { setPosts } from "../../redux/postsSlice";
 
 function WhereFilter({ onChange, location }) {
   const handleChange = (newLocation) => {
@@ -115,7 +117,12 @@ function ModelFilter({ onChange, model }) {
   );
 }
 
-const Filters = ({ activeFilter, isSlideDown }) => {
+const Filters = ({
+  activeFilter,
+  isSlideDown,
+  resetFilters,
+  setResetFilters,
+}) => {
   let filterContent;
   const dispatch = useDispatch();
 
@@ -128,8 +135,26 @@ const Filters = ({ activeFilter, isSlideDown }) => {
     model: "",
   });
 
+  useEffect(() => {
+    if (resetFilters) {
+      setFilterValues({
+        fromDate: "",
+        toDate: "",
+        fromPrice: "",
+        toPrice: "",
+        location: "",
+        model: "",
+      });
+      setResetFilters(false);
+    }
+  }, [resetFilters]);
+
   const applyFilter = async () => {
     dispatch(setFilter(filterValues));
+    const res = await axios.get(
+      `posts/filter/all?startDate=${filterValues.fromDate}&endDate=${filterValues.toDate}&startPrice=${filterValues.fromPrice}&endPrice=${filterValues.toPrice}&location=${filterValues.location}&model=${filterValues.model}`
+    );
+    dispatch(setPosts(res.data));
   };
 
   const handleFilterChange = (newValues) => {

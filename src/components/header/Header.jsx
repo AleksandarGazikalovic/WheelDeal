@@ -122,13 +122,13 @@ const Header = () => {
                   <div className="wd--header--sign-dropdown-container slide-buttom">
                     <div className="wd--header--sign-dropdown-container-links">
                       <p>
-                        <a href="#profile">Profile</a>
+                        <Link to="/profile">Profile</Link>
                       </p>
                       <p>
-                        <a href="#posts">Posts</a>
+                        <a href="posts">Posts</a>
                       </p>
                       <p>
-                        <a href="#settings">Settings</a>
+                        <a href="settings">Settings</a>
                       </p>
                       <button className="wd--header--sign-dropdown-container-button">
                         Sign out
