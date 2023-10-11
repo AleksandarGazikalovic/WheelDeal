@@ -25,13 +25,10 @@ export const loginUser = createAsyncThunk("user/loginUser", async (user) => {
 });
 
 export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
-  const res = await axios.put(`/users/${user._id}`, user);
-  const updatedUser = res.data;
+  const { profileImage, ...userWithoutProfileImage } = user;
+  const res = await axios.put(`/users/${user._id}`, userWithoutProfileImage);
 
-  // Remove the profileImage property from the response
-  const { profileImage, ...userWithoutProfileImage } = updatedUser;
-
-  return userWithoutProfileImage;
+  return res.data;
 });
 
 export const updateProfileImage = createAsyncThunk(
@@ -102,7 +99,10 @@ export const userSlice = createSlice({
     },
     [updateUser.fulfilled]: (state, action) => {
       state.pending = false;
-      state.userInfo = action.payload;
+      state.userInfo = {
+        ...state.userInfo,
+        ...action.payload,
+      };
     },
     [updateUser.rejected]: (state, action) => {
       state.pending = false;
@@ -135,6 +135,4 @@ export const userSlice = createSlice({
   },
 });
 
-export const { registerStart, registerSuccess, registerFailure } =
-  userSlice.actions;
 export default userSlice.reducer;

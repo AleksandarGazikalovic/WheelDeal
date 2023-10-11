@@ -16,6 +16,7 @@ import RegistrationForm from "../registrationForm/RegistrationForm";
 import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
 import { AiOutlineMinus } from "react-icons/ai";
+import { fetchPosts } from "../../redux/postsSlice";
 
 const Menu = () => (
   <>
@@ -58,18 +59,28 @@ const Header = () => {
   const fromDateRef = useRef();
   const toDateRef = useRef();
   const navigate = useNavigate();
-  const { fromDate, toDate, fromPrice, toPrice } = useSelector(
+  const { fromDate, toDate, fromPrice, toPrice, location, model } = useSelector(
     (state) => state.filter
   );
   const dispatch = useDispatch();
 
   const filterHandler = async (e) => {
-    const fromDate = fromDateRef.current.value;
-    const toDate = toDateRef.current.value;
+    const filterValues = {
+      fromDate: fromDate,
+      toDate: toDate,
+      fromPrice: fromPrice,
+      toPrice: toPrice,
+      location: location,
+      model: model,
+    };
     dispatch(
       setFilter({
-        fromDate: fromDate,
-        toDate: toDate,
+        filterValues,
+      })
+    );
+    dispatch(
+      fetchPosts({
+        filterValues,
       })
     );
     navigate(`/search-options`);
@@ -212,17 +223,12 @@ const Header = () => {
           <form className="wd--header-content--input" onSubmit={filterHandler}>
             <input
               type="date"
-              placeholder="Datum od:"
+              placeholder="From:"
               id="dateFrom"
               ref={fromDateRef}
             />
             <AiOutlineMinus className="minus" />
-            <input
-              type="date"
-              placeholder="Datum do:"
-              ref={toDateRef}
-              id="dateTo"
-            />
+            <input type="date" placeholder="To:" ref={toDateRef} id="dateTo" />
             <button type="submit">Search</button>
           </form>
         </div>

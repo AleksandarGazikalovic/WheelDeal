@@ -13,6 +13,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .wd--search--top-filter-btns {
@@ -26,7 +27,7 @@
   box-shadow: rgba(0, 0, 0, 0.25) 2.95px 2.95px 3.6px;
 }
 
-.wd--search--top-filter button {
+.wd--search--top-filter-btns button {
   width: 120px;
   height: 40px;
   font-family: var(--font-family);
@@ -35,13 +36,13 @@
   cursor: pointer;
 }
 
-.wd--search--top-filter button:hover {
+.wd--search--top-filter-btns button:hover {
   background-color: #f77f00;
   border-color: #f77f00;
   color: white;
 }
 
-.wd--search--top-filter button:focus {
+.wd--search--top-filter-btns button:focus {
   background-color: #f77f00;
   border-color: #f77f00;
   color: white;
@@ -88,13 +89,88 @@
   font-weight: 800;
 }
 
+.wd--search--top-filter-dropdown {
+  display: none;
+  border: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+}
+
+.wd--search--top-filter-dropdown-btn {
+  display: flex;
+  border-radius: 50px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  border: none;
+  background-color: #f77f00;
+  outline: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem 0rem;
+  font-size: 15px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  color: #fff;
+  width: 70%;
+  position: relative;
+}
+
+.wd--search--top-filter-dropdown-btn svg {
+  fill: white;
+  position: absolute;
+  right: 5px;
+}
+
+.wd--search--top-filter-dropdown-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  border-radius: 50px 50px 50px 50px;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.wd--search--top-filter-dropdown-content button {
+  height: 30px;
+  font-family: var(--font-family);
+  font-size: 15px;
+  outline: none;
+  cursor: pointer;
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.wd--search--top-filter-dropdown-content button:last-child {
+  border-left: #f77f00;
+  border-right: #f77f00;
+}
+
+.wd--search--top-filter-dropdown-content button:hover {
+  background-color: #f77f00;
+  border-color: #f77f00;
+  color: white;
+}
+
+.wd--search--top-filter-dropdown-content button:focus {
+  background-color: #f77f00;
+  border-color: #f77f00;
+  color: white;
+}
+
 @media screen and (max-width: 650px) {
   .wd--search--top-filter-btns {
-    flex-direction: column;
-    width: 300px;
+    display: none;
   }
 
-  .wd--search--top-filter button {
+  .wd--search--top-filter-dropdown {
+    display: flex;
+  }
+
+  .wd--search--top-filter-btns button {
     width: 300px;
   }
 

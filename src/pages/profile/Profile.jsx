@@ -17,25 +17,26 @@ import { Link } from "react-router-dom";
 import { AiFillCar } from "react-icons/ai";
 import { IoStatsChartOutline } from "react-icons/io5";
 import { FiSettings } from "react-icons/fi";
+import Loading from "../../components/loading/Loading";
 
 const Profile = () => {
-  const user = useSelector((state) => state.user.userInfo);
+  const { userInfo, pending, error } = useSelector((state) => state.user);
   const [likedPosts, setLikedPosts] = useState([]);
   const [userPosts, setUserPosts] = useState([]);
   const [showProfileInfoEdit, setShowProfileInfoEdit] = useState(false);
 
   useEffect(() => {
     const fetchLikedPosts = async () => {
-      const res = await axios.get(`posts/liked/${user._id}`);
+      const res = await axios.get(`posts/liked/${userInfo._id}`);
       setLikedPosts(res.data);
     };
     const fetchUserPosts = async () => {
-      const res = await axios.get(`posts/profile/${user._id}`);
+      const res = await axios.get(`posts/profile/${userInfo._id}`);
       setUserPosts(res.data);
     };
     fetchUserPosts();
     fetchLikedPosts();
-  }, [user._id]);
+  }, [userInfo._id]);
 
   return (
     <div className="wd-profile">
@@ -94,6 +95,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      {pending && <Loading />}
       {showProfileInfoEdit && (
         <ProfileInfoEdit setShowProfileInfoEdit={setShowProfileInfoEdit} />
       )}

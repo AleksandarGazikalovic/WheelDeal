@@ -33,16 +33,16 @@ const ProfileInfo = ({ setShowProfileInfoEdit }) => {
           </div>
           <div className="wd-profile--profile-info--details-values">
             <p className="wd-profile--profile-info--details-age">
-              {user.age || 20}
+              {user.age ? user.age : "/"}
             </p>
             <p className="wd-profile--profile-info--details-location">
-              {user.city}
+              {user.city ? user.city : "/"}
             </p>
             <p className="wd-profile--profile-info--details-phone">
-              {user.phone}
+              {user.phone ? user.phone : "/"}
             </p>
             <p className="wd-profile--profile-info--details-email">
-              {user.email}
+              {user.email ? user.email : "/"}
             </p>
           </div>
         </div>

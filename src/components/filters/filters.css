@@ -1,6 +1,6 @@
 .filter-holder {
   margin-top: 1rem;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -12,13 +12,24 @@
   display: flex;
 }
 
-.how-long-filter {
-  width: 700px;
-  display: flex;
-  justify-self: center;
-  align-self: center;
-  align-items: center;
-  justify-content: space-between;
+.how-long-to,
+.how-long-from {
+  position: relative;
+}
+
+.how-long-to label,
+.how-long-from label {
+  top: 0;
+  left: 10px;
+  transform: translateY(-50%);
+  color: rgb(97, 97, 97);
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 0 0.5rem;
+  pointer-events: none;
+  background-color: white;
+  position: absolute;
 }
 
 .apply-filter {
@@ -35,6 +46,7 @@
   cursor: pointer;
 }
 
+.how-long-filter,
 .how-much-filter {
   width: 600px;
   display: flex;
@@ -44,7 +56,9 @@
   justify-content: space-between;
 }
 
-.currency-input {
+.currency-input,
+.how-long-from input,
+.how-long-to input {
   min-height: 30px;
   padding: 0.5rem 1rem;
   color: rgb(97, 97, 97);
@@ -55,6 +69,7 @@
   border-radius: 5px;
   outline: none;
   cursor: pointer;
+  width: 200px;
 }
 
 @keyframes slideDown {
@@ -69,12 +84,13 @@
 }
 
 @media screen and (max-width: 1050px) {
-  .how-long-filter {
-    width: 500px;
-  }
+  .how-long-filter,
   .how-much-filter {
     width: 400px;
   }
+
+  .how-long-from input,
+  .how-long-to input,
   .currency-input {
     font-size: 15px;
     text-align: center;
@@ -83,14 +99,14 @@
 }
 
 @media screen and (max-width: 500px) {
-  .how-long-filter {
+  .how-long-filter,
+  .how-much-filter {
     width: 300px;
   }
-  .how-much-filter {
-    width: 100%;
-  }
+  .how-long-from input,
+  .how-long-to input,
   .currency-input {
     font-size: 12px;
-    width: 70px;
+    width: 100px;
   }
 }

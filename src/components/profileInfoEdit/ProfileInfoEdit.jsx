@@ -75,8 +75,8 @@ const ProfileInfoEdit = ({ setShowProfileInfoEdit }) => {
           <div className="wd-profile--profile-info-edit--image">
             {profileImage ? (
               <img src={profileImage} alt="" />
-            ) : user.profileImage ? (
-              <img src={user.profileImage} alt="" />
+            ) : userData.profileImage ? (
+              <img src={userData.profileImage} alt="" />
             ) : (
               <RiAccountCircleFill color="#5e5e5e" size="200" />
             )}

@@ -11,8 +11,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { setFilter } from "../../redux/filterSlice";
-import axios from "axios";
-import { setPosts } from "../../redux/postsSlice";
+import { fetchPosts } from "../../redux/postsSlice";
 
 function WhereFilter({ onChange, location }) {
   const handleChange = (newLocation) => {
@@ -44,21 +43,17 @@ function HowLongFilter({ onChange, fromDate, toDate }) {
     onChange(newDates);
   };
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="how-long-filter">
-        <DatePicker
-          label="From"
-          value={fromDate}
-          onChange={(newDate) => handleDateChange({ fromDate: newDate })}
-        />
-        <AiOutlineMinus />
-        <DatePicker
-          label="To"
-          value={toDate}
-          onChange={(newDate) => handleDateChange({ toDate: newDate })}
-        />
+    <div className="how-long-filter">
+      <div className="how-long-from">
+        <label htmlFor="how-long-from-input">From</label>
+        <input type="date" id="how-long-from-input" />
       </div>
-    </LocalizationProvider>
+      <AiOutlineMinus />
+      <div className="how-long-to">
+        <label htmlFor="how-long-to-input">To</label>
+        <input type="date" id="how-long-to-input" />
+      </div>
+    </div>
   );
 }
 
@@ -151,10 +146,7 @@ const Filters = ({
 
   const applyFilter = async () => {
     dispatch(setFilter(filterValues));
-    const res = await axios.get(
-      `posts/filter/all?startDate=${filterValues.fromDate}&endDate=${filterValues.toDate}&startPrice=${filterValues.fromPrice}&endPrice=${filterValues.toPrice}&location=${filterValues.location}&model=${filterValues.model}`
-    );
-    dispatch(setPosts(res.data));
+    dispatch(fetchPosts(filterValues));
   };
 
   const handleFilterChange = (newValues) => {

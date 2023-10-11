@@ -5,8 +5,9 @@ import { Filters } from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { setPosts } from "../../redux/postsSlice";
+import { fetchPosts } from "../../redux/postsSlice";
 import { setFilter } from "../../redux/filterSlice";
+import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 
 const TopFilter = ({ posts }) => {
   const [activeFilter, setActiveFilter] = useState(""); // Initial form value
@@ -15,6 +16,7 @@ const TopFilter = ({ posts }) => {
   const topFilterRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [toggleDropdown, setToggleDropdown] = useState(false);
   const { fromDate, toDate, fromPrice, toPrice, location, model } = useSelector(
     (state) => state.filter
   );
@@ -31,10 +33,7 @@ const TopFilter = ({ posts }) => {
 
     dispatch(setFilter(filterValues));
 
-    const res = await axios.get(
-      `posts/filter/all?startDate=${fromDate}&endDate=${toDate}&startPrice=${fromPrice}&endPrice=${toPrice}&location=${location}&model=${model}`
-    );
-    dispatch(setPosts(res.data));
+    dispatch(fetchPosts(filterValues));
     setResetFilters(true);
   };
 
@@ -45,12 +44,12 @@ const TopFilter = ({ posts }) => {
 
   useEffect(() => {
     function handleClickOutside(event) {
-      // if (
-      //   topFilterRef.current &&
-      //   !topFilterRef.current.contains(event.target)
-      // ) {
-      //   setIsSlideDown(false);
-      // }
+      if (
+        topFilterRef.current &&
+        !topFilterRef.current.contains(event.target)
+      ) {
+        setIsSlideDown(false);
+      }
     }
 
     // Add a click event listener to the entire document
@@ -62,9 +61,55 @@ const TopFilter = ({ posts }) => {
     };
   }, []);
 
+  console.log(isSlideDown);
+
   return (
     <div className="wd--search--top-filter">
       <div ref={topFilterRef} className="wd--search--top-filter-wrapper">
+        <div className="wd--search--top-filter-dropdown">
+          <button
+            className="wd--search--top-filter-dropdown-btn"
+            onClick={() => setToggleDropdown(!toggleDropdown)}
+          >
+            Filters
+            {toggleDropdown ? (
+              <RiArrowUpSLine size={30} />
+            ) : (
+              <RiArrowDownSLine size={30} />
+            )}
+          </button>
+          {toggleDropdown ? (
+            <div className="wd--search--top-filter-dropdown-content">
+              <button
+                className="where-btn"
+                onClick={() => handleFilterChange("where")}
+              >
+                Where
+              </button>
+              <button
+                className="how-much-btn"
+                onClick={() => handleFilterChange("howmuch")}
+              >
+                How much
+              </button>
+              <button
+                className="how-long-btn"
+                onClick={() => handleFilterChange("howlong")}
+              >
+                How long
+              </button>
+              <button
+                className="model-btn"
+                onClick={() => handleFilterChange("model")}
+              >
+                Model
+              </button>
+              <button className="rent-btn" onClick={resetFilter}>
+                Reset filters
+              </button>
+            </div>
+          ) : null}
+        </div>
         <div className="wd--search--top-filter-btns">
           <button
             className="where-btn"

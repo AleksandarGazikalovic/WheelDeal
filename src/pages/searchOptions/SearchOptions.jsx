@@ -4,30 +4,15 @@ import "./searchOptions.css";
 import axios from "axios";
 import { FilterElement } from "../../components";
 import { useSelector } from "react-redux";
-import { setPosts } from "../../redux/postsSlice";
 import { useDispatch } from "react-redux";
+import { Loading } from "../../components";
 
 const SearchOptions = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const dispatch = useDispatch();
-  const { fromDate, toDate, fromPrice, toPrice, location, model } = useSelector(
-    (state) => state.filter
-  );
-  const posts = useSelector((state) => state.posts.posts);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await axios.get(
-        `posts/filter/all?startDate=${fromDate}&endDate=${toDate}&startPrice=${fromPrice}&endPrice=${toPrice}&location=${location}&model=${model}`
-      );
-      dispatch(setPosts(res.data));
-      setIsLoading(false);
-    };
-    if (posts.length === 0) {
-      fetchPosts();
-    }
-  }, [fromDate, toDate, fromPrice, toPrice, location, model]);
+  const filter = useSelector((state) => state.filter);
+  const { posts, pending, error } = useSelector((state) => state.posts);
 
   return (
     <div className="gradient_bg2">
@@ -35,7 +20,7 @@ const SearchOptions = () => {
         showLoginForm={showLoginForm}
         setShowLoginForm={setShowLoginForm}
       />
-      <TopFilter setPosts={setPosts} />
+      <TopFilter />
       <div className="wd--search section_padding">
         <div className="wd--search-content">
           <div className="wd--search-content--elements">
@@ -54,6 +39,7 @@ const SearchOptions = () => {
               </div>
             )}
           </div>
+          {pending && <Loading />}
         </div>
         <div className="wave3">
           <svg

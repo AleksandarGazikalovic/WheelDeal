@@ -5,7 +5,6 @@ import "./newPosts.css";
 import { GoPlus } from "react-icons/go";
 import { useEffect } from "react";
 import { useRef } from "react";
-import carManufacturers from "../../models/manufacturers";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
@@ -18,6 +17,8 @@ import {
   PiNumberTwoBold,
   PiNumberThreeBold,
 } from "react-icons/pi";
+import carModelsArray from "../../models/car-models.json";
+import locations from "../../models/locations.json";
 
 function ImageItem({ image, onClick }) {
   return (
@@ -132,8 +133,6 @@ const NewPosts = () => {
       return URL.createObjectURL(file);
     });
 
-    console.log(...formData);
-
     setSelectedImages((previousImages) => previousImages.concat(imagesArray));
 
     setPostValues({
@@ -143,8 +142,6 @@ const NewPosts = () => {
 
     event.target.value = "";
   };
-
-  console.log(postValues);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -354,7 +351,6 @@ const NewPosts = () => {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  console.log(e);
                 }}
                 className={`wd--new-post--container-details-section1 ${
                   isFadingOut ? "fade-out" : ""
@@ -380,11 +376,13 @@ const NewPosts = () => {
                       <option value="none" selected disabled hidden>
                         Brand
                       </option>
-                      {carManufacturers.map((option, index) => (
-                        <option key={index} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
+                      {carModelsArray
+                        .sort((a, b) => a.brand.localeCompare(b.brand))
+                        .map((item) => (
+                          <option key={item.brand} value={item.brand}>
+                            {item.brand}
+                          </option>
+                        ))}
                     </select>
                   </div>
                   <div className="wd--new-post--container-details-section1-div">
@@ -399,15 +397,25 @@ const NewPosts = () => {
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
+                      disabled={postValues.brand === "" ? true : false}
                     >
                       <option value="none" selected disabled hidden>
                         Model
                       </option>
-                      {carManufacturers.map((option, index) => (
-                        <option key={index} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
+                      {postValues.brand !== ""
+                        ? carModelsArray.map((item) =>
+                            item.brand.toLowerCase() ===
+                            postValues.brand.toLowerCase()
+                              ? item.models
+                                  .sort((a, b) => a.localeCompare(b))
+                                  .map((option, index) => (
+                                    <option key={index} value={option}>
+                                      {option}
+                                    </option>
+                                  ))
+                              : null
+                          )
+                        : null}
                     </select>
                   </div>
                 </section>
@@ -566,20 +574,27 @@ const NewPosts = () => {
                     </select>
                   </div>
                   <div className="wd--new-post--container-details-section1-div">
-                    <input
+                    <select
                       required
-                      className="wd--new-post--container-details-section1-div-input"
-                      type="text"
+                      className="wd--new-post--container-details-section1-div-input2"
                       name="location"
                       id="location"
                       value={postValues.location}
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)
                       }
-                    />
-                    <label className="wd--new-post--container-details-section1-div-label">
-                      Location
-                    </label>
+                    >
+                      <option value="none" selected disabled hidden>
+                        Location
+                      </option>
+                      {locations
+                        .sort((a, b) => a.city.localeCompare(b.city))
+                        .map((item, index) => (
+                          <option key={index + 1} value={item.city}>
+                            {item.city}
+                          </option>
+                        ))}
+                    </select>
                   </div>
                 </section>
               </form>
