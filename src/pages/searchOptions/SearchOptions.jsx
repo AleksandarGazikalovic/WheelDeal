@@ -6,6 +6,9 @@ import { FilterElement } from "../../components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Loading } from "../../components";
+import Cookies from "universal-cookie";
+import { setFilter } from "../../redux/filterSlice";
+import { fetchPosts } from "../../redux/postsSlice";
 
 const SearchOptions = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,7 +16,15 @@ const SearchOptions = () => {
   const dispatch = useDispatch();
   const filter = useSelector((state) => state.filter);
   const { posts, pending, error } = useSelector((state) => state.posts);
+  const cookies = new Cookies(null, { path: "/" });
+  const cookieFilter = cookies.get("filter");
 
+  useEffect(() => {
+    if (cookieFilter) {
+      dispatch(setFilter(cookieFilter));
+      dispatch(fetchPosts(cookieFilter));
+    }
+  }, []);
   return (
     <div className="gradient_bg2">
       <Navbar

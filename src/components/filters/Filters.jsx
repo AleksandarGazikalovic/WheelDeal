@@ -12,6 +12,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { setFilter } from "../../redux/filterSlice";
 import { fetchPosts } from "../../redux/postsSlice";
+import Cookies from "universal-cookie";
 
 function WhereFilter({ onChange, location }) {
   const handleChange = (newLocation) => {
@@ -46,12 +47,22 @@ function HowLongFilter({ onChange, fromDate, toDate }) {
     <div className="how-long-filter">
       <div className="how-long-from">
         <label htmlFor="how-long-from-input">From</label>
-        <input type="date" id="how-long-from-input" />
+        <input
+          type="date"
+          id="how-long-from-input"
+          value={fromDate}
+          onChange={(e) => handleDateChange({ fromDate: e.target.value })}
+        />
       </div>
       <AiOutlineMinus />
       <div className="how-long-to">
         <label htmlFor="how-long-to-input">To</label>
-        <input type="date" id="how-long-to-input" />
+        <input
+          type="date"
+          id="how-long-to-input"
+          value={toDate}
+          onChange={(e) => handleDateChange({ toDate: e.target.value })}
+        />
       </div>
     </div>
   );
@@ -88,18 +99,18 @@ function HowMuchFilter({ onChange, fromPrice, toPrice }) {
   );
 }
 
-function ModelFilter({ onChange, model }) {
-  const handleChange = (newModel) => {
-    onChange(newModel);
+function BrandFilter({ onChange, brand }) {
+  const handleChange = (newBrand) => {
+    onChange(newBrand);
   };
 
   return (
     <TextField
-      id="searchModel"
+      id="searchBrand"
       type="search"
       label="Search"
-      value={model}
-      onChange={(e) => handleChange({ model: e.target.value })}
+      value={brand}
+      onChange={(e) => handleChange({ brand: e.target.value })}
       sx={{ width: 300 }}
       InputProps={{
         endAdornment: (
@@ -120,14 +131,14 @@ const Filters = ({
 }) => {
   let filterContent;
   const dispatch = useDispatch();
-
+  const cookies = new Cookies(null, { path: "/" });
   const [filterValues, setFilterValues] = useState({
     fromDate: "",
     toDate: "",
     fromPrice: "",
     toPrice: "",
     location: "",
-    model: "",
+    brand: "",
   });
 
   useEffect(() => {
@@ -138,13 +149,15 @@ const Filters = ({
         fromPrice: "",
         toPrice: "",
         location: "",
-        model: "",
+        brand: "",
       });
       setResetFilters(false);
     }
   }, [resetFilters]);
 
   const applyFilter = async () => {
+    console.log(filterValues);
+    cookies.set("filter", filterValues);
     dispatch(setFilter(filterValues));
     dispatch(fetchPosts(filterValues));
   };
@@ -180,9 +193,9 @@ const Filters = ({
         />
       );
       break;
-    case "model":
+    case "brand":
       filterContent = (
-        <ModelFilter onChange={handleFilterChange} model={filterValues.model} />
+        <BrandFilter onChange={handleFilterChange} brand={filterValues.brand} />
       );
       break;
     default:

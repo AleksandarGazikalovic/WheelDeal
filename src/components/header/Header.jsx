@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineMinus } from "react-icons/ai";
 import { fetchPosts } from "../../redux/postsSlice";
 import { logout } from "../../redux/userSlice";
+import Cookies from "universal-cookie";
 
 const Menu = () => (
   <>
@@ -58,22 +59,22 @@ const Header = () => {
     setShowLoginForm(false);
   };
 
+  const cookies = new Cookies(null, { path: "/" });
   const fromDateRef = useRef();
   const toDateRef = useRef();
   const navigate = useNavigate();
-  const { fromDate, toDate, fromPrice, toPrice, location, model } = useSelector(
-    (state) => state.filter
-  );
 
   const filterHandler = async (e) => {
     const filterValues = {
-      fromDate: fromDate,
-      toDate: toDate,
-      fromPrice: fromPrice,
-      toPrice: toPrice,
-      location: location,
-      model: model,
+      fromDate: fromDateRef.current.value,
+      toDate: toDateRef.current.value,
+      fromPrice: "",
+      toPrice: "",
+      location: "",
+      model: "",
     };
+    console.log(filterValues);
+    cookies.set("filter", filterValues);
     dispatch(
       setFilter({
         filterValues,
@@ -231,14 +232,9 @@ const Header = () => {
             for all your transportation needs.
           </p>
           <form className="wd--header-content--input" onSubmit={filterHandler}>
-            <input
-              type="date"
-              placeholder="From:"
-              id="dateFrom"
-              ref={fromDateRef}
-            />
+            <input type="date" id="dateFrom" ref={fromDateRef} />
             <AiOutlineMinus className="minus" />
-            <input type="date" placeholder="To:" ref={toDateRef} id="dateTo" />
+            <input type="date" ref={toDateRef} id="dateTo" />
             <button type="submit">Search</button>
           </form>
         </div>

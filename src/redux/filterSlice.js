@@ -8,7 +8,7 @@ export const filterSlice = createSlice({
     fromPrice: "",
     toPrice: "",
     location: "",
-    model: "",
+    brand: "",
   },
   reducers: {
     setFilter: (state, action) => {
@@ -17,7 +17,7 @@ export const filterSlice = createSlice({
       state.fromPrice = action.payload.fromPrice;
       state.toPrice = action.payload.toPrice;
       state.location = action.payload.location;
-      state.model = action.payload.model;
+      state.brand = action.payload.brand;
     },
   },
 });

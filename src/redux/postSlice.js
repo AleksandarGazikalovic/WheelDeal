@@ -15,6 +15,7 @@ export const postSlice = createSlice({
       userId: "",
       img: "",
       price: "",
+      brand: "",
       model: "",
       year: "",
       casco: "",

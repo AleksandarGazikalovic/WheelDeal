@@ -8,6 +8,7 @@ import axios from "axios";
 import { fetchPosts } from "../../redux/postsSlice";
 import { setFilter } from "../../redux/filterSlice";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
+import Cookies from "universal-cookie";
 
 const TopFilter = ({ posts }) => {
   const [activeFilter, setActiveFilter] = useState(""); // Initial form value
@@ -17,7 +18,8 @@ const TopFilter = ({ posts }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [toggleDropdown, setToggleDropdown] = useState(false);
-  const { fromDate, toDate, fromPrice, toPrice, location, model } = useSelector(
+  const cookies = new Cookies(null, { path: "/" });
+  const { fromDate, toDate, fromPrice, toPrice, location, brand } = useSelector(
     (state) => state.filter
   );
 
@@ -28,9 +30,10 @@ const TopFilter = ({ posts }) => {
       fromPrice: "",
       toPrice: "",
       location: "",
-      model: "",
+      brand: "",
     };
 
+    cookies.set("filter", filterValues);
     dispatch(setFilter(filterValues));
 
     dispatch(fetchPosts(filterValues));
@@ -60,8 +63,6 @@ const TopFilter = ({ posts }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  console.log(isSlideDown);
 
   return (
     <div className="wd--search--top-filter">
@@ -99,10 +100,10 @@ const TopFilter = ({ posts }) => {
                 How long
               </button>
               <button
-                className="model-btn"
-                onClick={() => handleFilterChange("model")}
+                className="brand-btn"
+                onClick={() => handleFilterChange("brand")}
               >
-                Model
+                Brand
               </button>
               <button className="rent-btn" onClick={resetFilter}>
                 Reset filters
@@ -130,10 +131,10 @@ const TopFilter = ({ posts }) => {
             How long
           </button>
           <button
-            className="model-btn"
-            onClick={() => handleFilterChange("model")}
+            className="brand-btn"
+            onClick={() => handleFilterChange("brand")}
           >
-            Model
+            Brand
           </button>
           <button className="rent-btn" onClick={resetFilter}>
             Reset filters
