@@ -6,7 +6,7 @@ import drivingCar from "../../assets/drivingCar.gif";
 const Partners = () => {
   return (
     <div className="wd__partners section__padding" id="partners">
-      <h2>Naši partneri</h2>
+      <h2>Partners</h2>
       <div className="wd__partners-content">
         <div className="wd__partners-content__item ball bubble">
           <img src={FON} alt="FON" />

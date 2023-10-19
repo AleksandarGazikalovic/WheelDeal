@@ -48,7 +48,7 @@
 .wd--header-links-container p,
 .wd--header-sign p,
 .wd--header-menu-container p {
-  color: #fff;
+  color: #d0e5f2cc;
   font-family: var(--font-family);
   font-weight: 800;
   font-size: 15px;
@@ -70,7 +70,7 @@
 
 #register {
   padding: 0.5rem 1rem;
-  color: #fff;
+  color: #d0e5f2cc;
   background: #f77f00;
   font-family: var(--font-family);
   font-weight: 800;
@@ -87,7 +87,7 @@
 }
 
 #login {
-  color: #fff;
+  color: #d0e5f2cc;
   outline: none;
   border: none;
   background-color: transparent;
@@ -119,7 +119,7 @@
   border-radius: 30px;
   background-color: #d0e5f2cc;
   cursor: pointer;
-  /* border: 1px solid #fff; */
+  /* border: 1px solid #d0e5f2cc; */
 }
 
 .wd--header-sign--account-avatar {
@@ -214,7 +214,7 @@
 
 .wd--header--sign-dropdown-container-button {
   padding: 0.5rem 1rem;
-  color: #fff;
+  color: #d0e5f2cc;
   background: #f77f00;
   font-family: var(--font-family);
   font-weight: 800;
@@ -250,7 +250,7 @@
   font-size: 62px;
   line-height: 75px;
   letter-spacing: -0.04em;
-  color: #fff;
+  color: #d0e5f2cc;
 }
 
 .wd--header-content p {
@@ -259,7 +259,7 @@
   font-size: 20px;
   line-height: 29px;
   margin-top: 2rem;
-  color: #fff;
+  color: #d0e5f2cc;
 }
 
 .wd--header-content--input {
@@ -275,13 +275,13 @@
   padding: 1rem 2rem;
   color: rgb(97, 97, 97);
   margin-top: 2rem;
-  background: #fff;
+  background: #d0e5f2cc;
   font-family: var(--font-family);
   color: #003049;
   font-weight: 100;
   font-size: 20px;
   line-height: 25px;
-  border: 2px solid #fff;
+  border: none;
   outline: none;
   cursor: pointer;
 }
@@ -291,7 +291,7 @@
   width: 100%;
   min-height: 50px;
   padding: 1rem 2rem;
-  color: #fff;
+  color: #d0e5f2cc;
   background: #f77f00;
   font-family: var(--font-family);
   font-weight: bold;
@@ -319,17 +319,17 @@
   padding: 1rem 0rem;
   color: rgb(97, 97, 97);
   margin-top: 2rem;
-  background: #fff;
+  background: #d0e5f2cc;
   font-family: var(--font-family);
   color: #003049;
-  border: 2px solid #fff;
+  border: none;
   outline: none;
   cursor: pointer;
 }
 
 .wave2 {
   position: absolute;
-  bottom: 0;
+  bottom: -2px;
   left: 0;
   width: 100%;
   overflow: hidden;
@@ -340,12 +340,12 @@
   position: relative;
   display: block;
   width: calc(100% + 1.3px);
-  height: 150px;
+  height: 70px;
   transform: rotateY(180deg);
 }
 
 .wave2 .shape-fill2 {
-  fill: #81e1fc;
+  fill: #e4e7f9;
 }
 
 @media screen and (max-width: 1050px) {
@@ -427,7 +427,7 @@
     border: none;
     outline: none;
     width: 100%;
-    color: #fff;
+    color: #d0e5f2cc;
     padding: 0;
     margin: 0;
   }

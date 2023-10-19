@@ -71,7 +71,7 @@ const Header = () => {
       fromPrice: "",
       toPrice: "",
       location: "",
-      model: "",
+      brand: "",
     };
     console.log(filterValues);
     cookies.set("filter", filterValues);
@@ -239,7 +239,7 @@ const Header = () => {
           </form>
         </div>
       </div>
-      {/* <div className="wave2">
+      <div className="wave2">
         <svg
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
@@ -251,7 +251,7 @@ const Header = () => {
             className="shape-fill2"
           ></path>
         </svg>
-      </div> */}
+      </div>
     </header>
   );
 };

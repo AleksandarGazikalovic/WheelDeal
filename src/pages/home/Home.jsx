@@ -6,6 +6,7 @@ import {
   Header,
   MovingCar,
   Footer,
+  Roadmap,
 } from "../../components";
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
     <>
       <Header />
       {/* <MovingCar /> */}
+      <Roadmap />
       <Partners />
       <Footer />
     </>
