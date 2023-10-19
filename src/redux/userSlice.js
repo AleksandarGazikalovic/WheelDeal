@@ -10,19 +10,19 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-export const loginUser = createAsyncThunk("user/loginUser", async (user) => {
-  console.log(user);
-  const res = await axios.post("/auth/login", user);
-  // if (res.data.token) {
-  //   localStorage.setItem("token", res.data.token);
-  // }
+export const loginUser = createAsyncThunk(
+  "user/loginUser",
+  async (userInfo) => {
+    const res = await axios.post("/auth/login", userInfo);
+    const { refreshToken, user, accessToken } = res.data;
 
-  if (res.data) {
-    localStorage.setItem("user", JSON.stringify(res.data));
+    if (refreshToken) {
+      localStorage.setItem("refreshToken", refreshToken);
+    }
+
+    return { user, accessToken };
   }
-
-  return res.data;
-});
+);
 
 export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
   const { profileImage, ...userWithoutProfileImage } = user;
@@ -64,10 +64,20 @@ export const userSlice = createSlice({
       address: "",
       profileImage: "",
     },
+    accessToken: "",
     pending: null,
     error: false,
   },
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.accessToken = "";
+      localStorage.removeItem("refreshToken");
+      state.userInfo = {};
+    },
+    setUser: (state, action) => {
+      state.userInfo = action.payload;
+    },
+  },
   extraReducers: {
     [registerUser.pending]: (state) => {
       state.pending = true;
@@ -87,7 +97,8 @@ export const userSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, action) => {
       state.pending = false;
-      state.userInfo = action.payload;
+      state.userInfo = action.payload.user;
+      state.accessToken = action.payload.accessToken;
     },
     [loginUser.rejected]: (state, action) => {
       state.pending = false;
@@ -135,4 +146,5 @@ export const userSlice = createSlice({
   },
 });
 
+export const { logout, setUser } = userSlice.actions;
 export default userSlice.reducer;

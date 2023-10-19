@@ -14,3 +14,4 @@ export { default as ProfileInfo } from "./profileInfo/ProfileInfo";
 export { default as ProfileInfoEdit } from "./profileInfoEdit/ProfileInfoEdit";
 export { default as ProfileNavbar } from "./profileNavbar/ProfileNavbar";
 export { default as ProfileStatistics } from "./profileStatistics/ProfileStatistics";
+export { default as JwtAuth } from "./jwtAuth/JwtAuth";

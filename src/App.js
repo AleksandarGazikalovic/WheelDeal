@@ -9,11 +9,13 @@ import {
 } from "react-router-dom";
 import { Home, SearchOptions, NewPosts, CarPost, Profile } from "./pages";
 import { useSelector } from "react-redux";
+import { JwtAuth } from "./components";
 
 const App = () => {
   const user = useSelector((state) => state.user);
   return (
     <Router>
+      <JwtAuth />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search-options" element={<SearchOptions filter={1} />} />

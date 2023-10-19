@@ -17,6 +17,7 @@ import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
 import { AiOutlineMinus } from "react-icons/ai";
 import { fetchPosts } from "../../redux/postsSlice";
+import { logout } from "../../redux/userSlice";
 
 const Menu = () => (
   <>
@@ -39,6 +40,7 @@ const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const user = useSelector((state) => state.user.userInfo);
   const [toggleDropdown, setToggleDropdown] = useState(false);
+  const dispatch = useDispatch();
 
   const handleShowRegistrationForm = () => {
     setShowRegistrationForm(true);
@@ -62,7 +64,6 @@ const Header = () => {
   const { fromDate, toDate, fromPrice, toPrice, location, model } = useSelector(
     (state) => state.filter
   );
-  const dispatch = useDispatch();
 
   const filterHandler = async (e) => {
     const filterValues = {
@@ -91,6 +92,11 @@ const Header = () => {
       setLoggedIn(true);
     }
   }, [user]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    window.location.reload();
+  };
 
   return (
     <header className="wd--header" id="home">
@@ -141,7 +147,11 @@ const Header = () => {
                       <p>
                         <a href="settings">Settings</a>
                       </p>
-                      <button className="wd--header--sign-dropdown-container-button">
+                      <button
+                        className="wd--header--sign-dropdown-container-button"
+                        type="button"
+                        onClick={handleLogout}
+                      >
                         Sign out
                       </button>
                     </div>
