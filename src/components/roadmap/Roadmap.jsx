@@ -1,6 +1,6 @@
 import React from "react";
 import "./roadmap.css";
-import roadmap from "../../assets/roadmap_landscape.svg";
+import roadmap from "../../assets/landscape_try.svg";
 import roadmap2 from "../../assets/roadmap_portrait.svg";
 
 const Roadmap = () => {
@@ -8,7 +8,7 @@ const Roadmap = () => {
     <div className="wd--roadmap">
       <img className="wd--roadmap-landscape" src={roadmap} alt="" />
       <img className="wd--roadmap-portrait" src={roadmap2} alt="" />
-      <div className="wave">
+      {/* <div className="wave">
         <svg
           data-name="Layer 1"
           xmlns="http:www.w3.org/2000/svg"
@@ -20,7 +20,7 @@ const Roadmap = () => {
             className="shape-fill"
           ></path>
         </svg>
-      </div>
+      </div> */}
     </div>
   );
 };
