@@ -47,6 +47,10 @@
     display: block;
   }
 
+  .wd--roadmap {
+    padding-bottom: 0;
+  }
+
   .wave svg {
     transform: rotateY(180deg);
   }
@@ -55,9 +59,5 @@
 @media screen and (max-width: 500px) {
   .wave svg {
     height: 50px;
-  }
-
-  .wd--roadmap {
-    padding-bottom: 1rem;
   }
 }

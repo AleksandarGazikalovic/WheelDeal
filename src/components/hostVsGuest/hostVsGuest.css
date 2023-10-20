@@ -93,3 +93,38 @@
     opacity: 1;
   }
 }
+
+@media screen and (max-width: 780px) {
+  .wd--host-vs-guest--content--part {
+    width: 30%;
+  }
+  .wd--host-vs-guest--content--part-header {
+    font-size: 2rem;
+  }
+  .wd--host-vs-guest--content--part-body {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .wd--host-vs-guest--content--part {
+    width: 35%;
+    padding: 0;
+  }
+  .wd--host-vs-guest--content--part-header {
+    font-size: 1.5rem;
+  }
+  .wd--host-vs-guest--content--part-body {
+    font-size: 1rem;
+  }
+
+  .wave svg {
+    height: 50px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .wave svg {
+    height: 0px;
+  }
+}
