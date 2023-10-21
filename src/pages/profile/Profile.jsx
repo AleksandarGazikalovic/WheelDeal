@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./profile.css";
 import { GoHome, GoPlus } from "react-icons/go";
-import Logo from "../../assets/Logo2.png";
+import Logo from "../../assets/logoDark.png";
 import { useSelector } from "react-redux";
 import {
   FilterElement,

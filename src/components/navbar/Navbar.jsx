@@ -6,7 +6,7 @@ import {
   RiAccountCircleFill,
   RiArrowDownSLine,
 } from "react-icons/ri";
-import logo from "../../assets/Logo2.png";
+import logo from "../../assets/logoDark.png";
 import RegistrationForm from "../registrationForm/RegistrationForm";
 import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";

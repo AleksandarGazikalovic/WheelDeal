@@ -1,6 +1,6 @@
 import React from "react";
 import "./footer.css";
-import logo from "../../assets/Logo2.png";
+import logo from "../../assets/logoLight.png";
 import { BsInstagram, BsLinkedin, BsFacebook } from "react-icons/bs";
 
 const Footer = () => {
@@ -28,11 +28,7 @@ const Footer = () => {
         </div>
         <div className="wd__footer-content__right">
           <h2>Follow us</h2>
-          <a
-            href="www.instagram.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://www.instagram.com/wheeldeal.rent/">
             <BsInstagram fontSize={30}> </BsInstagram>
           </a>
           <a
