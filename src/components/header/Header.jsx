@@ -73,7 +73,6 @@ const Header = () => {
       location: "",
       brand: "",
     };
-    console.log(filterValues);
     cookies.set("filter", filterValues);
     dispatch(
       setFilter({

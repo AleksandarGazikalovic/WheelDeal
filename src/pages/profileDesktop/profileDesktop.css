@@ -1,0 +1,176 @@
+.wd-profile {
+  background-color: #f9fafb;
+  height: 200vh;
+  width: 100%;
+  display: flex;
+  font-family: var(--font-family);
+  scroll-behavior: smooth;
+  overflow-y: hidden;
+}
+
+.wd-profile-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  margin: 1rem 0rem;
+}
+
+.wd-profile--sidebar {
+  height: 90vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 0.5rem;
+  border-radius: 30px;
+  margin-left: 1rem;
+  position: fixed;
+  left: 0;
+}
+
+.wd-profile--main {
+  width: 100%;
+  height: 100%;
+  background-color: #f6f8f9;
+  margin: 0rem 2rem;
+  padding: 1rem;
+  border-radius: 40px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  gap: 1rem;
+  margin-left: calc(
+    1rem + 100px
+  ); /* Adjust the width of your sidebar as needed */
+}
+
+.wd-profile--sidebar-logo {
+  width: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.wd-profile--sidebar-logo img {
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+.wd-profile--sidebar-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+}
+
+.wd-profile--sidebar-icons svg:hover {
+  color: #ff6b00;
+  cursor: pointer;
+}
+
+.wd-profile--sidebar-settings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wd-profile--sidebar-settings svg:hover {
+  color: #ff6b00;
+  cursor: pointer;
+}
+
+.wd-profile--your-posts-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  width: 100%;
+  grid-area: 2 / 10 / 6 / 13;
+  background-color: #fff;
+  border-radius: 20px;
+  color: #243550;
+  overflow-y: scroll;
+}
+
+.wd-profile--your-posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  gap: 1rem;
+}
+
+.wd-profile--liked-posts-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  width: 100%;
+  grid-area: 6 / 1 / 12 / 13;
+  background-color: #fff;
+  border-radius: 20px;
+  color: #243550;
+  overflow-y: scroll;
+}
+
+.wd-profile--liked-posts-title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 90%;
+  border-bottom: 1px solid #d9d9d9;
+  font-size: 1.5rem;
+  font-weight: 800;
+  padding-bottom: 0.5rem;
+}
+
+.wd-profile--liked-posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  width: 90%;
+  grid-gap: 20px;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+@media (max-width: 426px) {
+  .wd-profile {
+    display: none;
+  }
+  .wd-profile--your-posts-wrapper,
+  .wd-profile--liked-posts-wrapper {
+    height: 70vh;
+  }
+
+  .wd-profile--liked-posts-title,
+  .wd-profile--your-posts-title {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .wd-profile--your-posts-no-posts,
+  .wd-profile--liked-posts-no-posts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wd-profile--liked-posts {
+    width: auto;
+    margin: 0;
+    padding: 1rem 0;
+  }
+}

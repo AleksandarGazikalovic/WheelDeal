@@ -1,9 +1,17 @@
+body {
+  background-color: #fff;
+}
+.wd--navbar-wrapper {
+  width: 100%;
+}
+
 .wd--navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 6rem;
   border-bottom: 1px solid #e5e5e5;
+  background-color: #fff;
 }
 
 .wd--navbar-links {
@@ -121,7 +129,7 @@
   margin-left: 1rem;
   display: none;
   position: relative;
-  z-index: 9999;
+  z-index: 10;
 }
 
 .wd--navbar-menu svg {

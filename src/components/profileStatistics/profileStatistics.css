@@ -115,3 +115,15 @@
   font-size: 2rem;
   font-weight: 800;
 }
+
+@media screen and (max-width: 426px) {
+  .wd-profile--statistics-wrapper {
+    height: 80vh;
+  }
+  .wd-profile--calculations {
+    padding: 0;
+  }
+  .wd-profile--statistics {
+    padding: 0;
+  }
+}

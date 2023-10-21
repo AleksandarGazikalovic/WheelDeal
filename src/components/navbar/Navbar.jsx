@@ -12,6 +12,7 @@ import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { GoPlus } from "react-icons/go";
+import ProfileAccount from "../profileAccount/ProfileAccount";
 
 const Menu = () => (
   <>
@@ -56,7 +57,7 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
   };
 
   return (
-    <>
+    <div className="wd--navbar-wrapper">
       <div className="wd--navbar">
         <div className="wd--navbar-links">
           <div className="wd--navbar-links-logo">
@@ -79,16 +80,7 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
                 />
               </Link>
               <Link to="/profile">
-                <div className="wd--navbar-sign--account">
-                  {user.profileImage ? (
-                    <div className="wd--navbar-sign--account-avatar">
-                      <img src={user.profileImage} alt="" />
-                    </div>
-                  ) : (
-                    <RiAccountCircleFill color="#5e5e5e" size="50" />
-                  )}
-                  <RiArrowDownSLine color="5e5e5e" size="50" />
-                </div>
+                <ProfileAccount />
               </Link>
             </>
           ) : (
@@ -170,7 +162,7 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
           showRegistration={handleShowRegistrationForm}
         />
       )}
-    </>
+    </div>
   );
 };
 

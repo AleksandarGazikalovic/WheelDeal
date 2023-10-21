@@ -156,7 +156,6 @@ const Filters = ({
   }, [resetFilters]);
 
   const applyFilter = async () => {
-    console.log(filterValues);
     cookies.set("filter", filterValues);
     dispatch(setFilter(filterValues));
     dispatch(fetchPosts(filterValues));

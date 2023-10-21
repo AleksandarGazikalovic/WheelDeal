@@ -7,7 +7,6 @@ const HostVsGuest = () => {
 
   useEffect(() => {
     // Create an IntersectionObserver for each animated element
-    console.log(animateRefs.current);
     animateRefs.current.forEach((el) => {
       const observer = new IntersectionObserver(
         (entries) => {

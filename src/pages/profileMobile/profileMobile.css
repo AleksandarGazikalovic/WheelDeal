@@ -1,0 +1,21 @@
+* {
+  font-family: var(--font-family);
+}
+
+.wd-profile2 {
+  display: none;
+}
+
+.wd-profile2-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (max-width: 426px) {
+  .wd-profile2 {
+    display: flex;
+  }
+}

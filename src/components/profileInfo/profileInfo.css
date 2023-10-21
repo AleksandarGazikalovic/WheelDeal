@@ -117,3 +117,9 @@
   background-color: #f7f3fc;
   padding: 0.5rem;
 }
+
+@media screen and (max-width: 426px) {
+  .wd-profile--profile-info-wrapper {
+    border-radius: 0;
+  }
+}

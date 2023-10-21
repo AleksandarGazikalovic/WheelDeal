@@ -16,3 +16,5 @@ export { default as ProfileStatistics } from "./profileStatistics/ProfileStatist
 export { default as JwtAuth } from "./jwtAuth/JwtAuth";
 export { default as Roadmap } from "./roadmap/Roadmap";
 export { default as HostVsGuest } from "./hostVsGuest/HostVsGuest";
+export { default as TabBar } from "./tabBar/TabBar";
+export { default as ProfileAccount } from "./profileAccount/ProfileAccount";
