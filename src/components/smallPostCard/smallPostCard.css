@@ -43,3 +43,9 @@
   color: #000;
   margin-left: 1rem;
 }
+
+@media screen and (max-width: 900px) {
+  .wd-profile--liked-posts-post-text p {
+    font-size: 0.7rem;
+  }
+}

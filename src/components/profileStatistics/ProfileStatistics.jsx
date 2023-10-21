@@ -6,7 +6,7 @@ const ProfileStatistics = () => {
     <div className="wd-profile--statistics-wrapper">
       <div className="wd-profile--calculations">
         <p className="wd-profile--calculations-title">Calculator</p>
-        <p>
+        <p className="wd-profile--calculations-body">
           Want to know how much you could earn with WheelDeal? Choose your
           budget to see which cars have the highest potential return on
           investment (ROI).

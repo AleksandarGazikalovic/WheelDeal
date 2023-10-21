@@ -118,6 +118,45 @@
   padding: 0.5rem;
 }
 
+@media screen and (max-width: 1400px) {
+  .wd-profile--profile-info-wrapper {
+    grid-area: 2 / 1 / 6 / 5;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .wd-profile--profile-info-wrapper {
+    grid-area: 2 / 1 / 7 / 5;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .wd-profile--profile-info--name {
+    font-size: 1rem;
+    padding: 1rem 0;
+  }
+
+  .wd-profile--profile-info--details-labels,
+  .wd-profile--profile-info--details-values {
+    font-size: 0.8rem;
+  }
+  .wd-profile--profile-info--details {
+    gap: 0.5rem;
+  }
+  .wd-profile--profile-info--details-socials svg {
+    padding: 0.3rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .wd-profile--profile-info-wrapper {
+    grid-area: 2 / 1 / 6 / 6;
+  }
+  .wd-profile--profile-info--bottom {
+    padding: 1rem 0;
+  }
+}
+
 @media screen and (max-width: 426px) {
   .wd-profile--profile-info-wrapper {
     border-radius: 0;

@@ -2,12 +2,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
   grid-area: 2 / 4 / 6 / 10;
   background-color: #fff;
   border-radius: 20px;
   color: #243550;
+  padding: 2rem 0;
 }
 
 .wd-profile--calculations-title,
@@ -31,7 +32,6 @@
   justify-content: center;
   width: 90%;
   gap: 1rem;
-  padding: 2rem;
 }
 
 .wd-profile--calculations-link {
@@ -112,8 +112,49 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   font-size: 2rem;
   font-weight: 800;
+}
+
+@media screen and (max-width: 1400px) {
+  .wd-profile--statistics-wrapper {
+    grid-area: 2 / 5 / 6 / 10;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .wd-profile--statistics-wrapper {
+    grid-area: 2 / 5 / 7 / 9;
+  }
+  .wd-profile--calculations-link {
+    width: 100%;
+  }
+  .wd-profile--statistics-title,
+  .wd-profile--calculations-title {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .wd-profile--calculations-title,
+  .wd-profile--statistics-title,
+  .wd-profile--your-posts-title {
+    font-size: 1rem;
+  }
+  .wd-profile--statistics-comingsoon {
+    font-size: 1.5rem;
+  }
+
+  .wd-profile--calculations-body {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .wd-profile--statistics-wrapper {
+    grid-area: 2 / 6 / 6 / 13;
+  }
 }
 
 @media screen and (max-width: 426px) {
