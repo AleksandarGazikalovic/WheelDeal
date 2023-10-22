@@ -626,6 +626,9 @@ const NewPosts = () => {
                     minDate={new Date()}
                     dragSelectionEnabled={true}
                     ranges={state}
+                    style={{
+                      width: "300px",
+                    }}
                   />
                 </section>
               </div>
