@@ -10,7 +10,7 @@
   justify-content: space-around;
   align-items: center;
   border-top: 1px solid #d9d9d9;
-  z-index: 100;
+  z-index: 1;
 }
 
 .wd--tabBar-icons {

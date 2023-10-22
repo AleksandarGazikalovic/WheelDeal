@@ -1,29 +1,30 @@
-.wd--navbar-sign--account {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 120px;
-  height: 50px;
-  border: 10px;
-  border-radius: 30px;
-  border: 1px solid #e5e5e5;
-  background-color: #fff;
+#login {
+  color: #d0e5f2cc;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 25px;
+  text-transform: capitalize;
+  border-radius: 20px;
   cursor: pointer;
-  /* border: 1px solid #fff; */
 }
 
-.wd--navbar-sign--account-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
+#login:hover {
+  color: #fff;
 }
 
-.wd--navbar-sign--account-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
+.wd--profile-account-link-btns {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media screen and (max-width: 350px) {
+  .wd--profile-account-link-btns {
+    flex-direction: column;
+  }
 }

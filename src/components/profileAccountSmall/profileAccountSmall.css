@@ -1,0 +1,23 @@
+.wd--small-profile-account {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  border-radius: 50%;
+  overflow: hidden;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid #fff;
+}
+
+.wd--small-profile-account img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.wd--small-profile-account:hover,
+.wd--small-profile-account:focus,
+.wd--small-profile-account:active {
+  border: 2px solid #ff6b00;
+}

@@ -45,8 +45,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-  width: 150px;
+  gap: 1rem;
+  width: 250px;
 }
 
 .wd-profile--navbar-profile {

@@ -19,7 +19,16 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search-options" element={<SearchOptions filter={1} />} />
-        <Route path="/add-post" element={<NewPosts />} />
+        <Route
+          path="/add-post"
+          element={
+            user.userInfo.email ? (
+              <NewPosts />
+            ) : (
+              <Navigate to="/search-options" replace />
+            )
+          }
+        />
         <Route
           path="/profile"
           element={

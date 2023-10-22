@@ -3,6 +3,7 @@ import userReducer from "./userSlice";
 import filterReducer from "./filterSlice";
 import postsReducer from "./postsSlice";
 import postReducer from "./postSlice";
+import userPostsReducer from "./userPostsSlice";
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     filter: filterReducer,
     posts: postsReducer,
     post: postReducer,
+    userPosts: userPostsReducer,
   },
 });

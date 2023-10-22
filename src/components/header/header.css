@@ -17,13 +17,6 @@
   padding: 2rem 0;
 }
 
-.wd--header-links {
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
 .wd--header-links-logo {
   width: 100px;
 }
@@ -31,108 +24,6 @@
 .wd--header-links-logo img {
   width: 100%;
   height: 100%;
-}
-
-.wd--header-links-container {
-  display: flex;
-  flex-direction: row;
-  margin-left: 2rem;
-}
-
-.wd--header-sign {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.wd--header-links-container p,
-.wd--header-sign p,
-.wd--header-menu-container p {
-  color: #d0e5f2cc;
-  font-family: var(--font-family);
-  font-weight: 800;
-  font-size: 15px;
-  line-height: 25px;
-  text-transform: capitalize;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-
-  margin: 0 1rem;
-  cursor: pointer;
-}
-
-.wd--header-links-container p:hover,
-.wd--header-sign p:hover,
-.wd--header-menu-container p:hover {
-  background-color: #5f8092;
-  opacity: 0.9;
-}
-
-#register {
-  padding: 0.5rem 1rem;
-  color: #d0e5f2cc;
-  background: #f77f00;
-  font-family: var(--font-family);
-  font-weight: 800;
-  font-size: 15px;
-  line-height: 25px;
-  border: none;
-  outline: none;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-#register:hover {
-  color: #003049;
-}
-
-#login {
-  color: #d0e5f2cc;
-  outline: none;
-  border: none;
-  background-color: transparent;
-  font-family: var(--font-family);
-  font-weight: 800;
-  font-size: 15px;
-  line-height: 25px;
-  text-transform: capitalize;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-
-  margin: 0 1rem;
-  cursor: pointer;
-}
-
-#login:hover {
-  background-color: #5f8092;
-  opacity: 0.9;
-}
-
-.wd--header-sign--account {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 120px;
-  height: 50px;
-  border: 10px;
-  border-radius: 30px;
-  background-color: #d0e5f2cc;
-  cursor: pointer;
-  /* border: 1px solid #d0e5f2cc; */
-}
-
-.wd--header-sign--account-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.wd--header-sign--account-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
 }
 
 .wd--header-menu {
@@ -144,90 +35,6 @@
 
 .wd--header-menu svg {
   cursor: pointer;
-}
-
-.wd--header-menu-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  flex-direction: column;
-  text-align: end;
-  background: var(--color-footer);
-  padding: 2rem;
-  position: absolute;
-  right: 0;
-  top: 40px;
-  margin-top: 1rem;
-  min-width: 210px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-}
-
-.wd--header-menu-container p {
-  margin: 1rem 0;
-}
-
-.wd--header-menu-container-links-sign {
-  display: none;
-}
-
-.wd--header--sign-dropdown {
-  position: relative;
-  z-index: 9999;
-}
-
-.wd--header--sign-dropdown-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: end;
-  flex-direction: column;
-  background: #d0e5f2cc;
-  position: absolute;
-  right: 0;
-  top: 40px;
-  margin-top: 0.6rem;
-  width: 100px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  padding: 1rem;
-}
-
-.wd--header--sign-dropdown-container-links {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: end;
-  width: 100%;
-}
-
-.wd--header--sign-dropdown-container-links p {
-  color: #003049;
-  width: 100%;
-}
-
-.wd--header--sign-dropdown-container-links:hover p {
-  color: #003049;
-  border-radius: 0;
-}
-
-.wd--header--sign-dropdown-container-button {
-  padding: 0.5rem 1rem;
-  color: #d0e5f2cc;
-  background: #f77f00;
-  font-family: var(--font-family);
-  font-weight: 800;
-  font-size: 15px;
-  line-height: 25px;
-  border: none;
-  outline: none;
-  border-radius: 20px;
-  cursor: pointer;
-  display: flex;
-  justify-self: flex-end;
-  align-self: flex-end;
-  margin-top: 1rem;
 }
 
 .wd--header-2 {
@@ -374,14 +181,6 @@
   .wd--header-content h1 {
     text-align: center;
   }
-
-  .wd--header-links-container {
-    display: none;
-  }
-
-  .wd--header-menu {
-    display: flex;
-  }
 }
 
 @media screen and (max-width: 780px) {
@@ -437,16 +236,6 @@
   }
 }
 
-@media screen and (max-width: 650px) {
-  .wd--header-sign {
-    display: none;
-  }
-
-  .wd--header-menu-container-links-sign {
-    display: block;
-  }
-}
-
 @media screen and (max-width: 550px) {
   .wd--header-content--input {
     width: 80%;
@@ -469,6 +258,15 @@
     font-size: 12px;
     line-height: 16px;
     padding: 0.5rem 1rem;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .wd--header-menu {
+    display: flex;
+  }
+  .wd--header-sign {
+    display: none;
   }
 }
 

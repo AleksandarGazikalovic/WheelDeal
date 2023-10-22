@@ -12,21 +12,8 @@ import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { GoPlus } from "react-icons/go";
-import ProfileAccount from "../profileAccount/ProfileAccount";
-
-const Menu = () => (
-  <>
-    <p>
-      <a href="#whatWD">How does WheelDeal work?</a>
-    </p>
-    <p>
-      <a href="#podrska">Support</a>
-    </p>
-    <p>
-      <a href="#politika">Privacy Policy</a>
-    </p>
-  </>
-);
+import ProfileAccount from "../profileAccountBig/ProfileAccountBig";
+import Menu from "../menu/Menu";
 
 const Navbar = ({ showLoginForm, setShowLoginForm }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -65,9 +52,7 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
               <img src={logo} alt="logo" />
             </Link>
           </div>
-          <div className="wd--navbar-links-container">
-            <Menu />
-          </div>
+          <Menu />
         </div>
         <div className="wd--navbar-sign">
           {loggedIn ? (
@@ -79,9 +64,7 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
                   size="40"
                 />
               </Link>
-              <Link to="/profile">
-                <ProfileAccount />
-              </Link>
+              <ProfileAccount color={"#fff"} />
             </>
           ) : (
             <>
@@ -112,42 +95,14 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
         </div>
 
         <div className="wd--navbar-menu">
-          {toggleMenu ? (
-            <RiCloseLine
-              color="#3e3e3e"
-              size="35"
-              onClick={() => setToggleMenu(false)}
-            />
-          ) : (
-            <RiMenu3Line
-              color="#3e3e3e"
-              size="35"
-              onClick={() => setToggleMenu(true)}
-            />
-          )}
-          {toggleMenu && (
-            <div className="wd--navbar-menu-container slide-fwd-center">
-              <div className="wd--navbar-menu-container-links">
-                <Menu />
-              </div>
-              <div className="wd--navbar-menu-container-links-sign">
-                <button
-                  type="button"
-                  id="login-navbar"
-                  onClick={handleShowLoginForm}
-                >
-                  Log in
-                </button>
-                <button
-                  type="button"
-                  id="register-navbar"
-                  onClick={handleShowRegistrationForm}
-                >
-                  Sign up
-                </button>
-              </div>
-            </div>
-          )}
+          <RiMenu3Line
+            color="#3e3e3e"
+            size="35"
+            onClick={() => {
+              setToggleMenu(true);
+            }}
+          />
+          <Menu toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
         </div>
       </div>
       {showRegistrationForm && (

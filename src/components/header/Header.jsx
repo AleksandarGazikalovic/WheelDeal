@@ -4,43 +4,22 @@ import drivingCar from "../../assets/drivingCar.gif";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter } from "../../redux/filterSlice";
-import React, { useRef, useState, useEffect } from "react";
-import {
-  RiMenu3Line,
-  RiCloseLine,
-  RiAccountCircleFill,
-  RiArrowDownSLine,
-} from "react-icons/ri";
+import React, { useRef, useState } from "react";
+import { RiMenu3Line } from "react-icons/ri";
 import logo from "../../assets/logoLight.png";
 import RegistrationForm from "../registrationForm/RegistrationForm";
 import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
 import { AiOutlineMinus } from "react-icons/ai";
 import { fetchPosts } from "../../redux/postsSlice";
-import { logout } from "../../redux/userSlice";
 import Cookies from "universal-cookie";
-
-const Menu = () => (
-  <>
-    <p>
-      <a href="#whatWD">How does WheelDeal work?</a>
-    </p>
-    <p>
-      <a href="#podrska">Support</a>
-    </p>
-    <p>
-      <a href="#politika">Privacy Policy</a>
-    </p>
-  </>
-);
+import Menu from "../menu/Menu";
+import ProfileAccount from "../profileAccount/ProfileAccount";
 
 const Header = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const user = useSelector((state) => state.user.userInfo);
-  const [toggleDropdown, setToggleDropdown] = useState(false);
   const dispatch = useDispatch();
 
   const handleShowRegistrationForm = () => {
@@ -87,127 +66,36 @@ const Header = () => {
     navigate(`/search-options`);
   };
 
-  useEffect(() => {
-    if (user.id !== "") {
-      setLoggedIn(true);
-    }
-  }, [user]);
-
-  const handleLogout = () => {
-    dispatch(logout());
-    window.location.reload();
-  };
-
   return (
     <header className="wd--header" id="home">
       <div className="wd--header-1 ">
-        <div className="wd--header-links">
-          <div className="wd--header-links-logo">
-            <Link to="/">
-              <img src={logo} alt="logo" />
-            </Link>
-          </div>
-          <div className="wd--header-links-container">
-            <Menu />
-          </div>
+        <div className="wd--header-links-logo">
+          <Link to="/">
+            <img src={logo} alt="logo" />
+          </Link>
         </div>
         <div className="wd--header-sign">
-          {loggedIn ? (
-            <div className="wd--header-sign--account">
-              {user.profileImage ? (
-                <div className="wd--header-sign--account-avatar">
-                  <img src={user.profileImage} alt="" />
-                </div>
-              ) : (
-                <RiAccountCircleFill color="#fff" size="50" />
-              )}
-              <div className="wd--header--sign-dropdown">
-                {toggleDropdown ? (
-                  <RiCloseLine
-                    color="#003049"
-                    size="45"
-                    onClick={() => setToggleDropdown(false)}
-                  />
-                ) : (
-                  <RiArrowDownSLine
-                    color="#003049"
-                    size="45"
-                    onClick={() => setToggleDropdown(true)}
-                  />
-                )}
-                {toggleDropdown && (
-                  <div className="wd--header--sign-dropdown-container slide-buttom">
-                    <div className="wd--header--sign-dropdown-container-links">
-                      <p>
-                        <Link to="/profile">Profile</Link>
-                      </p>
-                      <p>
-                        <a href="posts">Posts</a>
-                      </p>
-                      <p>
-                        <a href="settings">Settings</a>
-                      </p>
-                      <button
-                        className="wd--header--sign-dropdown-container-button"
-                        type="button"
-                        onClick={handleLogout}
-                      >
-                        Sign out
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div>
-              <button type="button" id="login" onClick={handleShowLoginForm}>
-                Log in
-              </button>
-              <button
-                type="button"
-                id="register"
-                onClick={handleShowRegistrationForm}
-              >
-                Sign up
-              </button>
-            </div>
-          )}
+          <ProfileAccount
+            size={"big"}
+            handleShowLoginForm={handleShowLoginForm}
+            handleShowRegistrationForm={handleShowRegistrationForm}
+          />
         </div>
 
         <div className="wd--header-menu">
-          {toggleMenu ? (
-            <RiCloseLine
-              color="#fff"
-              size="40"
-              onClick={() => setToggleMenu(false)}
-            />
-          ) : (
-            <RiMenu3Line
-              color="#fff"
-              size="40"
-              onClick={() => setToggleMenu(true)}
-            />
-          )}
-          {toggleMenu && (
-            <div className="wd--header-menu-container slide-fwd-center">
-              <div className="wd--header-menu-container-links">
-                <Menu />
-              </div>
-              <div className="wd--header-menu-container-links-sign">
-                <button type="button" id="login" onClick={handleShowLoginForm}>
-                  Log in
-                </button>
-                <button
-                  type="button"
-                  id="register"
-                  onClick={handleShowRegistrationForm}
-                >
-                  Sign up
-                </button>
-              </div>
-            </div>
-          )}
+          <RiMenu3Line
+            color="#fff"
+            size="35"
+            onClick={() => {
+              setToggleMenu(true);
+            }}
+          />
+          <Menu
+            toggleMenu={toggleMenu}
+            setToggleMenu={setToggleMenu}
+            handleShowLoginForm={handleShowLoginForm}
+            handleShowRegistrationForm={handleShowRegistrationForm}
+          />
         </div>
       </div>
       {showRegistrationForm && (

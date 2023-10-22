@@ -1,21 +1,48 @@
 import React from "react";
-import { RiAccountCircleFill, RiArrowDownSLine } from "react-icons/ri";
+import ProfileAccountBig from "../profileAccountBig/ProfileAccountBig";
 import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import "./profileAccount.css";
+import OrangeButton from "../orangeButton/OrangeButton";
+import ProfileAccountSmall from "../profileAccountSmall/ProfileAccountSmall";
 
-const ProfileAccount = () => {
+const ProfileAccount = ({
+  size,
+  color,
+  textColor,
+  handleShowLoginForm,
+  handleShowRegistrationForm,
+}) => {
   const user = useSelector((state) => state.user.userInfo);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (user.id !== "") {
+      setLoggedIn(true);
+    }
+  }, [user]);
   return (
-    <div className="wd--navbar-sign--account">
-      {user.profileImage ? (
-        <div className="wd--navbar-sign--account-avatar">
-          <img src={user.profileImage} alt="" />
-        </div>
+    <>
+      {loggedIn ? (
+        size === "small" ? (
+          <ProfileAccountSmall />
+        ) : (
+          <ProfileAccountBig textColor={textColor} color={color} />
+        )
       ) : (
-        <RiAccountCircleFill color="#5e5e5e" size="50" />
+        <div className="wd--profile-account-link-btns">
+          <button
+            type="button"
+            id="login"
+            style={{ color: textColor }}
+            onClick={handleShowLoginForm}
+          >
+            Log in
+          </button>
+          <OrangeButton text="Sign up" action={handleShowRegistrationForm} />
+        </div>
       )}
-      <RiArrowDownSLine color="5e5e5e" size="50" />
-    </div>
+    </>
   );
 };
 

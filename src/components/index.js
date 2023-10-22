@@ -18,3 +18,7 @@ export { default as Roadmap } from "./roadmap/Roadmap";
 export { default as HostVsGuest } from "./hostVsGuest/HostVsGuest";
 export { default as TabBar } from "./tabBar/TabBar";
 export { default as ProfileAccount } from "./profileAccount/ProfileAccount";
+export { default as ProfileAccountBig } from "./profileAccountBig/ProfileAccountBig";
+export { default as ProfileAccountSmall } from "./profileAccountSmall/ProfileAccountSmall";
+export { default as Menu } from "./menu/Menu";
+export { default as OrangeButton } from "./orangeButton/OrangeButton";

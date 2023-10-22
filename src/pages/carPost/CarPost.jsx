@@ -13,21 +13,36 @@ import { format } from "date-fns";
 
 const CarPost = () => {
   const { postId } = useParams();
-  const { posts } = useSelector((state) => state.posts);
-  const post = posts.find((p) => p._id === postId);
+  const [post, setPost] = useState({});
   const [owner, setOwner] = useState({});
-  const [images, setImages] = useState(post.images);
+  const [images, setImages] = useState([]);
   const [timeJoined, setTimeJoined] = useState("");
   const [showLoginForm, setShowLoginForm] = useState(false);
 
   useEffect(() => {
-    const fetchOwner = async () => {
-      const res = await axios.get(`/users/${post.userId}`);
-      setOwner(res.data);
-      setTimeJoined(format(new Date(res.data.createdAt), "MMM yyyy"));
+    const fetchData = async () => {
+      try {
+        // Fetch the post data
+        const postResponse = await axios.get(`/posts/${postId}`);
+        setPost(postResponse.data);
+        setImages(postResponse.data.images);
+
+        // Fetch the owner data using the post data
+        const ownerResponse = await axios.get(
+          `/users/${postResponse.data.userId}`
+        );
+        setOwner(ownerResponse.data);
+        setTimeJoined(
+          format(new Date(ownerResponse.data.createdAt), "MMM yyyy")
+        );
+      } catch (error) {
+        // Handle errors if necessary
+        console.error("Error fetching data:", error);
+      }
     };
-    fetchOwner();
-  }, [post.userId]);
+
+    fetchData();
+  }, [postId]);
 
   const handleNextImage = () => {
     const newImages = [...images];
