@@ -69,6 +69,11 @@
   color: #d0e5f2cc;
 }
 
+.wd--header-content--div {
+  position: relative;
+  margin-top: 2rem;
+}
+
 .wd--header-content--input {
   width: 90%;
   margin: 2rem 0 1rem;
@@ -82,7 +87,6 @@
   min-height: 30px;
   padding: 1rem 2rem;
   color: rgb(97, 97, 97);
-  margin-top: 2rem;
   background: #d0e5f2cc;
   font-family: var(--font-family);
   color: #003049;
@@ -121,6 +125,19 @@
 #dateFrom {
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
+}
+
+.wd--header-content--label {
+  top: 0;
+  left: 10px;
+  color: #a6c1d1;
+  transform: translateY(-100%);
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 0 0.5rem;
+  pointer-events: none;
+  position: absolute;
 }
 
 .minus {
@@ -187,6 +204,12 @@
   .wd--header-content p {
     color: #fff;
     font-weight: 500;
+  }
+  .wd--header-content--input {
+    margin-top: 4rem;
+  }
+  .wd--header-content--div {
+    margin: 0;
   }
 }
 

@@ -126,14 +126,24 @@ const Header = () => {
             for all your transportation needs.
           </p>
           <form className="wd--header-content--input" onSubmit={filterHandler}>
-            <input
-              type="date"
-              id="dateFrom"
-              placeholder="From"
-              ref={fromDateRef}
-            />
+            <div className="wd--header-content--div">
+              <label className="wd--header-content--label" htmlFor="dateFrom">
+                From
+              </label>
+              <input
+                type="date"
+                id="dateFrom"
+                placeholder="From"
+                ref={fromDateRef}
+              />
+            </div>
             <AiOutlineMinus className="minus" />
-            <input type="date" ref={toDateRef} placeholder="To" id="dateTo" />
+            <div className="wd--header-content--div">
+              <label className="wd--header-content--label" htmlFor="dateTo">
+                To
+              </label>
+              <input type="date" ref={toDateRef} placeholder="To" id="dateTo" />
+            </div>
             <button type="submit">Search</button>
           </form>
         </div>

@@ -26,3 +26,9 @@
     scale: 0.5;
   }
 }
+
+@media screen and (max-width: 350px) {
+  .wd--home-page--background {
+    scale: 0.4;
+  }
+}

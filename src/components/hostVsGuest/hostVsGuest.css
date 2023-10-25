@@ -53,7 +53,6 @@
   font-weight: 700;
   color: #fff;
   letter-spacing: 0.1rem;
-  margin-bottom: 1rem;
   padding: 2rem 0;
   opacity: 0;
   display: flex;
@@ -68,6 +67,11 @@
 
 .wd--host-vs-guest--content--part-body p {
   flex: 2;
+}
+
+.wd--host-vs-guest--content--part-body svg {
+  width: 70px;
+  height: 70px;
 }
 
 .animate {
@@ -107,6 +111,19 @@
   }
 }
 
+@media screen and (max-width: 1040px) {
+  .wd--host-vs-guest--content--part {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .wd--host-vs-guest--content--part-body p {
+    font-size: 1.2rem;
+  }
+}
+
 @media screen and (max-width: 780px) {
   .wd--host-vs-guest--content--part {
     width: 30%;
@@ -115,6 +132,9 @@
     font-size: 2rem;
   }
   .wd--host-vs-guest--content--part-body {
+    gap: 0;
+  }
+  .wd--host-vs-guest--content--part-body p {
     font-size: 1rem;
   }
 }
@@ -127,7 +147,7 @@
   .wd--host-vs-guest--content--part-header {
     font-size: 1.5rem;
   }
-  .wd--host-vs-guest--content--part-body {
+  .wd--host-vs-guest--content--part-body p {
     font-size: 0.8rem;
   }
 
@@ -143,7 +163,13 @@
   .wd--host-vs-guest--wrapper {
     padding-bottom: 0;
   }
-  .wd--host-vs-guest--content--part-body {
+  .wd--host-vs-guest--content--part-body p {
     font-size: 0.7rem;
+    flex: 0;
+  }
+  .wd--host-vs-guest--content--part-body {
+    flex-direction: column;
+    gap: 1rem;
+    height: 12rem;
   }
 }
