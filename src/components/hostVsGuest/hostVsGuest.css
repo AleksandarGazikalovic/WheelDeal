@@ -5,7 +5,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
-  height: 100vh;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   text-align: center;
   font-family: var(--font-family);
@@ -26,7 +27,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
 }
 
@@ -55,6 +56,18 @@
   margin-bottom: 1rem;
   padding: 2rem 0;
   opacity: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+  width: 90%;
+  height: 10rem;
+  text-align: center;
+}
+
+.wd--host-vs-guest--content--part-body p {
+  flex: 2;
 }
 
 .animate {
@@ -115,7 +128,7 @@
     font-size: 1.5rem;
   }
   .wd--host-vs-guest--content--part-body {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 
   .wave svg {
@@ -126,5 +139,11 @@
 @media screen and (max-width: 450px) {
   .wave svg {
     height: 0px;
+  }
+  .wd--host-vs-guest--wrapper {
+    padding-bottom: 0;
+  }
+  .wd--host-vs-guest--content--part-body {
+    font-size: 0.7rem;
   }
 }

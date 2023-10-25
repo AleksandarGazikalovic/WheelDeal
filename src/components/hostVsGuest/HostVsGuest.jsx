@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import "./hostVsGuest.css";
 import { useRef } from "react";
+import { GiPayMoney, GiMoneyStack } from "react-icons/gi";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import { Ri24HoursLine } from "react-icons/ri";
+import { BsFillCarFrontFill } from "react-icons/bs";
+import { GiReceiveMoney } from "react-icons/gi";
 
 const HostVsGuest = () => {
   const animateRefs = useRef([]);
@@ -40,81 +45,60 @@ const HostVsGuest = () => {
               className="wd--host-vs-guest--content--part-body"
               ref={(element) => (animateRefs.current[1] = element)}
             >
-              <p>
-                Hosts are the ones who have a parking space and want to rent it
-                out to guests.
-              </p>
+              <GiMoneyStack size={70} />
+              <p>Earn money by sharing your vehicle</p>
             </div>
             <div
               className="wd--host-vs-guest--content--part-body"
               ref={(element) => (animateRefs.current[2] = element)}
             >
-              <p>
-                Hosts are the ones who have a parking space and want to rent it
-                out to guests.
-              </p>
+              <GiPayMoney size={70} />
+              <p>Pay off car service, insurance and registration expenses</p>
             </div>
             <div
               className="wd--host-vs-guest--content--part-body"
               ref={(element) => (animateRefs.current[3] = element)}
             >
-              <p>
-                Hosts are the ones who have a parking space and want to rent it
-                out to guests.
-              </p>
-            </div>
-            <div
-              className="wd--host-vs-guest--content--part-body"
-              ref={(element) => (animateRefs.current[4] = element)}
-            >
-              <p>
-                Hosts are the ones who have a parking space and want to rent it
-                out to guests.
-              </p>
+              <FaMoneyBillTrendUp size={70} />
+              <p>Invest in a new car that will pay off after a few years</p>
             </div>
           </div>
           <div className="wd--host-vs-guest--content--part">
             <div
               className="wd--host-vs-guest--content--part-header"
-              ref={(element) => (animateRefs.current[5] = element)}
+              ref={(element) => (animateRefs.current[4] = element)}
             >
               <h3>Guest</h3>
+            </div>
+            <div
+              className="wd--host-vs-guest--content--part-body"
+              ref={(element) => (animateRefs.current[5] = element)}
+            >
+              <p>
+                Save up to 25% of your money compared to traditional rent-a-car
+                service
+              </p>
+              <GiReceiveMoney size={70} />
             </div>
             <div
               className="wd--host-vs-guest--content--part-body"
               ref={(element) => (animateRefs.current[6] = element)}
             >
               <p>
-                Guests are the ones who are looking for a parking space to park
-                their vehicles.
+                Never think again if you can find a car with our service
+                available 24/7
               </p>
+              <Ri24HoursLine size={70} />
             </div>
             <div
               className="wd--host-vs-guest--content--part-body"
               ref={(element) => (animateRefs.current[7] = element)}
             >
               <p>
-                Guests are the ones who are looking for a parking space to park
-                their vehicles.
+                With our wide range of vehicles we can always secure what you
+                want
               </p>
-            </div>
-            <div
-              className="wd--host-vs-guest--content--part-body"
-              ref={(element) => (animateRefs.current[8] = element)}
-            >
-              <p>
-                Guests are the ones who are looking for a parking space to park
-                their vehicles.
-              </p>
-            </div>
-            <div
-              className="wd--host-vs-guest--content--part-body"
-              ref={(element) => (animateRefs.current[9] = element)}
-            >
-              <p>
-                Guests are the ones who are looking for a parking space to park
-                their vehicles.
-              </p>
+              <BsFillCarFrontFill size={70} />
             </div>
           </div>
         </div>

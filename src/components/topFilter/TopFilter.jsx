@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { Filters } from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { fetchPosts } from "../../redux/postsSlice";
 import { setFilter } from "../../redux/filterSlice";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
@@ -16,12 +15,8 @@ const TopFilter = ({ posts }) => {
   const [resetFilters, setResetFilters] = useState(false); // Initial form value
   const topFilterRef = useRef(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const cookies = new Cookies(null, { path: "/" });
-  const { fromDate, toDate, fromPrice, toPrice, location, brand } = useSelector(
-    (state) => state.filter
-  );
 
   const resetFilter = async () => {
     const filterValues = {

@@ -165,7 +165,6 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   user-select: none;
-  margin-top: 2rem;
 
   &:hover {
     background-color: #fa972d;
@@ -238,10 +237,10 @@
 }
 
 .error-msg-register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: red;
-  position: absolute;
-  bottom: 40%;
-  margin-top: 1rem;
   font-size: 12px;
   font-family: var(--font-family);
   font-weight: bold;
@@ -262,17 +261,11 @@
   .registration-form {
     width: 40%;
   }
-  .registration-button {
-    margin-top: 1rem;
-  }
 }
 
 @media screen and (max-width: 780px) {
   .registration-form {
     width: 50%;
-  }
-  .registration-button {
-    margin-top: 1rem;
   }
 }
 

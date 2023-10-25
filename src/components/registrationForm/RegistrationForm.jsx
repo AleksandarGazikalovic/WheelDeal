@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./registrationForm.css";
 import { RiCloseLine } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import { ReactComponent as Loader } from "../../assets/spinner.svg";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = ({ onClose, showLogin }) => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -21,6 +22,7 @@ const RegistrationForm = ({ onClose, showLogin }) => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const [account, setAccount] = useState({
@@ -136,8 +138,11 @@ const RegistrationForm = ({ onClose, showLogin }) => {
         email: account.email,
         password: account.password,
       })
-    );
-    onClose();
+    ).then((result) => {
+      if (registerUser.fulfilled.match(result)) {
+        navigate("/profile"); // Successful login
+      }
+    });
   };
 
   useEffect(() => {
@@ -316,36 +321,30 @@ const RegistrationForm = ({ onClose, showLogin }) => {
           )}
         </div>
         {error && (
-          <span className="error-msg-register">
+          <span
+            className="error-msg-register"
+            style={{
+              display: `${error ? "flex" : ""}`,
+            }}
+          >
             Account with this email address already exists!
           </span>
         )}
-        {(errorMessage && !isNameFocused && (
-          <span className={`error-msg-register ${isShaking ? "shaking" : ""}`}>
-            {errorMessage}
-          </span>
-        )) ||
-          (errorMessage && !isSurnameFocused && (
-            <span
-              className={`error-msg-register ${isShaking ? "shaking" : ""}`}
-            >
-              {errorMessage}
-            </span>
-          )) ||
-          (errorMessage && !isEmailFocused && (
-            <span
-              className={`error-msg-register ${isShaking ? "shaking" : ""}`}
-            >
-              {errorMessage}
-            </span>
-          )) ||
-          (errorMessage && !isPasswordFocused && (
-            <span
-              className={`error-msg-register ${isShaking ? "shaking" : ""}`}
-            >
-              {errorMessage}
-            </span>
-          ))}
+        <span
+          className={`error-msg-register ${isShaking ? "shaking" : ""}`}
+          style={{
+            display: `${
+              (errorMessage && !isNameFocused) ||
+              (errorMessage && !isSurnameFocused) ||
+              (errorMessage && !isEmailFocused) ||
+              (errorMessage && !isPasswordFocused)
+                ? "flex"
+                : ""
+            }`,
+          }}
+        >
+          {errorMessage}
+        </span>
         <button
           className="registration-button"
           type="submit"

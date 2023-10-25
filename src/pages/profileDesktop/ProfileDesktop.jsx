@@ -5,7 +5,7 @@ import Logo from "../../assets/logoDark.png";
 import { useSelector } from "react-redux";
 import {
   FilterElement,
-  Navbar,
+  OrangeButton,
   ProfileInfo,
   ProfileInfoEdit,
   ProfileNavbar,
@@ -19,6 +19,7 @@ import { AiFillCar } from "react-icons/ai";
 import { IoStatsChartOutline } from "react-icons/io5";
 import { FiSettings } from "react-icons/fi";
 import Loading from "../../components/loading/Loading";
+import { IoIosArrowForward } from "react-icons/io";
 
 const ProfileDesktop = () => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
@@ -27,6 +28,9 @@ const ProfileDesktop = () => {
   const [showProfileInfoEdit, setShowProfileInfoEdit] = useState(false);
 
   useEffect(() => {
+    if (userInfo._id === undefined) {
+      return;
+    }
     const fetchLikedPosts = async () => {
       const res = await axios.get(`posts/liked/${userInfo._id}`);
       setLikedPosts(res.data);
@@ -74,9 +78,17 @@ const ProfileDesktop = () => {
                   <SmallPostCard key={post._id} post={post} />
                 ))
               ) : (
-                <p className="wd-profile--your-posts-no-posts">
-                  You have no posts
-                </p>
+                <>
+                  <p className="wd-profile--your-posts-no-posts">
+                    You have no posts
+                  </p>
+                  <Link to={"/add-post"}>
+                    <OrangeButton
+                      className="wd-profile--your-posts-no-posts-button"
+                      text={"Add post"}
+                    />
+                  </Link>
+                </>
               )}
             </div>
           </div>
@@ -88,9 +100,18 @@ const ProfileDesktop = () => {
                   <FilterElement key={post._id} post={post} />
                 ))
               ) : (
-                <p className="wd-profile--liked-posts-no-posts">
-                  You have no liked posts
-                </p>
+                <>
+                  <p className="wd-profile--liked-posts-no-posts">
+                    You have no liked posts
+                  </p>
+                  <Link
+                    to={"/search-options"}
+                    className="wd-profile--liked-posts-no-posts-offer"
+                  >
+                    <p>Check what our hosts have to offer</p>
+                    <IoIosArrowForward size={20} />
+                  </Link>
+                </>
               )}
             </div>
           </div>

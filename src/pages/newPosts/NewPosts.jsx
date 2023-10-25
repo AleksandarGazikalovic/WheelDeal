@@ -2,7 +2,6 @@ import React from "react";
 import { Footer, Navbar, Loading } from "../../components";
 import { useState } from "react";
 import "./newPosts.css";
-import { GoPlus } from "react-icons/go";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { DateRange } from "react-date-range";
@@ -12,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createPost } from "../../redux/postSlice";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+import { FiEdit2 } from "react-icons/fi";
 import {
   PiNumberOneBold,
   PiNumberTwoBold,
@@ -54,6 +54,7 @@ const NewPosts = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
   const [filled, setFilled] = useState(true);
+  const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
   const [state, setState] = useState([
     {
@@ -109,6 +110,7 @@ const NewPosts = () => {
   };
 
   const handlePriceChange = (event) => {
+    setEdit(true);
     const numericValue = parseFloat(event.target.value.replace(/[$,]/g, ""));
 
     // Check if the input is a valid number, greater than zero, and round it to the nearest whole number
@@ -618,6 +620,12 @@ const NewPosts = () => {
                       onChange={handlePriceChange} // Handle changes to the input
                       id="price"
                     />
+                    <div
+                      className="wd--new-post--container-details-section2-price-edit"
+                      style={edit ? { display: "none" } : { display: "flex" }}
+                    >
+                      <FiEdit2 size={20} color="#969696" />
+                    </div>
                   </div>
                   <DateRange
                     editableDateInputs={true}

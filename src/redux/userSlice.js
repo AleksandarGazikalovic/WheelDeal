@@ -11,15 +11,22 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   "user/loginUser",
-  async (userInfo) => {
-    const res = await axios.post("/auth/login", userInfo);
-    const { refreshToken, user, accessToken } = res.data;
+  async (userInfo, { rejectWithValue }) => {
+    try {
+      const res = await axios.post("/auth/login", userInfo);
+      const { refreshToken, user, accessToken } = res.data;
 
-    if (refreshToken) {
-      localStorage.setItem("refreshToken", refreshToken);
+      if (refreshToken) {
+        localStorage.setItem("refreshToken", refreshToken);
+      }
+
+      return { user, accessToken };
+    } catch (error) {
+      // Handle the login error and set the error message in the Redux state
+      return rejectWithValue(
+        "Failed to log in! Please check your credentials."
+      );
     }
-
-    return { user, accessToken };
   }
 );
 

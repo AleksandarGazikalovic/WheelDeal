@@ -15,6 +15,7 @@ const Menu = ({
   setToggleMenu,
   handleShowLoginForm,
   handleShowRegistrationForm,
+  loggedIn,
 }) => {
   const menuRef = useRef(null);
   const dispatch = useDispatch();
@@ -66,16 +67,22 @@ const Menu = ({
                   </Link>
                 </div>
                 <div className="wd--menu-links-container-item">
-                  <Link to="/add-post">
-                    <p>Add your car</p>
-                  </Link>
+                  {loggedIn ? (
+                    <Link to="/add-post">
+                      <p>Add your car</p>
+                    </Link>
+                  ) : (
+                    <p onClick={handleShowLoginForm}>Add your car</p>
+                  )}
                 </div>
                 <div className="wd--menu-links-container-item">
                   <p>Calculator</p>
                 </div>
-                <div className="wd--menu-links-container-item">
-                  <OrangeButton text="Sign out" action={handleLogout} />
-                </div>
+                {loggedIn && (
+                  <div className="wd--menu-links-container-item">
+                    <OrangeButton text="Sign out" action={handleLogout} />
+                  </div>
+                )}
               </div>
               <div className="wd--menu-links-logo">
                 <img src={Logo} alt="logo" />

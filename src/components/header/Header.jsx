@@ -1,10 +1,8 @@
 import "./header.css";
-import firstCar from "../../assets/firstCar.png";
-import drivingCar from "../../assets/drivingCar.gif";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter } from "../../redux/filterSlice";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { RiMenu3Line } from "react-icons/ri";
 import logo from "../../assets/logoLight.png";
 import RegistrationForm from "../registrationForm/RegistrationForm";
@@ -20,7 +18,15 @@ const Header = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.userInfo);
+
+  useEffect(() => {
+    if (user.id !== "") {
+      setLoggedIn(true);
+    }
+  }, [user]);
 
   const handleShowRegistrationForm = () => {
     setShowRegistrationForm(true);
@@ -95,6 +101,7 @@ const Header = () => {
             setToggleMenu={setToggleMenu}
             handleShowLoginForm={handleShowLoginForm}
             handleShowRegistrationForm={handleShowRegistrationForm}
+            loggedIn={loggedIn}
           />
         </div>
       </div>
@@ -119,9 +126,14 @@ const Header = () => {
             for all your transportation needs.
           </p>
           <form className="wd--header-content--input" onSubmit={filterHandler}>
-            <input type="date" id="dateFrom" ref={fromDateRef} />
+            <input
+              type="date"
+              id="dateFrom"
+              placeholder="From"
+              ref={fromDateRef}
+            />
             <AiOutlineMinus className="minus" />
-            <input type="date" ref={toDateRef} id="dateTo" />
+            <input type="date" ref={toDateRef} placeholder="To" id="dateTo" />
             <button type="submit">Search</button>
           </form>
         </div>

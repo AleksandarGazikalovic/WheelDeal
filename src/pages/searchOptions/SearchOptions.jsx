@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Footer, Navbar, TopFilter } from "../../components";
 import "./searchOptions.css";
-import axios from "axios";
 import { FilterElement } from "../../components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -11,10 +10,8 @@ import { setFilter } from "../../redux/filterSlice";
 import { fetchPosts } from "../../redux/postsSlice";
 
 const SearchOptions = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const dispatch = useDispatch();
-  const filter = useSelector((state) => state.filter);
   const { posts, pending, error } = useSelector((state) => state.posts);
   const cookies = new Cookies(null, { path: "/" });
   const cookieFilter = cookies.get("filter");
@@ -23,6 +20,17 @@ const SearchOptions = () => {
     if (cookieFilter) {
       dispatch(setFilter(cookieFilter));
       dispatch(fetchPosts(cookieFilter));
+    } else {
+      dispatch(
+        fetchPosts({
+          fromDate: "",
+          toDate: "",
+          fromPrice: "",
+          toPrice: "",
+          location: "",
+          brand: "",
+        })
+      );
     }
   }, []);
   return (
@@ -40,7 +48,6 @@ const SearchOptions = () => {
                 <FilterElement
                   post={p}
                   key={p._id}
-                  isLoading={isLoading}
                   setShowLoginForm={setShowLoginForm}
                 />
               ))

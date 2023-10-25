@@ -346,6 +346,7 @@
   justify-content: center;
   align-items: center;
   width: 40%;
+  position: relative;
 }
 
 .wd--new-post--container-details-section2-price-input {
@@ -362,6 +363,24 @@
 .wd--new-post--container-details-section2-price-input:focus {
   outline: none;
   border: none;
+}
+
+.wd--new-post--container-details-section2-price-edit {
+  position: absolute;
+  bottom: 10%;
+  right: 20%;
+  border-radius: 50%;
+  border: 1px solid #969696;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.wd--new-post--container-details-section2-price-edit:hover {
+  background-color: #f6f6f6;
+  border-color: #000;
 }
 
 .wd--new-post--container-buttons {
@@ -663,6 +682,12 @@ input[type="number"] {
   .wd--new-post--container-details-section2 {
     width: 120%;
   }
+  .wd--new-post--container-details-section2-price-edit {
+    padding: 0.3rem;
+  }
+  .wd--new-post--container-details-section2-price-edit svg {
+    width: 70%;
+  }
 }
 
 @media screen and (max-width: 700px) {
@@ -732,6 +757,9 @@ input[type="number"] {
   .wd--new-post--container-images-image img {
     width: 150px;
   }
+  .wd--new-post--container-details-section2-price-edit {
+    right: 10%;
+  }
 }
 
 @media screen and (max-width: 550px) {
@@ -777,5 +805,12 @@ input[type="number"] {
   }
   .wd--new-post--container-details-section1-div-input2 {
     width: 100%;
+  }
+  .wd--new-post--container-details-section2-price-edit {
+    right: 5%;
+    padding: 0;
+  }
+  .wd--new-post--container-details-section2-price-edit svg {
+    width: 50%;
   }
 }

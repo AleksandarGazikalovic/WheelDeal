@@ -145,6 +145,20 @@
   padding: 1rem;
 }
 
+.wd-profile--liked-posts-no-posts-offer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-weight: 700;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.wd-profile--liked-posts-no-posts-offer {
+}
+
 @media screen and (max-width: 1100px) {
   .wd-profile--your-posts-wrapper {
     grid-area: 2 / 9 / 7 / 13;

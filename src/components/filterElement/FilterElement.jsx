@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { likePost } from "../../redux/userSlice";
 
-const FilterElement = ({ post, isLoading, setShowLoginForm }) => {
+const FilterElement = ({ post, setShowLoginForm }) => {
   const [isLiked, setIsLiked] = useState(false);
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const fromDate = new Date(post.from);

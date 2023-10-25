@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./navbar.css";
-import {
-  RiMenu3Line,
-  RiCloseLine,
-  RiAccountCircleFill,
-  RiArrowDownSLine,
-} from "react-icons/ri";
+import { RiMenu3Line } from "react-icons/ri";
 import logo from "../../assets/logoDark.png";
 import RegistrationForm from "../registrationForm/RegistrationForm";
 import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { GoPlus } from "react-icons/go";
 import ProfileAccount from "../profileAccountBig/ProfileAccountBig";
 import Menu from "../menu/Menu";
@@ -102,7 +97,13 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
               setToggleMenu(true);
             }}
           />
-          <Menu toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
+          <Menu
+            toggleMenu={toggleMenu}
+            setToggleMenu={setToggleMenu}
+            handleShowLoginForm={handleShowLoginForm}
+            handleShowRegistrationForm={handleShowRegistrationForm}
+            loggedIn={loggedIn}
+          />
         </div>
       </div>
       {showRegistrationForm && (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./loginForm.css";
 import { RiCloseLine } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
@@ -81,14 +81,13 @@ const LoginForm = ({ onClose, showRegistration }) => {
         email: account.email,
         password: account.password,
       })
-    );
-
-    while (pending) {}
-    if (!error) {
-      navigate("/");
-    } else {
-      setErrorMessage("Failed to log in! Please check your credentials.");
-    }
+    ).then((result) => {
+      if (loginUser.fulfilled.match(result)) {
+        navigate("/profile"); // Successful login
+      } else {
+        setErrorMessage(result.payload);
+      }
+    });
   };
 
   useEffect(() => {

@@ -1,10 +1,7 @@
-import React from "react";
+import React, { useLayoutEffect, useState } from "react";
 import {
   Partners,
-  Navbar,
-  ElementSkeleton,
   Header,
-  MovingCar,
   Footer,
   Roadmap,
   HostVsGuest,
@@ -12,9 +9,17 @@ import {
 import "./home.css";
 
 const Home = () => {
+  const [isEverythingRendered, setIsEverythingRendered] = useState(false);
+
+  // Use useLayoutEffect to set the state variable when everything is rendered
+  useLayoutEffect(() => {
+    setIsEverythingRendered(true);
+  }, []);
   return (
     <>
-      <div className="wd--home-page--background"></div>
+      {isEverythingRendered && (
+        <div className="wd--home-page--background"></div>
+      )}
       <Header />
       <Roadmap />
       <HostVsGuest />

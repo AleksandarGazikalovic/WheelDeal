@@ -1,7 +1,8 @@
 import "./partners.css";
 import React from "react";
 import FON from "../../assets/Partners/FON.png";
-import drivingCar from "../../assets/drivingCar.gif";
+import IRC from "../../assets/Partners/IRC_FON.png";
+import R2L from "../../assets/Partners/Route2Launch.png";
 
 const Partners = () => {
   return (
@@ -12,13 +13,10 @@ const Partners = () => {
           <img src={FON} alt="FON" />
         </div>
         <div className="wd__partners-content__item ball bubble">
-          <img src={FON} alt="FON" />
+          <img src={IRC} alt="FON" />
         </div>
         <div className="wd__partners-content__item ball bubble">
-          <img src={FON} alt="FON" />
-        </div>
-        <div className="wd__partners-content__item ball bubble">
-          <img src={FON} alt="FON" />
+          <img src={R2L} alt="FON" />
         </div>
       </div>
       <div className="wave3">
