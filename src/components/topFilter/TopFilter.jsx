@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Filters } from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchPosts } from "../../redux/postsSlice";
+import { fetchPosts, resetPosts } from "../../redux/postsSlice";
 import { setFilter } from "../../redux/filterSlice";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import Cookies from "universal-cookie";
@@ -20,17 +20,16 @@ const TopFilter = ({ posts }) => {
 
   const resetFilter = async () => {
     const filterValues = {
-      fromDate: "",
-      toDate: "",
-      fromPrice: "",
-      toPrice: "",
-      location: "",
-      brand: "",
+      fromDate: undefined,
+      toDate: undefined,
+      fromPrice: undefined,
+      toPrice: undefined,
+      location: undefined,
+      brand: undefined,
     };
 
     cookies.set("filter", filterValues);
     dispatch(setFilter(filterValues));
-
     dispatch(fetchPosts(filterValues));
     setResetFilters(true);
   };

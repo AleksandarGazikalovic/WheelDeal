@@ -692,7 +692,7 @@ const NewPosts = () => {
                     name="images"
                     onChange={onSelectFile}
                     multiple
-                    accept="image/png , image/jpeg, image/webp"
+                    accept="image/*"
                   />
                   Add Photo
                 </label>

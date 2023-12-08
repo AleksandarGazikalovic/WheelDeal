@@ -72,6 +72,9 @@
 .wd--header-content--div {
   position: relative;
   margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .wd--header-content--input {
@@ -208,9 +211,6 @@
   .wd--header-content--input {
     margin-top: 4rem;
   }
-  .wd--header-content--div {
-    margin: 0;
-  }
 }
 
 @media screen and (max-width: 780px) {
@@ -236,6 +236,8 @@
   .wd--header-content--input {
     width: 50%;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .wd--header-content--input input,
@@ -247,7 +249,12 @@
   .wd--header-content--input input {
     font-size: 16px;
     line-height: 24px;
-    width: 80%;
+    width: 100%;
+  }
+
+  .wd--header-content--div {
+    margin: 0;
+    width: 100%;
   }
 
   .minus {

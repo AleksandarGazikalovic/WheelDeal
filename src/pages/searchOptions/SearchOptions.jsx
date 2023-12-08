@@ -12,27 +12,42 @@ import { fetchPosts } from "../../redux/postsSlice";
 const SearchOptions = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const dispatch = useDispatch();
-  const { posts, pending, error } = useSelector((state) => state.posts);
+  const { posts, pending, hasMore } = useSelector((state) => state.posts);
+  const [page, setPage] = useState(1);
   const cookies = new Cookies(null, { path: "/" });
-  const cookieFilter = cookies.get("filter");
+  const cookieFilter = cookies.get("filter") || {
+    fromDate: undefined,
+    toDate: undefined,
+    fromPrice: undefined,
+    toPrice: undefined,
+    location: undefined,
+    brand: undefined,
+    page: 1,
+  };
+
+  const handleScroll = () => {
+    if (hasMore === false) return;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+    if (scrollTop + clientHeight + 1 >= scrollHeight) {
+      setPage((prev) => prev + 1);
+      console.log(page);
+    }
+  };
 
   useEffect(() => {
-    if (cookieFilter) {
+    if (hasMore || posts.length === 0 || page !== 1) {
       dispatch(setFilter(cookieFilter));
-      dispatch(fetchPosts(cookieFilter));
-    } else {
-      dispatch(
-        fetchPosts({
-          fromDate: "",
-          toDate: "",
-          fromPrice: "",
-          toPrice: "",
-          location: "",
-          brand: "",
-        })
-      );
+      dispatch(fetchPosts({ ...cookieFilter, page: page }));
     }
-  }, []);
+  }, [page]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasMore]);
+
   return (
     <div className="gradient_bg2">
       <Navbar

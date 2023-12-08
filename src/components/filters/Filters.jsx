@@ -8,7 +8,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { setFilter } from "../../redux/filterSlice";
-import { fetchPosts } from "../../redux/postsSlice";
+import { fetchPosts, resetPosts } from "../../redux/postsSlice";
 import Cookies from "universal-cookie";
 
 function WhereFilter({ onChange, location }) {
@@ -130,23 +130,23 @@ const Filters = ({
   const dispatch = useDispatch();
   const cookies = new Cookies(null, { path: "/" });
   const [filterValues, setFilterValues] = useState({
-    fromDate: "",
-    toDate: "",
-    fromPrice: "",
-    toPrice: "",
-    location: "",
-    brand: "",
+    fromDate: undefined,
+    toDate: undefined,
+    fromPrice: undefined,
+    toPrice: undefined,
+    location: undefined,
+    brand: undefined,
   });
 
   useEffect(() => {
     if (resetFilters) {
       setFilterValues({
-        fromDate: "",
-        toDate: "",
-        fromPrice: "",
-        toPrice: "",
-        location: "",
-        brand: "",
+        fromDate: undefined,
+        toDate: undefined,
+        fromPrice: undefined,
+        toPrice: undefined,
+        location: undefined,
+        brand: undefined,
       });
       setResetFilters(false);
     }

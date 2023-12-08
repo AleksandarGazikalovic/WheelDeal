@@ -4,9 +4,20 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
   async (filter) => {
-    const res = await fetch(
-      `posts/filter/all?startDate=${filter.fromDate}&endDate=${filter.toDate}&startPrice=${filter.fromPrice}&endPrice=${filter.toPrice}&location=${filter.location}&brand=${filter.brand}`
-    );
+    let url = "posts/filter/all?";
+
+    // Build the URL dynamically based on the presence of filter fields
+    if (filter.fromDate) url += `startDate=${filter.fromDate}&`;
+    if (filter.toDate) url += `endDate=${filter.toDate}&`;
+    if (filter.fromPrice) url += `startPrice=${filter.fromPrice}&`;
+    if (filter.toPrice) url += `endPrice=${filter.toPrice}&`;
+    if (filter.location) url += `location=${filter.location}&`;
+    if (filter.brand) url += `brand=${filter.brand}&`;
+
+    // Add the page parameter, default to 1 if not provided
+    url += `page=${filter.page || 1}`;
+
+    const res = await fetch(url);
     return res.json();
   }
 );
@@ -16,6 +27,7 @@ export const postSlice = createSlice({
   initialState: {
     posts: [],
     pending: null,
+    hasMore: true,
     error: false,
   },
   reducers: {},
@@ -25,7 +37,8 @@ export const postSlice = createSlice({
       state.error = false;
     },
     [fetchPosts.fulfilled]: (state, action) => {
-      state.posts = action.payload;
+      state.posts = state.posts.concat(action.payload.posts);
+      state.hasMore = action.payload.hasMore;
       state.pending = false;
     },
     [fetchPosts.rejected]: (state, action) => {

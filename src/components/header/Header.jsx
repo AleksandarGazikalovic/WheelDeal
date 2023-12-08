@@ -64,11 +64,6 @@ const Header = () => {
         filterValues,
       })
     );
-    dispatch(
-      fetchPosts({
-        filterValues,
-      })
-    );
     navigate(`/search-options`);
   };
 
