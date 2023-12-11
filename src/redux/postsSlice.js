@@ -30,7 +30,11 @@ export const postSlice = createSlice({
     hasMore: true,
     error: false,
   },
-  reducers: {},
+  reducers: {
+    clearPosts: (state) => {
+      state.posts = [];
+    },
+  },
   extraReducers: {
     [fetchPosts.pending]: (state) => {
       state.pending = true;
@@ -47,5 +51,7 @@ export const postSlice = createSlice({
     },
   },
 });
+
+export const { clearPosts } = postSlice.actions;
 
 export default postSlice.reducer;

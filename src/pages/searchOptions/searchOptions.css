@@ -4,6 +4,7 @@
   background-color: white;
   font-family: var(--font-family);
   position: relative;
+  min-height: 100vh;
 }
 
 .wd--search-content {

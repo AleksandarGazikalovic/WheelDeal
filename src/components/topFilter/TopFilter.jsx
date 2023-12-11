@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Filters } from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchPosts, resetPosts } from "../../redux/postsSlice";
+import { clearPosts, fetchPosts } from "../../redux/postsSlice";
 import { setFilter } from "../../redux/filterSlice";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import Cookies from "universal-cookie";
@@ -30,6 +30,7 @@ const TopFilter = ({ posts }) => {
 
     cookies.set("filter", filterValues);
     dispatch(setFilter(filterValues));
+    dispatch(clearPosts());
     dispatch(fetchPosts(filterValues));
     setResetFilters(true);
   };

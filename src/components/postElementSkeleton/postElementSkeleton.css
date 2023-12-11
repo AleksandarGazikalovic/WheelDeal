@@ -29,3 +29,12 @@
   height: 20px;
   margin-bottom: 0.5rem;
 }
+
+@media screen and (max-width: 365px) {
+  .card-skeleton {
+    width: 250px;
+  }
+  .card-skeleton__text {
+    width: 250px;
+  }
+}

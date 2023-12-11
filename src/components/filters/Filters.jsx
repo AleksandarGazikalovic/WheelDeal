@@ -8,7 +8,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { setFilter } from "../../redux/filterSlice";
-import { fetchPosts, resetPosts } from "../../redux/postsSlice";
+import { clearPosts, fetchPosts, resetPosts } from "../../redux/postsSlice";
 import Cookies from "universal-cookie";
 
 function WhereFilter({ onChange, location }) {
@@ -155,6 +155,7 @@ const Filters = ({
   const applyFilter = async () => {
     cookies.set("filter", filterValues);
     dispatch(setFilter(filterValues));
+    dispatch(clearPosts());
     dispatch(fetchPosts(filterValues));
   };
 

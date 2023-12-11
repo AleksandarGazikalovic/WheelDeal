@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import "./postElement.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { likePost } from "../../redux/userSlice";
 import PostElementSkeleton from "../postElementSkeleton/PostElementSkeleton";
 
-const PostElement = ({ post, setShowLoginForm }) => {
+const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
   const [isLiked, setIsLiked] = useState(false);
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const fromDate = new Date(post.from);
@@ -66,6 +66,7 @@ const PostElement = ({ post, setShowLoginForm }) => {
         className={`wd--search-content--elements-element ${
           isLoaded ? "wd--search-content--elements-element-loaded" : ""
         }`}
+        ref={ref}
       >
         <div className="wd--search-content--elements-element-image">
           {userInfo._id === post.userId ? null : (
@@ -121,6 +122,6 @@ const PostElement = ({ post, setShowLoginForm }) => {
       </div>
     </>
   );
-};
+});
 
 export default PostElement;

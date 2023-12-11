@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Footer,
   Navbar,
@@ -30,16 +30,21 @@ const SearchOptions = () => {
     page: 1,
   };
 
-  const handleScroll = () => {
-    if (hasMore === false) return;
-    const scrollHeight = document.documentElement.scrollHeight;
-    const scrollTop = document.documentElement.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
-    if (scrollTop + clientHeight + 1 >= scrollHeight) {
-      setPage((prev) => prev + 1);
-      console.log(page);
-    }
-  };
+  const observer = useRef();
+  const lastPostElementRef = useCallback(
+    (node) => {
+      if (pending) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prev) => prev + 1);
+          console.log(page);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [pending, hasMore]
+  );
 
   useEffect(() => {
     if (hasMore || posts.length === 0 || page !== 1) {
@@ -47,11 +52,6 @@ const SearchOptions = () => {
       dispatch(fetchPosts({ ...cookieFilter, page: page }));
     }
   }, [page]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [hasMore]);
 
   return (
     <div className="gradient_bg2">
@@ -63,21 +63,34 @@ const SearchOptions = () => {
       <div className="wd--search section_padding">
         <div className="wd--search-content">
           <div className="wd--search-content--elements">
-            {posts.length !== 0 ? (
-              posts.map((p) => (
-                <PostElement
-                  post={p}
-                  key={p._id}
-                  setShowLoginForm={setShowLoginForm}
-                />
-              ))
-            ) : (
-              <div className="wd--search-content--elements-title">
-                <h1>Sorry, there are no results for this search.</h1>
-              </div>
-            )}
+            {posts.length !== 0
+              ? posts.map((p, index) => {
+                  if (posts.length === index + 1) {
+                    return (
+                      <PostElement
+                        post={p}
+                        key={p._id}
+                        setShowLoginForm={setShowLoginForm}
+                        ref={lastPostElementRef}
+                      />
+                    );
+                  } else {
+                    return (
+                      <PostElement
+                        post={p}
+                        key={p._id}
+                        setShowLoginForm={setShowLoginForm}
+                      />
+                    );
+                  }
+                })
+              : !pending && (
+                  <div className="wd--search-content--elements-title">
+                    <h1>Sorry, there are no results for this search.</h1>
+                  </div>
+                )}
           </div>
-          {pending && <Loading />}
+          {/* {pending && <Loading />} */}
         </div>
         <div className="wave3">
           <svg
