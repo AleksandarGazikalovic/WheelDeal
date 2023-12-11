@@ -7,7 +7,7 @@ export { default as Footer } from "./footer/Footer";
 export { default as TopFilter } from "./topFilter/TopFilter";
 export { default as Filters } from "./filters/Filters";
 export { default as Loading } from "./loading/Loading";
-export { default as FilterElement } from "./filterElement/FilterElement";
+export { default as PostElement } from "./postElement/PostElement";
 export { default as SmallPostCard } from "./smallPostCard/SmallPostCard";
 export { default as ProfileInfo } from "./profileInfo/ProfileInfo";
 export { default as ProfileInfoEdit } from "./profileInfoEdit/ProfileInfoEdit";
@@ -22,3 +22,4 @@ export { default as ProfileAccountBig } from "./profileAccountBig/ProfileAccount
 export { default as ProfileAccountSmall } from "./profileAccountSmall/ProfileAccountSmall";
 export { default as Menu } from "./menu/Menu";
 export { default as OrangeButton } from "./orangeButton/OrangeButton";
+export { default as PostElementSkeleton } from "./postElementSkeleton/PostElementSkeleton";

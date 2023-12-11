@@ -7,6 +7,14 @@
   align-self: center;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  display: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.wd--search-content--elements-element-loaded {
+  opacity: 1;
+  display: flex;
 }
 
 .wd--search-content--elements-element:hover {

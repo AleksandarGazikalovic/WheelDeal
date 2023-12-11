@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Footer, Navbar, TopFilter } from "../../components";
+import {
+  Footer,
+  Navbar,
+  PostElementSkeleton,
+  TopFilter,
+} from "../../components";
 import "./searchOptions.css";
-import { FilterElement } from "../../components";
+import { PostElement } from "../../components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Loading } from "../../components";
@@ -60,7 +65,7 @@ const SearchOptions = () => {
           <div className="wd--search-content--elements">
             {posts.length !== 0 ? (
               posts.map((p) => (
-                <FilterElement
+                <PostElement
                   post={p}
                   key={p._id}
                   setShowLoginForm={setShowLoginForm}

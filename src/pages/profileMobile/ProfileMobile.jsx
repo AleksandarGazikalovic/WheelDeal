@@ -1,6 +1,7 @@
 import "./profileMobile.css";
 import {
   OrangeButton,
+  PostElement,
   ProfileInfo,
   ProfileInfoEdit,
   ProfileStatistics,
@@ -11,7 +12,6 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import FilterElement from "../../components/filterElement/FilterElement";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -64,7 +64,7 @@ const ProfileMobile = () => {
             <div className="wd-profile--liked-posts">
               {likedPosts.length > 0 ? (
                 likedPosts.map((post) => (
-                  <FilterElement key={post._id} post={post} />
+                  <PostElement key={post._id} post={post} />
                 ))
               ) : (
                 <>

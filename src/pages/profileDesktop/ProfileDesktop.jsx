@@ -4,8 +4,8 @@ import { GoHome, GoPlus } from "react-icons/go";
 import Logo from "../../assets/logoDark.png";
 import { useSelector } from "react-redux";
 import {
-  FilterElement,
   OrangeButton,
+  PostElement,
   ProfileInfo,
   ProfileInfoEdit,
   ProfileNavbar,
@@ -97,7 +97,7 @@ const ProfileDesktop = () => {
             <div className="wd-profile--liked-posts">
               {likedPosts.length > 0 ? (
                 likedPosts.map((post) => (
-                  <FilterElement key={post._id} post={post} />
+                  <PostElement key={post._id} post={post} />
                 ))
               ) : (
                 <>
