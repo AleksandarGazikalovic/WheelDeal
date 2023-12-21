@@ -27,10 +27,8 @@ const RegistrationForm = ({ onClose, showLogin }) => {
   return (
     <div className="registration-form-overlay">
       <div className="registration-form slide-top">
-        <div className="form-div">
-          <h1 className="registration-welcome">Deal the Wheel with us!</h1>
-          <RiCloseLine onClick={onClose} className="registration-close" />
-        </div>
+        <h1 className="registration-welcome">Deal the Wheel with us!</h1>
+        <RiCloseLine onClick={onClose} className="registration-close" />
         {!succesful ? (
           <RegistrationInput
             showLogin={showLogin}

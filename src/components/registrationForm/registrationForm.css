@@ -30,13 +30,6 @@
   border-radius: 20px;
 }
 
-.form-div {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-}
-
 .registration-welcome {
   font-family: var(--font-family);
   font-size: 25px;
@@ -44,8 +37,8 @@
   color: rgb(77, 77, 77);
   margin-top: 1rem;
   text-align: center;
+  align-self: center;
   width: 100%;
-  margin-left: 2rem;
 }
 
 .registration-form section {
@@ -60,8 +53,8 @@
 
 .registration-close {
   color: rgb(85, 84, 84);
-  display: flex;
-  align-self: flex-start;
+  position: absolute;
+  align-self: flex-end;
   transform: rotate(0deg);
   transition: transform 0.3s ease;
   cursor: pointer;

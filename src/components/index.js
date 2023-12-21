@@ -25,3 +25,4 @@ export { default as OrangeButton } from "./orangeButton/OrangeButton";
 export { default as PostElementSkeleton } from "./postElementSkeleton/PostElementSkeleton";
 export { default as EmailVerification } from "./emailVerification/EmailVerification";
 export { default as RegistrationInput } from "./registrationInput/RegistrationInput";
+export { default as ForgotPassword } from "./forgotPassword/ForgotPassword";

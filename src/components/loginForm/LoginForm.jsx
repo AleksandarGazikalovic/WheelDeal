@@ -8,6 +8,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import ForgotPassword from "../forgotPassword/ForgotPassword";
 
 const LoginForm = ({ onClose, showRegistration }) => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -19,6 +20,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const navigate = useNavigate();
   const [account, setAccount] = useState({
     email: "",
@@ -31,6 +33,10 @@ const LoginForm = ({ onClose, showRegistration }) => {
       ...account,
       [name]: value,
     });
+  };
+
+  const handleForgotPassword = () => {
+    setShowForgotPassword(true);
   };
 
   const validateInput = (fieldName, value) => {
@@ -117,134 +123,138 @@ const LoginForm = ({ onClose, showRegistration }) => {
 
   return (
     <div className="login-form-overlay">
-      <form className="login-form slide-top" onSubmit={handleLogin}>
-        <div className="form-div">
-          <h1 className="login-welcome">Login</h1>
-          <RiCloseLine onClick={onClose} className="login-close" />
-        </div>
-        <div className="wd--registration-form--div">
-          <input
-            className={`wd--registration-form--div-input  ${
-              isEmailFocused ? "focus" : ""
-            }`}
-            type="email"
-            name="email"
-            id="email"
-            value={account.email}
-            onFocus={() => setIsEmailFocused(true)}
-            onBlur={() => setIsEmailFocused(false)}
-            onChange={(e) => {
-              const value = e.target.value;
-              handleInputChange("email", value);
-            }}
-          />
-          <label
-            className={`wd--registration-form--div-label  ${
-              !isEmailFocused && !account.email
-                ? ""
-                : !isEmailFocused && !isEmailValid
-                ? "invalid"
-                : !isEmailFocused && isEmailValid
-                ? "valid"
-                : isEmailValid
-                ? "valid"
-                : "invalid"
-            }`}
-          >
-            Email
-          </label>
-        </div>
-        <div className="wd--registration-form--div">
-          <input
-            className={`wd--registration-form--div-input  ${
-              isPasswordFocused ? "focus" : ""
-            }`}
-            type={showPassword ? "text" : "password"}
-            name="password"
-            id="password"
-            value={account.password}
-            onFocus={() => setIsPasswordFocused(true)}
-            onBlur={() => setIsPasswordFocused(false)}
-            onChange={(e) => {
-              const value = e.target.value;
-              handleInputChange("password", value);
-            }}
-          />
-          <label
-            className={`wd--registration-form--div-label  ${
-              !isPasswordFocused && !account.password
-                ? ""
-                : !isPasswordFocused && !isPasswordValid
-                ? "invalid"
-                : !isPasswordFocused && isPasswordValid
-                ? "valid"
-                : isPasswordValid
-                ? "valid"
-                : "invalid"
-            }`}
-          >
-            Password
-          </label>
-          {showPassword ? (
-            <AiOutlineEye
-              className="wd--registration-form--div-eye"
-              onClick={() => setShowPassword(!showPassword)}
-              size={30}
-            />
-          ) : (
-            <AiOutlineEyeInvisible
-              className="wd--registration-form--div-eye"
-              onClick={() => setShowPassword(!showPassword)}
-              size={30}
-            />
-          )}
-        </div>
-        <div className="forgot-password">
-          <a rel="noopener noreferrer" href="#">
-            Forgot Password?
-          </a>
-        </div>
-        {error && (
-          <span className={`error-msg-login ${isShaking ? "shaking" : ""}`}>
-            {errorMessage}
-          </span>
-        )}
-        {errorMessage && (
-          <span className={`error-msg-login ${isShaking ? "shaking" : ""}`}>
-            {errorMessage}
-          </span>
-        )}
-        <button
-          className="login-button"
-          type="submit"
-          onClick={handleShake}
-          disabled={pending}
-        >
-          {!pending ? "Log in" : <Loader className="spinner" />}
-        </button>
+      <div className="login-form slide-top">
+        <RiCloseLine onClick={onClose} className="login-close" />
+        {showForgotPassword ? (
+          <ForgotPassword />
+        ) : (
+          <form className="form-wrapper" onSubmit={handleLogin}>
+            <h1 className="login-welcome">Login</h1>
+            <div className="wd--registration-form--div">
+              <input
+                className={`wd--registration-form--div-input  ${
+                  isEmailFocused ? "focus" : ""
+                }`}
+                type="email"
+                name="email"
+                id="email"
+                value={account.email}
+                onFocus={() => setIsEmailFocused(true)}
+                onBlur={() => setIsEmailFocused(false)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  handleInputChange("email", value);
+                }}
+              />
+              <label
+                className={`wd--registration-form--div-label  ${
+                  !isEmailFocused && !account.email
+                    ? ""
+                    : !isEmailFocused && !isEmailValid
+                    ? "invalid"
+                    : !isEmailFocused && isEmailValid
+                    ? "valid"
+                    : isEmailValid
+                    ? "valid"
+                    : "invalid"
+                }`}
+              >
+                Email
+              </label>
+            </div>
+            <div className="wd--registration-form--div">
+              <input
+                className={`wd--registration-form--div-input  ${
+                  isPasswordFocused ? "focus" : ""
+                }`}
+                type={showPassword ? "text" : "password"}
+                name="password"
+                id="password"
+                value={account.password}
+                onFocus={() => setIsPasswordFocused(true)}
+                onBlur={() => setIsPasswordFocused(false)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  handleInputChange("password", value);
+                }}
+              />
+              <label
+                className={`wd--registration-form--div-label  ${
+                  !isPasswordFocused && !account.password
+                    ? ""
+                    : !isPasswordFocused && !isPasswordValid
+                    ? "invalid"
+                    : !isPasswordFocused && isPasswordValid
+                    ? "valid"
+                    : isPasswordValid
+                    ? "valid"
+                    : "invalid"
+                }`}
+              >
+                Password
+              </label>
+              {showPassword ? (
+                <AiOutlineEye
+                  className="wd--registration-form--div-eye"
+                  onClick={() => setShowPassword(!showPassword)}
+                  size={30}
+                />
+              ) : (
+                <AiOutlineEyeInvisible
+                  className="wd--registration-form--div-eye"
+                  onClick={() => setShowPassword(!showPassword)}
+                  size={30}
+                />
+              )}
+            </div>
+            <div className="forgot-password">
+              <a rel="noopener noreferrer" onClick={handleForgotPassword}>
+                Forgot Password?
+              </a>
+            </div>
+            {error && (
+              <span className={`error-msg-login ${isShaking ? "shaking" : ""}`}>
+                {errorMessage}
+              </span>
+            )}
+            {errorMessage && (
+              <span className={`error-msg-login ${isShaking ? "shaking" : ""}`}>
+                {errorMessage}
+              </span>
+            )}
+            <button
+              className="login-button"
+              type="submit"
+              onClick={handleShake}
+              disabled={pending}
+            >
+              {!pending ? "Log in" : <Loader className="spinner" />}
+            </button>
 
-        <div className="or-line">
-          <span></span>
-          <span>or</span>
-          <span></span>
-        </div>
-        <div className="social-icons">
-          <FcGoogle size={40} className="icon" />
-          <FaFacebook size={40} className="icon" />
-        </div>
-        <p className="signup">
-          Don't have an account? &nbsp;
-          <button
-            type="button"
-            onClick={() => {
-              showRegistration();
-              onClose();
-            }}
-          >
-            Sign up
-          </button>
-        </p>
-      </form>
+            <div className="or-line">
+              <span></span>
+              <span>or</span>
+              <span></span>
+            </div>
+            <div className="social-icons">
+              <FcGoogle size={40} className="icon" />
+              <FaFacebook size={40} className="icon" />
+            </div>
+            <p className="signup">
+              Don't have an account? &nbsp;
+              <button
+                type="button"
+                onClick={() => {
+                  showRegistration();
+                  onClose();
+                }}
+              >
+                Sign up
+              </button>
+            </p>
+          </form>
+        )}
+      </div>
     </div>
   );
 };
