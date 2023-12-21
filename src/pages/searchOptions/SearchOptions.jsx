@@ -90,7 +90,7 @@ const SearchOptions = () => {
                   </div>
                 )}
           </div>
-          {/* {pending && <Loading />} */}
+          {pending && <Loading />}
         </div>
         <div className="wave3">
           <svg

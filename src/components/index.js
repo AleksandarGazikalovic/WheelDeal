@@ -23,3 +23,5 @@ export { default as ProfileAccountSmall } from "./profileAccountSmall/ProfileAcc
 export { default as Menu } from "./menu/Menu";
 export { default as OrangeButton } from "./orangeButton/OrangeButton";
 export { default as PostElementSkeleton } from "./postElementSkeleton/PostElementSkeleton";
+export { default as EmailVerification } from "./emailVerification/EmailVerification";
+export { default as RegistrationInput } from "./registrationInput/RegistrationInput";

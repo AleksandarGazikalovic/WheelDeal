@@ -75,6 +75,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
 
     if (!isEmailValid || !isPasswordValid) return;
 
+    console.log("a");
     // Check if any of the fields is empty
     dispatch(
       loginUser({
@@ -85,6 +86,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
       if (loginUser.fulfilled.match(result)) {
         navigate("/profile"); // Successful login
       } else {
+        console.log(result.payload);
         setErrorMessage(result.payload);
       }
     });
