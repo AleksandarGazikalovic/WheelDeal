@@ -1,0 +1,27 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set Up Docker
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - name: Build and Push Docker Image
+      run: |
+        echo "$DOCKER_TOKEN" | docker login ghcr.io -u AleksandarGazikalovic --password-stdin
+        docker build -t ghcr.io/AleksandarGazikalovic/WheelDeal:latest .
+        docker push ghcr.io/AleksandarGazikalovic/WheelDeal:latest
+      env:
+        DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
