@@ -20,7 +20,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          echo "$DOCKER_TOKEN" | docker login ghcr.io -u AleksandarGazikalovic --password-stdin
+          echo "$DOCKER_TOKEN" | docker login ghcr.io -u AleksandarGazikalovic "$DOCKER_PASSWORD"
           docker build -t ghcr.io/AleksandarGazikalovic/WheelDeal:latest .
           docker push ghcr.io/AleksandarGazikalovic/WheelDeal:latest
 
