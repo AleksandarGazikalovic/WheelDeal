@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set Up Docker
         uses: actions/setup-node@v3
@@ -20,18 +20,18 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          echo "$DOCKER_TOKEN" | docker login ghcr.io -u AleksandarGazikalovic "$DOCKER_PASSWORD"
-          docker build -t ghcr.io/AleksandarGazikalovic/WheelDeal:latest .
-          docker push ghcr.io/AleksandarGazikalovic/WheelDeal:latest
+          docker login --username ${{github.actor}} --password ${{secrets.GH_PAT}} ghcr.io
+          docker build -t ghcr.io/aleksandargazikalovic/wheeldeal:latest -f Dockerfile.frontend .
+          docker push ghcr.io/aleksandargazikalovic/wheeldeal:latest
 
       - name: Deploy to DigitalOcean Droplet
-        run: |
-          ssh your-username@your-droplet-ip 'bash -s' < deploy-script.sh
-        env:
-          DOCKER_IMAGE: ghcr.io/AleksandarGazikalovic/WheelDeal:latest
-          DOCKER_USERNAME: gazi6
-          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} # GitHub secret for Docker password
-          DROPLET_IP: 46.101.104.224
-          DROPLET_USERNAME: root
-          DROPLET_SSH_KEY: ${{ secrets.DROPLET_SSH_KEY }} # GitHub secret for your SSH private key
+        uses: appleboy/ssh-action@v1.0.1
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: ${{ secrets.DROPLET_USERNAME }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          port: 22
+          script: |
+            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_PAT }}
+            docker pull ${{secrets.DOCKER_IMAGE}}
+            docker run -d -p 8080:80 --name your-container ${{secrets.DOCKER_IMAGE}}
