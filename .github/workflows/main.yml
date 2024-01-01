@@ -16,7 +16,7 @@ jobs:
       - name: Set Up Docker
         uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: "18"
 
       - name: Build and Push Docker Image
         run: |
@@ -25,13 +25,14 @@ jobs:
           docker push ghcr.io/aleksandargazikalovic/wheeldeal:latest
 
       - name: Deploy to DigitalOcean Droplet
-        uses: appleboy/ssh-action@v1.0.1
+        uses: appleboy/ssh-action@v1.0.2
         with:
           host: ${{ secrets.DROPLET_HOST }}
           username: ${{ secrets.DROPLET_USERNAME }}
           key: ${{ secrets.DROPLET_SSH_KEY }}
           port: 22
           script: |
-            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_PAT }}
+            docker login ghcr.io -u ${{ secrets.GH_USERNAME }} -p ${{ secrets.GH_PAT }}
             docker pull ${{secrets.DOCKER_IMAGE}}
-            docker run -d -p 8080:80 --name your-container ${{secrets.DOCKER_IMAGE}}
+            CONTAINER_NAME="wheel-deal-$(date +"%Y%m%d%H%M%S")"
+            docker run -d -p 8080:80 --name $CONTAINER_NAME ${{ secrets.DOCKER_IMAGE }}
