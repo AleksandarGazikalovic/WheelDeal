@@ -36,7 +36,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
   };
 
   const handleForgotPassword = () => {
-    setShowForgotPassword(true);
+    setShowForgotPassword(!showForgotPassword);
   };
 
   const validateInput = (fieldName, value) => {
@@ -126,7 +126,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
       <div className="login-form slide-top">
         <RiCloseLine onClick={onClose} className="login-close" />
         {showForgotPassword ? (
-          <ForgotPassword />
+          <ForgotPassword handleGoBack={handleForgotPassword} />
         ) : (
           <form className="form-wrapper" onSubmit={handleLogin}>
             <h1 className="login-welcome">Login</h1>

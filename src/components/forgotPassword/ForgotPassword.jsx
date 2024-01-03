@@ -4,7 +4,7 @@ import "./forgotPassword.css";
 import OrangeButton from "../orangeButton/OrangeButton";
 import TextField from "@mui/material/TextField";
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ handleGoBack }) => {
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -49,6 +49,9 @@ const ForgotPassword = () => {
           Confirm
         </button>
       </form>
+      <button className="login-back-btn" onClick={handleGoBack}>
+        Go back
+      </button>
     </div>
   );
 };
