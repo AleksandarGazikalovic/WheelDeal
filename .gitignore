@@ -1,1 +1,56 @@
-node_modules
+# dependencies
+/node_modules
+
+# build
+/build
+/dist
+
+# environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+
+# cache
+/.pnp
+.pnp.js
+
+# logs
+/logs
+*.log
+
+# IDE files
+.idea
+.vscode
+
+# misc
+.DS_Store
+Thumbs.db
+*.swp
+
+# compiled output
+*.log
+*.tsbuildinfo
+
+# local .env files
+.env.local
+.env.*.local
+
+# Jest coverage
+/coverage
+
+# Next.js build output
+/out
+
+# Nuxt.js build output
+/.nuxt
+
+# Vuepress build output
+/.vuepress/dist
+
+# Yarn
+yarn-error.log
+.pnp
+.pnp.js

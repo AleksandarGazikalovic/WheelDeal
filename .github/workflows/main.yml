@@ -44,4 +44,4 @@ jobs:
             fi
 
             CONTAINER_NAME="wheel-deal-$(date +"%Y%m%d%H%M%S")"
-            docker run -d -p 3000:3000 --name $CONTAINER_NAME ${{ secrets.DOCKER_IMAGE }}
+            docker run -d -p 3000:3000 --name $CONTAINER_NAME -v /root/env/.env:/app/.env ${{ secrets.DOCKER_IMAGE }}

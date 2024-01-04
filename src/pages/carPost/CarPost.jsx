@@ -1,5 +1,5 @@
 import React from "react";
-import { Footer, Navbar, Loading } from "../../components";
+import { Footer, Navbar, Loading, GoogleMaps } from "../../components";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./carPost.css";
@@ -10,6 +10,11 @@ import { HiArrowSmLeft } from "react-icons/hi";
 import { PiEngineLight, PiGasPump } from "react-icons/pi";
 import { GiCartwheel } from "react-icons/gi";
 import { format } from "date-fns";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import dayjs from "dayjs";
 
 const CarPost = () => {
   const { postId } = useParams();
@@ -137,14 +142,24 @@ const CarPost = () => {
                     <b>{post.price} € </b>/ day
                   </h1>
                 </div>
-                <input
-                  type="date"
-                  className="wd--post-wrapper--info-top-right--start-date"
-                ></input>
-                <input
-                  type="date"
-                  className="wd--post-wrapper--info-top-right--end-date"
-                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker
+                      label="Trip start"
+                      defaultValue={dayjs()}
+                      ampm={false}
+                      format="DD/MM/YYYY HH:mm"
+                    />
+                  </DemoContainer>
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker
+                      label="Trip end"
+                      defaultValue={dayjs().add(3, "day")}
+                      ampm={false}
+                      format="DD/MM/YYYY HH:mm"
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
                 <button className="wd--post-wrapper--info-top-right--button">
                   Book
                 </button>
@@ -152,6 +167,7 @@ const CarPost = () => {
             </div>
           </section>
           <div className="wd--post-wrapper-info-comments"></div>
+          <GoogleMaps />
         </div>
         <div className="wave3">
           <svg

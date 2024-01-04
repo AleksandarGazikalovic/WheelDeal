@@ -26,3 +26,4 @@ export { default as PostElementSkeleton } from "./postElementSkeleton/PostElemen
 export { default as EmailVerification } from "./emailVerification/EmailVerification";
 export { default as RegistrationInput } from "./registrationInput/RegistrationInput";
 export { default as ForgotPassword } from "./forgotPassword/ForgotPassword";
+export { default as GoogleMaps } from "./googleMaps/GoogleMaps";
