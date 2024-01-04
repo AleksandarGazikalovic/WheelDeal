@@ -136,13 +136,17 @@
   cursor: pointer;
 }
 
-.forgot-password a {
+.forgot-password button {
   color: rgba(105, 105, 105);
   font-size: 0.75rem;
   text-decoration: none;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 
-.forgot-password a:hover {
+.forgot-password button:hover {
   text-decoration: underline rgba(105, 105, 105, 1);
 }
 

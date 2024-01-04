@@ -208,9 +208,9 @@ const LoginForm = ({ onClose, showRegistration }) => {
               )}
             </div>
             <div className="forgot-password">
-              <a rel="noopener noreferrer" onClick={handleForgotPassword}>
+              <button rel="noopener noreferrer" onClick={handleForgotPassword}>
                 Forgot Password?
-              </a>
+              </button>
             </div>
             {error && (
               <span className={`error-msg-login ${isShaking ? "shaking" : ""}`}>

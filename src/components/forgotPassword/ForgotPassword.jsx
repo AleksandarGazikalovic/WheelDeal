@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./forgotPassword.css";
-import OrangeButton from "../orangeButton/OrangeButton";
 import TextField from "@mui/material/TextField";
 
 const ForgotPassword = ({ handleGoBack }) => {

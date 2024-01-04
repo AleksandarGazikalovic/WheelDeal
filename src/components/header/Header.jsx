@@ -9,7 +9,6 @@ import RegistrationForm from "../registrationForm/RegistrationForm";
 import LoginForm from "../loginForm/LoginForm";
 import { Link } from "react-router-dom";
 import { AiOutlineMinus } from "react-icons/ai";
-import { fetchPosts } from "../../redux/postsSlice";
 import Cookies from "universal-cookie";
 import Menu from "../menu/Menu";
 import ProfileAccount from "../profileAccount/ProfileAccount";
