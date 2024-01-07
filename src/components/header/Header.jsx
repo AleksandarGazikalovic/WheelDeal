@@ -12,6 +12,7 @@ import { AiOutlineMinus } from "react-icons/ai";
 import Cookies from "universal-cookie";
 import Menu from "../menu/Menu";
 import ProfileAccount from "../profileAccount/ProfileAccount";
+import { clearPosts } from "../../redux/postsSlice";
 
 const Header = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -52,17 +53,19 @@ const Header = () => {
     const filterValues = {
       fromDate: fromDateRef.current.value,
       toDate: toDateRef.current.value,
-      fromPrice: "",
-      toPrice: "",
-      location: "",
-      brand: "",
+      fromPrice: undefined,
+      toPrice: undefined,
+      location: undefined,
+      brand: undefined,
+      page: 1,
     };
-    cookies.set("filter", filterValues);
-    dispatch(
-      setFilter({
-        filterValues,
-      })
-    );
+    if (filterValues.fromDate !== "" || filterValues.toDate !== "") {
+      cookies.set("filter", filterValues);
+    } else {
+      cookies.remove("filter");
+    }
+    dispatch(setFilter(filterValues));
+    dispatch(clearPosts());
     navigate(`/search-options`);
   };
 

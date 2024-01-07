@@ -15,6 +15,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
+import noAvatar from "../../assets/noAvatar.png";
 
 const CarPost = () => {
   const { postId } = useParams();
@@ -29,6 +30,7 @@ const CarPost = () => {
       try {
         // Fetch the post data
         const postResponse = await axios.get(`/posts/${postId}`);
+
         setPost(postResponse.data);
         setImages(postResponse.data.images);
 
@@ -63,6 +65,8 @@ const CarPost = () => {
     setImages(newImages);
   };
 
+  console.log(post.location);
+
   return (
     <div className="gradient_bg2">
       <Navbar
@@ -86,7 +90,7 @@ const CarPost = () => {
                 </h1>
               </div>
               <div className="wd--post-wrapper--info-top-left--location">
-                <p>{post.location}</p>
+                <p>{post.location != null && post.location.address}</p>
               </div>
               {/* <div className="wd--post-wrapper--info-top-right--rating">
                 <h2>Rating</h2>
@@ -115,7 +119,10 @@ const CarPost = () => {
                 <h2>Host</h2>
                 <div className="wd--post-wrapper--info-top-left--profile-info">
                   <div className="wd--post-wrapper--info-top-left--profile-info-image">
-                    <img src={owner.profileImage} alt="profile" />
+                    <img
+                      src={owner.profileImage ? owner.profileImage : noAvatar}
+                      alt="profile"
+                    />
                   </div>
                   <div className="wd--post-wrapper--info-top-left--profile-info-right">
                     <p className="wd--post-wrapper--info-top-left--profile-info-name">
@@ -145,6 +152,7 @@ const CarPost = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DateTimePicker"]}>
                     <DateTimePicker
+                      className="wd--post-wrapper--info-top-right--start-date"
                       label="Trip start"
                       defaultValue={dayjs()}
                       ampm={false}
@@ -153,6 +161,7 @@ const CarPost = () => {
                   </DemoContainer>
                   <DemoContainer components={["DateTimePicker"]}>
                     <DateTimePicker
+                      className="wd--post-wrapper--info-top-right--end-date"
                       label="Trip end"
                       defaultValue={dayjs().add(3, "day")}
                       ampm={false}
@@ -166,8 +175,8 @@ const CarPost = () => {
               </div>
             </div>
           </section>
+          <GoogleMaps selectedLocation={post.location} />
           <div className="wd--post-wrapper-info-comments"></div>
-          <GoogleMaps />
         </div>
         <div className="wave3">
           <svg

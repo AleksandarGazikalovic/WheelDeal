@@ -136,6 +136,7 @@ const Filters = ({
     toPrice: undefined,
     location: undefined,
     brand: undefined,
+    page: 1,
   });
 
   useEffect(() => {
@@ -147,16 +148,16 @@ const Filters = ({
         toPrice: undefined,
         location: undefined,
         brand: undefined,
+        page: 1,
       });
       setResetFilters(false);
     }
-  }, [resetFilters]);
+  }, [resetFilters, setResetFilters]);
 
   const applyFilter = async () => {
     cookies.set("filter", filterValues);
     dispatch(setFilter(filterValues));
     dispatch(clearPosts());
-    dispatch(fetchPosts(filterValues));
   };
 
   const handleFilterChange = (newValues) => {

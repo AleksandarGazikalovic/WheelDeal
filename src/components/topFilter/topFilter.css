@@ -13,18 +13,19 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
-  width: 100%;
+  width: auto;
 }
 
 .wd--search--top-filter-btns {
   display: flex;
   flex-wrap: nowrap;
   border-radius: 50px 50px 50px 50px;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  box-shadow: rgba(0, 0, 0, 0.25) 2.95px 2.95px 3.6px;
+  transition: all 0.2s ease-in-out 0s;
 }
 
 .wd--search--top-filter-btns:hover {
-  box-shadow: rgba(0, 0, 0, 0.25) 2.95px 2.95px 3.6px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .wd--search--top-filter-btns button {

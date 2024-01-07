@@ -90,7 +90,7 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
               {post.brand + " " + post.model + " " + post.year}
             </p>
             <p className="wd--search-content--elements-element-text--left-location">
-              {post.location}
+              {post.location.address}
             </p>
             <p className="wd--search-content--elements-element-text--left-date">
               {formattedFromDate + "-" + formattedToDate}

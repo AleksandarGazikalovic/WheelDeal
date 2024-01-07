@@ -18,7 +18,6 @@ export const postSlice = createSlice({
       brand: "",
       model: "",
       year: "",
-      casco: "",
       from: "",
       to: "",
       location: "",

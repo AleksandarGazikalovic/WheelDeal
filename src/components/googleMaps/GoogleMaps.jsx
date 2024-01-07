@@ -1,31 +1,36 @@
-import React from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+// GoogleMaps.jsx
+
+import React, { useState } from "react";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import "./googleMaps.css";
 
-const GoogleMaps = () => {
+const GoogleMaps = ({ selectedLocation }) => {
   const mapContainerStyle = {
     width: "100%",
     height: "100%",
+    borderRadius: "2rem",
   };
-
-  const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-
-  const center = {
-    lat: -34.397,
-    lng: 150.644,
+  const latLng = selectedLocation
+    ? {
+        lat: parseFloat(selectedLocation?.latLng.lat),
+        lng: parseFloat(selectedLocation?.latLng.lng),
+      }
+    : null;
+  const center = latLng || {
+    lat: 44.7866, // Latitude for Belgrade
+    lng: 20.4489, // Longitude for Belgrade
   };
+  const zoomLevel = selectedLocation ? 15 : 12;
 
   return (
     <div className="wd--google-maps-wrapper">
-      <LoadScript googleMapsApiKey={API_KEY}>
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={center}
-          zoom={8}
-        >
-          <Marker position={center} />
-        </GoogleMap>
-      </LoadScript>
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        center={center}
+        zoom={zoomLevel}
+      >
+        {selectedLocation && <Marker position={center} />}
+      </GoogleMap>
     </div>
   );
 };

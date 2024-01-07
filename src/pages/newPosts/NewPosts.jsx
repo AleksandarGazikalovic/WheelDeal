@@ -1,5 +1,5 @@
 import React from "react";
-import { Footer, Navbar, Loading } from "../../components";
+import { Footer, Navbar, Loading, GoogleMaps } from "../../components";
 import { useState } from "react";
 import "./newPosts.css";
 import { useEffect } from "react";
@@ -12,13 +12,14 @@ import { createPost } from "../../redux/postSlice";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
+import { LocationAutocomplete } from "../../components";
 import {
   PiNumberOneBold,
   PiNumberTwoBold,
   PiNumberThreeBold,
+  PiNumberFourBold,
 } from "react-icons/pi";
 import carModelsArray from "../../models/car-models.json";
-import locations from "../../models/locations.json";
 
 function ImageItem({ image, onClick }) {
   return (
@@ -47,6 +48,7 @@ const NewPosts = () => {
   const [firstPage, setFirstPage] = useState(true);
   const [secondPage, setSecondPage] = useState(false);
   const [thirdPage, setThirdPage] = useState(false);
+  const [fourthPage, setFourthPage] = useState(false);
   const imageRef = useRef(null);
   const deleteBtnRef = useRef(null);
   const [isFadingOut, setIsFadingOut] = useState(false);
@@ -80,7 +82,6 @@ const NewPosts = () => {
     price: "",
     from: "",
     to: "",
-    casco: "",
   });
 
   const handleInputChange = (name, value) => {
@@ -186,41 +187,58 @@ const NewPosts = () => {
   const handleBack = () => {
     if (secondPage) {
       setFilled(true);
-      setIsFadingOut(true); // Apply "fade-out" class
+      setIsFadingOut(true);
       setTimeout(() => {
         setSecondPage(false);
         setFirstPage(true);
-        setIsFadingOut(false); // Remove "fade-out" class
-      }, 1000); // Delay the transition for 0.5 seconds (adjust as needed)
+        setIsFadingOut(false);
+      }, 1000);
     } else if (thirdPage) {
       setFilled(true);
-      setIsFadingOut(true); // Apply "fade-out" class
+      setIsFadingOut(true);
       setTimeout(() => {
         setThirdPage(false);
         setSecondPage(true);
-        setIsFadingOut(false); // Remove "fade-out" class
-      }, 1000); // Delay the transition for 0.5 seconds (adjust as needed)
+        setIsFadingOut(false);
+      }, 1000);
+    } else if (fourthPage) {
+      setFilled(true);
+      setIsFadingOut(true);
+      setTimeout(() => {
+        setFourthPage(false);
+        setThirdPage(true);
+        setIsFadingOut(false);
+      }, 1000);
     }
     // ... (rest of your code)
   };
 
   const handleNext = () => {
     if (firstPage) {
-      setIsFadingOut(true); // Apply "fade-out" class
+      setIsFadingOut(true);
       setTimeout(() => {
         setFirstPage(false);
         setSecondPage(true);
-        setIsFadingOut(false); // Remove "fade-out" class
-      }, 1000); // Delay the transition for 0.5 seconds (adjust as needed)
+        setIsFadingOut(false);
+      }, 1000);
     } else if (secondPage) {
       if (handleError1()) return;
       setFilled(true);
-      setIsFadingOut(true); // Apply "fade-out" class
+      setIsFadingOut(true);
       setTimeout(() => {
         setSecondPage(false);
         setThirdPage(true);
-        setIsFadingOut(false); // Remove "fade-out" class
-      }, 1000); // Delay the transition for 0.5 seconds (adjust as needed)
+        setIsFadingOut(false);
+      }, 1000);
+    } else if (thirdPage) {
+      if (handleError2()) return;
+      setFilled(true);
+      setIsFadingOut(true);
+      setTimeout(() => {
+        setThirdPage(false);
+        setFourthPage(true);
+        setIsFadingOut(false);
+      }, 1000);
     }
   };
 
@@ -234,9 +252,7 @@ const NewPosts = () => {
       postValues.transmission === "" ||
       postValues.fuel === "" ||
       postValues.drive === "" ||
-      postValues.engine === "" ||
-      postValues.location === "" ||
-      postValues.casco === ""
+      postValues.engine === ""
     ) {
       setFilled(false);
       return true;
@@ -245,6 +261,14 @@ const NewPosts = () => {
   };
 
   const handleError2 = () => {
+    if (postValues.location === "") {
+      setFilled(false);
+      return true;
+    }
+    return false;
+  };
+
+  const handleError3 = () => {
     if (
       postValues.price === "" ||
       postValues.from === "" ||
@@ -257,11 +281,19 @@ const NewPosts = () => {
   };
 
   const handleCreatePost = () => {
-    if (handleError2()) return;
+    if (handleError3()) return;
     dispatch(createPost(postValues)).then(() => {
       if (!error && !pending) {
         navigate("/profile");
       }
+    });
+  };
+
+  const handleLocationSelect = (selectedLocation) => {
+    console.log(selectedLocation);
+    setPostValues({
+      ...postValues,
+      location: selectedLocation,
     });
   };
 
@@ -288,6 +320,12 @@ const NewPosts = () => {
                 size={30}
                 className={`wd--new-posts--page-numbers-three ${
                   thirdPage ? "active-page" : ""
+                }`}
+              />
+              <PiNumberFourBold
+                size={30}
+                className={`wd--new-posts--page-numbers-three ${
+                  fourthPage ? "active-page" : ""
                 }`}
               />
             </div>
@@ -554,54 +592,27 @@ const NewPosts = () => {
                     </label>
                   </div>
                 </section>
-                <section>
-                  <div className="wd--new-post--container-details-section1-div">
-                    <select
-                      required
-                      className="wd--new-post--container-details-section1-div-input2 style-7"
-                      name="casco"
-                      id="casco"
-                      value={
-                        postValues.casco === "" ? "none" : postValues.casco
-                      }
-                      onChange={(e) =>
-                        handleInputChange(e.target.name, e.target.value)
-                      }
-                    >
-                      <option value="none" selected disabled hidden>
-                        Casco
-                      </option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                  <div className="wd--new-post--container-details-section1-div">
-                    <select
-                      required
-                      className="wd--new-post--container-details-section1-div-input2"
-                      name="location"
-                      id="location"
-                      value={postValues.location}
-                      onChange={(e) =>
-                        handleInputChange(e.target.name, e.target.value)
-                      }
-                    >
-                      <option value="none" selected disabled hidden>
-                        Location
-                      </option>
-                      {locations
-                        .sort((a, b) => a.city.localeCompare(b.city))
-                        .map((item, index) => (
-                          <option key={index + 1} value={item.city}>
-                            {item.city}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
-                </section>
               </form>
             ) : null}
+
             {thirdPage ? (
+              <div
+                className={`wd--new-post--container-details-section2 ${
+                  isFadingOut ? "fade-out" : ""
+                }`}
+              >
+                <h1 className="wd--new-post--container-details-section2-title">
+                  Location
+                </h1>
+                <LocationAutocomplete
+                  selectedLocation={postValues.location.address}
+                  onSelect={handleLocationSelect}
+                />
+                <GoogleMaps selectedLocation={postValues.location} />
+              </div>
+            ) : null}
+
+            {fourthPage ? (
               <div
                 className={`wd--new-post--container-details-section2 ${
                   isFadingOut ? "fade-out" : ""
@@ -699,7 +710,7 @@ const NewPosts = () => {
               )}
               {!filled ? <span>"Please fill in all the fields!"</span> : null}
 
-              {thirdPage ? (
+              {fourthPage ? (
                 <button
                   type="button"
                   disabled={pending}

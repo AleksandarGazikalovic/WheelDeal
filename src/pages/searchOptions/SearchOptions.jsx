@@ -12,23 +12,21 @@ import { useDispatch } from "react-redux";
 import { Loading } from "../../components";
 import Cookies from "universal-cookie";
 import { setFilter } from "../../redux/filterSlice";
-import { fetchPosts } from "../../redux/postsSlice";
+import { clearPosts, fetchPosts } from "../../redux/postsSlice";
 
 const SearchOptions = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const dispatch = useDispatch();
   const { posts, pending, hasMore } = useSelector((state) => state.posts);
-  const [page, setPage] = useState(1);
   const cookies = new Cookies(null, { path: "/" });
-  const cookieFilter = cookies.get("filter") || {
-    fromDate: undefined,
-    toDate: undefined,
-    fromPrice: undefined,
-    toPrice: undefined,
-    location: undefined,
-    brand: undefined,
-    page: 1,
-  };
+  const cookieFilter = cookies.get("filter") || null;
+  const filterState = useSelector((state) => state.filter);
+
+  useEffect(() => {}, []);
+
+  useEffect(() => {
+    dispatch(fetchPosts(filterState));
+  }, [dispatch, filterState]);
 
   const observer = useRef();
   const lastPostElementRef = useCallback(
@@ -37,21 +35,19 @@ const SearchOptions = () => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          setPage((prev) => prev + 1);
-          console.log(page);
+          //need to set filter page to current page + 1
+          dispatch(
+            setFilter({
+              ...filterState,
+              page: filterState.page + 1,
+            })
+          );
         }
       });
       if (node) observer.current.observe(node);
     },
     [pending, hasMore]
   );
-
-  useEffect(() => {
-    if (hasMore || posts.length === 0 || page !== 1) {
-      dispatch(setFilter(cookieFilter));
-      dispatch(fetchPosts({ ...cookieFilter, page: page }));
-    }
-  }, [page]);
 
   return (
     <div className="gradient_bg2">

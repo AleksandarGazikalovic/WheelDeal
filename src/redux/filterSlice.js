@@ -21,8 +21,17 @@ export const filterSlice = createSlice({
       state.brand = action.payload.brand;
       state.page = action.payload.page;
     },
+    clearFilter: (state) => {
+      state.fromDate = undefined;
+      state.toDate = undefined;
+      state.fromPrice = undefined;
+      state.toPrice = undefined;
+      state.location = undefined;
+      state.brand = undefined;
+      state.page = 1;
+    },
   },
 });
 
-export const { setFilter } = filterSlice.actions;
+export const { setFilter, clearFilter } = filterSlice.actions;
 export default filterSlice.reducer;
