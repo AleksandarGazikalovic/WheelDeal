@@ -19,10 +19,12 @@ const TopFilter = ({ posts }) => {
   const cookies = new Cookies(null, { path: "/" });
 
   const resetFilter = async () => {
-    cookies.remove("filter");
-    dispatch(clearFilter());
-    dispatch(clearPosts());
-    setResetFilters(true);
+    if (cookies.get("filter") !== undefined) {
+      cookies.remove("filter");
+      dispatch(clearPosts());
+      dispatch(clearFilter());
+      setResetFilters(true);
+    }
   };
 
   const handleFilterChange = (formName) => {

@@ -1,0 +1,35 @@
+.wd--verification-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #dadbdc;
+}
+
+.wd--verification-container--success-container,
+.wd--verification-container--error-container {
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.wd--verification-container--success-container {
+  color: #008000; /* Green color for success */
+}
+
+.wd--verification-container--error-container {
+  color: #ff0000; /* Red color for error */
+}
+
+.wd--verification-container--home-link {
+  display: block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #007bff; /* Blue color for the link */
+}
+
+.wd--verification-container--home-link:hover {
+  text-decoration: underline;
+}

@@ -22,8 +22,6 @@ const SearchOptions = () => {
   const cookieFilter = cookies.get("filter") || null;
   const filterState = useSelector((state) => state.filter);
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
     dispatch(fetchPosts(filterState));
   }, [dispatch, filterState]);

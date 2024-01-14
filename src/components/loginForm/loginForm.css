@@ -131,14 +131,7 @@
   font-size: 0.75rem;
   line-height: 1rem;
   color: rgba(105, 105, 105);
-  margin: 8px 0 14px 0;
   font-family: var(--font-family);
-  cursor: pointer;
-}
-
-.forgot-password button {
-  color: rgba(105, 105, 105);
-  font-size: 0.75rem;
   text-decoration: none;
   background: none;
   border: none;
@@ -146,7 +139,7 @@
   cursor: pointer;
 }
 
-.forgot-password button:hover {
+.forgot-password:hover {
   text-decoration: underline rgba(105, 105, 105, 1);
 }
 
@@ -176,7 +169,7 @@
   width: 100%;
   transition: background-color 0.3s ease;
   user-select: none;
-  margin-top: 1rem;
+  margin-top: 3rem;
 
   &:hover {
     background-color: #fa972d;
@@ -220,8 +213,7 @@
 .error-msg-login {
   color: red;
   position: absolute;
-  bottom: 43%;
-  margin-top: 1rem;
+  bottom: 46%;
   font-size: 12px;
   font-family: var(--font-family);
   font-weight: bold;
@@ -293,14 +285,23 @@
   .login-button {
     margin-top: 1rem;
   }
+  .error-msg-login {
+    bottom: 48%;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .login-button {
+    margin-top: 2rem;
+  }
+  .error-msg-login {
+    bottom: 46%;
+  }
 }
 
 @media screen and (max-width: 780px) {
   .login-form {
     width: 50%;
-  }
-  .login-button {
-    margin-top: 1rem;
   }
 }
 
@@ -322,6 +323,9 @@
   .login-form label {
     margin-left: 0;
     font-size: 14px;
+  }
+  .login-button {
+    margin-top: 3rem;
   }
 }
 

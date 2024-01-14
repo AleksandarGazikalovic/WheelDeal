@@ -7,7 +7,14 @@ import {
   redirect,
   Navigate,
 } from "react-router-dom";
-import { Home, SearchOptions, NewPosts, CarPost, Profile } from "./pages";
+import {
+  Home,
+  SearchOptions,
+  NewPosts,
+  CarPost,
+  Profile,
+  VerificationPage,
+} from "./pages";
 import { useSelector } from "react-redux";
 import { JwtAuth } from "./components";
 
@@ -40,6 +47,7 @@ const App = () => {
           }
         />
         <Route path="/post/:postId" element={<CarPost />} />
+        <Route path="/verify/:token" element={<VerificationPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

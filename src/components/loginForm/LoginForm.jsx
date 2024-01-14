@@ -207,11 +207,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
                 />
               )}
             </div>
-            <div className="forgot-password">
-              <button rel="noopener noreferrer" onClick={handleForgotPassword}>
-                Forgot Password?
-              </button>
-            </div>
+
             {error && (
               <span className={`error-msg-login ${isShaking ? "shaking" : ""}`}>
                 {errorMessage}
@@ -230,7 +226,13 @@ const LoginForm = ({ onClose, showRegistration }) => {
             >
               {!pending ? "Log in" : <Loader className="spinner" />}
             </button>
-
+            <button
+              className="forgot-password"
+              rel="noopener noreferrer"
+              onClick={handleForgotPassword}
+            >
+              Forgot Password?
+            </button>
             <div className="or-line">
               <span></span>
               <span>or</span>

@@ -96,7 +96,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 70%;
+  width: auto;
 }
 
 .wd--search--top-filter-dropdown-btn {
@@ -115,7 +115,7 @@
   font-family: var(--font-family);
   font-weight: 700;
   color: #fff;
-  width: 70%;
+  width: 300px;
   position: relative;
 }
 
@@ -180,5 +180,11 @@
   }
   .rent-btn {
     border-radius: 0 0 50px 50px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .wd--search--top-filter-dropdown-btn {
+    width: 250px;
   }
 }
