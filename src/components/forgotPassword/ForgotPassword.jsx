@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./forgotPassword.css";
 import TextField from "@mui/material/TextField";
+import { ReactComponent as Loader } from "../../assets/spinner.svg";
 
 const ForgotPassword = ({ handleGoBack }) => {
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
+  const [pending, setPending] = useState(false);
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     try {
+      setPending(true);
       const response = await axios.post("/auth/forgot-password", { email });
+      setPending(false);
       setSuccess(true);
 
       console.log("Forgot password request successful", response.data);
@@ -45,7 +49,7 @@ const ForgotPassword = ({ handleGoBack }) => {
         />
 
         <button className="login-button" type="submit">
-          Confirm
+          {!pending ? "Confirm" : <Loader className="spinner" />}
         </button>
       </form>
       <button className="login-back-btn" onClick={handleGoBack}>

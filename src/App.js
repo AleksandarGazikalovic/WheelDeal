@@ -14,6 +14,7 @@ import {
   CarPost,
   Profile,
   VerificationPage,
+  ResetPassword,
 } from "./pages";
 import { useSelector } from "react-redux";
 import { JwtAuth } from "./components";
@@ -48,6 +49,7 @@ const App = () => {
         />
         <Route path="/post/:postId" element={<CarPost />} />
         <Route path="/verify/:token" element={<VerificationPage />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

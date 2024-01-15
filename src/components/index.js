@@ -28,3 +28,4 @@ export { default as RegistrationInput } from "./registrationInput/RegistrationIn
 export { default as ForgotPassword } from "./forgotPassword/ForgotPassword";
 export { default as GoogleMaps } from "./googleMaps/GoogleMaps";
 export { default as LocationAutocomplete } from "./locationAutocomplete/LocationAutocomplete";
+export { default as PasswordInput } from "./passwordInput/PasswordInput";

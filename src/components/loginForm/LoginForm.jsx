@@ -4,19 +4,17 @@ import { RiCloseLine } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../redux/userSlice";
 import { ReactComponent as Loader } from "../../assets/spinner.svg";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import ForgotPassword from "../forgotPassword/ForgotPassword";
+import PasswordInput from "../passwordInput/PasswordInput";
 
 const LoginForm = ({ onClose, showRegistration }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [showPassword, setShowPassword] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
@@ -81,7 +79,6 @@ const LoginForm = ({ onClose, showRegistration }) => {
 
     if (!isEmailValid || !isPasswordValid) return;
 
-    console.log("a");
     // Check if any of the fields is empty
     dispatch(
       loginUser({
@@ -162,52 +159,11 @@ const LoginForm = ({ onClose, showRegistration }) => {
                 Email
               </label>
             </div>
-            <div className="wd--registration-form--div">
-              <input
-                className={`wd--registration-form--div-input  ${
-                  isPasswordFocused ? "focus" : ""
-                }`}
-                type={showPassword ? "text" : "password"}
-                name="password"
-                id="password"
-                value={account.password}
-                onFocus={() => setIsPasswordFocused(true)}
-                onBlur={() => setIsPasswordFocused(false)}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  handleInputChange("password", value);
-                }}
-              />
-              <label
-                className={`wd--registration-form--div-label  ${
-                  !isPasswordFocused && !account.password
-                    ? ""
-                    : !isPasswordFocused && !isPasswordValid
-                    ? "invalid"
-                    : !isPasswordFocused && isPasswordValid
-                    ? "valid"
-                    : isPasswordValid
-                    ? "valid"
-                    : "invalid"
-                }`}
-              >
-                Password
-              </label>
-              {showPassword ? (
-                <AiOutlineEye
-                  className="wd--registration-form--div-eye"
-                  onClick={() => setShowPassword(!showPassword)}
-                  size={30}
-                />
-              ) : (
-                <AiOutlineEyeInvisible
-                  className="wd--registration-form--div-eye"
-                  onClick={() => setShowPassword(!showPassword)}
-                  size={30}
-                />
-              )}
-            </div>
-
+            <PasswordInput
+              handleInputChange={handleInputChange}
+              isPasswordValid={isPasswordValid}
+              account={account}
+            />
             {error && (
               <span className={`error-msg-login ${isShaking ? "shaking" : ""}`}>
                 {errorMessage}
