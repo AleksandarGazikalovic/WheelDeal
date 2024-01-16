@@ -22,6 +22,11 @@ const GoogleMaps = ({ selectedLocation }) => {
   };
   const zoomLevel = selectedLocation ? 15 : 12;
 
+  const CarMarker = {
+    url: "path/to/car-icon.png", // Replace with the path to your car marker icon
+    scaledSize: new window.google.maps.Size(60, 60), // Adjust the size as needed
+  };
+
   return (
     <div className="wd--google-maps-wrapper">
       <GoogleMap
@@ -29,7 +34,7 @@ const GoogleMaps = ({ selectedLocation }) => {
         center={center}
         zoom={zoomLevel}
       >
-        {selectedLocation && <Marker position={center} />}
+        {selectedLocation && <Marker position={center} icon={CarMarker} />}
       </GoogleMap>
     </div>
   );

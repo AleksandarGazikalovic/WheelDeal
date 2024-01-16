@@ -21,6 +21,8 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
   const [owner, setOwner] = useState({});
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [price, setPrice] = useState(post.price);
+  const currency = useSelector((state) => state.currency);
 
   useEffect(() => {
     const fetchOwner = async () => {
@@ -45,6 +47,14 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
       console.error("Error liking post:", error);
     }
   };
+
+  useEffect(() => {
+    if (currency.name === "EUR") {
+      setPrice(post.price);
+    } else {
+      setPrice(post.price * currency.rate);
+    }
+  }, [currency]);
 
   useEffect(() => {
     const fetchLikes = async () => {
@@ -96,7 +106,7 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
               {formattedFromDate + "-" + formattedToDate}
             </p>
             <p className="wd--search-content--elements-element-text--left-price">
-              {post.price}€ / dan
+              {Math.round(price)} {currency.name === "EUR" ? "€" : "RSD"} / dan
             </p>
           </div>
           <div className="wd--search-content--elements-element-text--right">

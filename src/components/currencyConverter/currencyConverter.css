@@ -1,0 +1,67 @@
+.wd--currency-container {
+  display: flex;
+  flex-wrap: nowrap;
+  border-radius: 50px 50px 50px 50px;
+  box-shadow: rgba(0, 0, 0, 0.25) 2.95px 2.95px 3.6px;
+  transition: all 0.2s ease-in-out 0s;
+  width: auto;
+  position: absolute;
+  right: 5%;
+}
+
+.wd--currency-container:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.wd--currency-container--item {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 22px;
+  font-family: var(--font-family);
+  outline: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: transparent;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.wd--currency-container--item:hover {
+  background-color: #f77f00;
+  border-color: #f77f00;
+  color: white;
+}
+
+.wd--currency-container--item:focus {
+  background-color: #f77f00;
+  border-color: #f77f00;
+  color: white;
+}
+
+.wd--currency-container--euro {
+  border: 1px solid #e5e5e5;
+  background-color: #fff;
+  border-right: none;
+  border-radius: 50px 0 0 50px;
+  font-weight: 300;
+  font-size: 10rem;
+}
+
+.wd--currency-container--dinar {
+  border: 1px solid #e5e5e5;
+  background-color: #fff;
+  border-right: none;
+  border-radius: 0 50px 50px 0;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 1050px) {
+  .wd--currency-container {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}

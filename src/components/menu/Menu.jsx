@@ -1,8 +1,6 @@
 import React from "react";
 import "./menu.css";
 import ProfileAccount from "../profileAccount/ProfileAccount";
-import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logoDark.png";
 import { useRef, useEffect } from "react";

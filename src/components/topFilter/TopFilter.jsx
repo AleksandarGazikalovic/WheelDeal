@@ -1,15 +1,14 @@
 import React from "react";
 import "./topFilter.css";
 import { useState, useRef, useEffect } from "react";
-import { Filters } from "..";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { clearPosts, fetchPosts } from "../../redux/postsSlice";
-import { clearFilter, setFilter } from "../../redux/filterSlice";
+import { CurrencyConverter, Filters } from "..";
+import { useDispatch } from "react-redux";
+import { clearPosts } from "../../redux/postsSlice";
+import { clearFilter } from "../../redux/filterSlice";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import Cookies from "universal-cookie";
 
-const TopFilter = ({ posts }) => {
+const TopFilter = () => {
   const [activeFilter, setActiveFilter] = useState(""); // Initial form value
   const [isSlideDown, setIsSlideDown] = useState(false);
   const [resetFilters, setResetFilters] = useState(false); // Initial form value
@@ -53,6 +52,7 @@ const TopFilter = ({ posts }) => {
 
   return (
     <div className="wd--search--top-filter">
+      <CurrencyConverter />
       <div ref={topFilterRef} className="wd--search--top-filter-wrapper">
         <div className="wd--search--top-filter-dropdown">
           <button
