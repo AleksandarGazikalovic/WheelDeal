@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  redirect,
   Navigate,
 } from "react-router-dom";
 import {
@@ -17,7 +16,7 @@ import {
   ResetPassword,
 } from "./pages";
 import { useSelector } from "react-redux";
-import { JwtAuth } from "./components";
+import { Comments, JwtAuth } from "./components";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -50,6 +49,7 @@ const App = () => {
         <Route path="/post/:postId" element={<CarPost />} />
         <Route path="/verify/:token" element={<VerificationPage />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/comments/" element={<Comments />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

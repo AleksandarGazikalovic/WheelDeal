@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { OrangeButton, PasswordInput } from "../../components";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./resetPassword.css";
+import logoDark from "../../assets/logoDark.png";
 
 const ResetPassword = () => {
   const { token } = useParams();
   const [account, setAccount] = useState({ password: "", confirmPassword: "" });
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
-  const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(null);
+  const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [success, setSuccess] = useState(false);
 
@@ -16,16 +17,50 @@ const ResetPassword = () => {
     switch (fieldName) {
       case "password":
         if (!value.trim()) {
+          setErrorMessage("Password is required");
+          setIsPasswordValid(false);
+        } else if (value.length < 7) {
+          setErrorMessage(
+            "Password requirements: 7 characters, one uppercase letter and one digit"
+          );
+          setIsPasswordValid(false);
+        } else if (!/[A-Z]/.test(value)) {
+          setErrorMessage(
+            "Password requirements: 7 characters, one uppercase letter and one digit"
+          );
+          setIsPasswordValid(false);
+        } else if (!/\d/.test(value)) {
+          setErrorMessage(
+            "Password requirements: 7 characters, one uppercase letter and one digit"
+          );
           setIsPasswordValid(false);
         } else {
+          setErrorMessage(null);
           setIsPasswordValid(true);
         }
         break;
 
       case "confirmPassword":
         if (!value.trim()) {
+          setErrorMessage("Password is required");
+          setIsConfirmPasswordValid(false);
+        } else if (value.length < 7) {
+          setErrorMessage(
+            "Password requirements: 7 characters, one uppercase letter and one digit"
+          );
+          setIsConfirmPasswordValid(false);
+        } else if (!/[A-Z]/.test(value)) {
+          setErrorMessage(
+            "Password requirements: 7 characters, one uppercase letter and one digit"
+          );
+          setIsConfirmPasswordValid(false);
+        } else if (!/\d/.test(value)) {
+          setErrorMessage(
+            "Password requirements: 7 characters, one uppercase letter and one digit"
+          );
           setIsConfirmPasswordValid(false);
         } else {
+          setErrorMessage(null);
           setIsConfirmPasswordValid(true);
         }
         break;
@@ -63,38 +98,43 @@ const ResetPassword = () => {
     }
   };
 
-  return !success ? (
+  return (
     <div className="wd--reset-password">
-      <div className="wd--reset-password--container">
-        <h2>Success!</h2>
-        <p>Your password has been reset successfully.</p>
-        <OrangeButton
-          text={"Go back"}
-          action={() => window.location.replace("/")}
-        />
+      <div className="wd--reset-logo">
+        <Link to="/">
+          <img src={logoDark} alt="" />
+        </Link>
       </div>
-    </div>
-  ) : (
-    <div className="wd--reset-password">
       <div className="wd--reset-password--container">
-        <PasswordInput
-          handleInputChange={handleInputChange}
-          isPasswordValid={isPasswordValid}
-          account={account}
-          name="password"
-          text={"New Password"}
-        />
-        <PasswordInput
-          handleInputChange={handleInputChange}
-          isConfirmPasswordValid={isConfirmPasswordValid}
-          account={account}
-          name="confirmPassword"
-          text={"Confirm Password"}
-        />
-        <span className="wd--reset-password--container-error">
-          {errorMessage}
-        </span>
-        <OrangeButton text={"Reset Password"} action={resetPassword} />
+        {success ? (
+          <>
+            <h2>Success!</h2>
+            <p>Your password has been reset successfully.</p>
+            <OrangeButton
+              text={"Go back"}
+              action={() => window.location.replace("/")}
+            />
+          </>
+        ) : (
+          <>
+            <PasswordInput
+              handleInputChange={handleInputChange}
+              isValid={isPasswordValid}
+              name="password"
+              label={"New Password"}
+            />
+            <PasswordInput
+              handleInputChange={handleInputChange}
+              isValid={isConfirmPasswordValid}
+              name="confirmPassword"
+              label={"Confirm Password"}
+            />
+            <span className="wd--reset-password--container-error">
+              {errorMessage}
+            </span>
+            <OrangeButton text={"Reset Password"} action={resetPassword} />
+          </>
+        )}
       </div>
     </div>
   );

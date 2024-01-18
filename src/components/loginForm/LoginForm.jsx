@@ -16,7 +16,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
   const dispatch = useDispatch();
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(null);
   const [isShaking, setIsShaking] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const navigate = useNavigate();
@@ -98,6 +98,7 @@ const LoginForm = ({ onClose, showRegistration }) => {
   useEffect(() => {
     const handleEscapeKey = (event) => {
       if (event.key === "Escape") {
+        setErrorMessage(null); // Clear the error message
         onClose(); // Call the onClose function passed as a prop to close the login window
       }
     };
@@ -161,8 +162,9 @@ const LoginForm = ({ onClose, showRegistration }) => {
             </div>
             <PasswordInput
               handleInputChange={handleInputChange}
-              isPasswordValid={isPasswordValid}
-              account={account}
+              isValid={isPasswordValid}
+              name={"password"}
+              label={"Password"}
             />
             {error && (
               <span className={`error-msg-login ${isShaking ? "shaking" : ""}`}>

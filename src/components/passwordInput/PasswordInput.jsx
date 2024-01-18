@@ -4,56 +4,49 @@ import "./passwordInput.css";
 
 const PasswordInput = ({
   handleInputChange,
-  isPasswordValid,
-  account,
+  isValid,
+  value,
   name,
-  text,
+  label,
+  placeholder,
+  showToggleIcon = true,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+
   return (
-    <div className="wd--registration-form--div">
+    <div className="password-input-container">
       <input
-        className={`wd--registration-form--div-input  ${
-          isPasswordFocused ? "focus" : ""
-        }`}
+        className={`password-input ${isPasswordFocused ? "focus" : ""}`}
         type={showPassword ? "text" : "password"}
-        name={`${name} || password`}
-        id={`${name} || password`}
+        name={name}
+        id={name}
+        placeholder={placeholder || ""}
         onFocus={() => setIsPasswordFocused(true)}
         onBlur={() => setIsPasswordFocused(false)}
         onChange={(e) => {
-          const value = e.target.value;
-          handleInputChange(name, value);
+          const inputValue = e.target.value;
+          handleInputChange(name, inputValue);
         }}
       />
       <label
-        className={`wd--registration-form--div-label  ${
-          !isPasswordFocused && !account.password
-            ? ""
-            : !isPasswordFocused && !isPasswordValid
-            ? "invalid"
-            : !isPasswordFocused && isPasswordValid
-            ? "valid"
-            : isPasswordValid
-            ? "valid"
-            : "invalid"
-        }`}
+        className={`password-label ${
+          isPasswordFocused || value ? "active" : ""
+        } ${isValid ? "valid" : isValid === false ? "invalid" : ""}`}
       >
-        {text || "Password"}
+        {label || "Password"}
       </label>
-      {showPassword ? (
-        <AiOutlineEye
-          className="wd--registration-form--div-eye"
+      {showToggleIcon && (
+        <div
+          className="password-toggle-icon"
           onClick={() => setShowPassword(!showPassword)}
-          size={30}
-        />
-      ) : (
-        <AiOutlineEyeInvisible
-          className="wd--registration-form--div-eye"
-          onClick={() => setShowPassword(!showPassword)}
-          size={30}
-        />
+        >
+          {showPassword ? (
+            <AiOutlineEye size={30} />
+          ) : (
+            <AiOutlineEyeInvisible size={30} />
+          )}
+        </div>
       )}
     </div>
   );
