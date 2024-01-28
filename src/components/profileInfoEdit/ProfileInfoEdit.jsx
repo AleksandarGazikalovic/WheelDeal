@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateProfileImage, updateUser } from "../../redux/userSlice";
+import { Avatar } from "@mui/material";
 
 const ProfileInfoEdit = ({ setShowProfileInfoEdit }) => {
   const user = useSelector((state) => state.user.userInfo);
@@ -74,11 +75,23 @@ const ProfileInfoEdit = ({ setShowProfileInfoEdit }) => {
         <div className="wd-profile--profile-info-edit--top">
           <div className="wd-profile--profile-info-edit--image">
             {profileImage ? (
-              <img src={profileImage} alt="" />
-            ) : userData.profileImage ? (
-              <img src={userData.profileImage} alt="" />
+              <Avatar
+                sx={{
+                  width: "inherit",
+                  height: "inherit",
+                }}
+                src={profileImage}
+              />
             ) : (
-              <RiAccountCircleFill color="#5e5e5e" size="200" />
+              <Avatar
+                sx={{
+                  width: "inherit",
+                  height: "inherit",
+                  backgroundColor: user.profileImage ? "" : "#003049",
+                }}
+                src={user.profileImage}
+                alt={user.firstname + " " + user.lastname}
+              />
             )}
             <div className="wd-profile--profile-info-edit--image-upload">
               <label>

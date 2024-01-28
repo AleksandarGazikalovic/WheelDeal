@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/userSlice";
 import OrangeButton from "../orangeButton/OrangeButton";
+import { Avatar } from "@mui/material";
 
 const ProfileAccountBig = ({ color }) => {
   const user = useSelector((state) => state.user.userInfo);
@@ -23,15 +24,19 @@ const ProfileAccountBig = ({ color }) => {
       className="wd--navbar-sign--account"
       style={{ backgroundColor: color }}
     >
-      {user.profileImage ? (
-        <Link to="/profile">
-          <div className="wd--navbar-sign--account-avatar">
-            <img src={user.profileImage} alt="" />
-          </div>
-        </Link>
-      ) : (
-        <RiAccountCircleFill color="#5e5e5e" size="50" />
-      )}
+      <Link to="/profile">
+        <div className="wd--navbar-sign--account-avatar">
+          <Avatar
+            sx={{
+              width: "inherit",
+              height: "inherit",
+              backgroundColor: user.profileImage ? "" : "#003049",
+            }}
+            src={user.profileImage}
+            alt={user.firstname + " " + user.lastname}
+          />
+        </div>
+      </Link>
       <div className="wd--header--sign-dropdown">
         {toggleDropdown ? (
           <RiCloseLine
