@@ -175,8 +175,11 @@ const CarPost = () => {
               </div>
             </div>
           </section>
+          <div className="wd--post-wrapper-info-comments">
+            <h2> Reviews </h2>
+            <Comments user_id={owner._id} />
+          </div>
           <GoogleMaps selectedLocation={post.location} />
-          <div className="wd--post-wrapper-info-comments"></div>
         </div>
         <div className="wave3">
           <svg
