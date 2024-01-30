@@ -1,22 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RiAccountCircleFill, RiArrowDownSLine } from "react-icons/ri";
-import { useSelector } from "react-redux";
 import "./profileAccountBig.css";
 import { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/userSlice";
 import OrangeButton from "../orangeButton/OrangeButton";
+import { logoutUser } from "../../redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const ProfileAccountBig = ({ color }) => {
   const user = useSelector((state) => state.user.userInfo);
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+
+  }, [user])
+  
 
   const handleLogout = () => {
-    dispatch(logout());
-    window.location.reload();
+    
+     // Check if any of the fields is empty
+     dispatch(logout());
+     dispatch(
+      logoutUser({})
+      ).then((result) => {
+        if (logoutUser.fulfilled.match(result)) {
+          // dispatch(logout());
+          navigate("/") // Successful logout
+        } else {
+          console.log(result.payload);
+        }
+    });
+    //window.location.reload();
   };
   return (
     <div
