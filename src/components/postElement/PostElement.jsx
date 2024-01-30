@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { likePost } from "../../redux/userSlice";
 import PostElementSkeleton from "../postElementSkeleton/PostElementSkeleton";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
   const [isLiked, setIsLiked] = useState(false);
   const { userInfo, pending, error } = useSelector((state) => state.user);
@@ -26,7 +28,7 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
 
   useEffect(() => {
     const fetchOwner = async () => {
-      const res = await axios.get(`/users/${post.userId}`);
+      const res = await axios.get( API_ENDPOINT + `/users/${post.userId}`);
       setOwner(res.data);
     };
     fetchOwner();

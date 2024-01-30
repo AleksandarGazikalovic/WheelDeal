@@ -9,13 +9,15 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 const Comments = ({ post_id }) => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`/users/${post_id}/comments`);
+        const response = await axios.get( API_ENDPOINT + `/users/${post_id}/comments`);
         setComments(response.data);
       } catch (error) {
         console.log(error);

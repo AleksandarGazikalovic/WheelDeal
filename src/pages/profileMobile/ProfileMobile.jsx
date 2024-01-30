@@ -15,6 +15,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 const ProfileMobile = () => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const [showProfileInfoEdit, setShowProfileInfoEdit] = useState(false);
@@ -101,11 +103,11 @@ const ProfileMobile = () => {
       return;
     }
     const fetchLikedPosts = async () => {
-      const res = await axios.get(`posts/liked/${userInfo._id}`);
+      const res = await axios.get( API_ENDPOINT + `/posts/liked/${userInfo._id}`);
       setLikedPosts(res.data);
     };
     const fetchUserPosts = async () => {
-      const res = await axios.get(`posts/profile/${userInfo._id}`);
+      const res = await axios.get( API_ENDPOINT + `/posts/profile/${userInfo._id}`);
       setUserPosts(res.data);
     };
     fetchUserPosts();

@@ -5,6 +5,8 @@ import { Link, useParams } from "react-router-dom";
 import "./resetPassword.css";
 import logoDark from "../../assets/logoDark.png";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 const ResetPassword = () => {
   const { token } = useParams();
   const [account, setAccount] = useState({ password: "", confirmPassword: "" });
@@ -86,7 +88,7 @@ const ResetPassword = () => {
     e.preventDefault();
     if (account.password === account.confirmPassword) {
       try {
-        await axios.post(`/auth/reset-password/${token}`, {
+        await axios.post( API_ENDPOINT + `/auth/reset-password/${token}`, {
           newPassword: account.password,
         });
         setSuccess(true);
