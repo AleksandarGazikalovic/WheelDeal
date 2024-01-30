@@ -1,5 +1,11 @@
 import React from "react";
-import { Footer, Navbar, Loading, GoogleMaps } from "../../components";
+import {
+  Footer,
+  Navbar,
+  Loading,
+  GoogleMaps,
+  Comments,
+} from "../../components";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./carPost.css";
@@ -16,6 +22,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import noAvatar from "../../assets/noAvatar.png";
+import { Avatar } from "@mui/material";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
 
@@ -66,8 +73,6 @@ const CarPost = () => {
     newImages.unshift(lastImage);
     setImages(newImages);
   };
-
-  console.log(post.location);
 
   return (
     <div className="gradient_bg2">
@@ -121,9 +126,14 @@ const CarPost = () => {
                 <h2>Host</h2>
                 <div className="wd--post-wrapper--info-top-left--profile-info">
                   <div className="wd--post-wrapper--info-top-left--profile-info-image">
-                    <img
-                      src={owner.profileImage ? owner.profileImage : noAvatar}
-                      alt="profile"
+                    <Avatar
+                      sx={{
+                        width: "inherit",
+                        height: "inherit",
+                        backgroundColor: owner.profileImage ? "" : "#003049",
+                      }}
+                      src={owner.profileImage}
+                      alt={owner.firstname + " " + owner.lastname}
                     />
                   </div>
                   <div className="wd--post-wrapper--info-top-left--profile-info-right">
@@ -177,8 +187,11 @@ const CarPost = () => {
               </div>
             </div>
           </section>
+          <div className="wd--post-wrapper-info-comments">
+            <h2> Reviews </h2>
+            <Comments user_id={owner._id} />
+          </div>
           <GoogleMaps selectedLocation={post.location} />
-          <div className="wd--post-wrapper-info-comments"></div>
         </div>
         <div className="wave3">
           <svg

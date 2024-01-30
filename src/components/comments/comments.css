@@ -1,0 +1,11 @@
+.wd--comment-name {
+  max-width: 200px;
+  text-align: flex-start;
+}
+
+.wd--comment-content {
+  text-align: left;
+  max-width: 600px;
+  align-self: center;
+  margin-left: 1rem;
+}

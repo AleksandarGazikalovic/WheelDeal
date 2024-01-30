@@ -4,6 +4,7 @@ import { FiEdit2 } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import noAvatar from "../../assets/noAvatar.png";
 import { IoLogoTwitter, IoLogoFacebook, IoLogoLinkedin } from "react-icons/io5";
+import { Avatar } from "@mui/material";
 
 const ProfileInfo = ({ setShowProfileInfoEdit }) => {
   const user = useSelector((state) => state.user.userInfo);
@@ -18,7 +19,15 @@ const ProfileInfo = ({ setShowProfileInfoEdit }) => {
       <div className="wd-profile--profile-info">
         <div className="wd-profile--profile-info--top">
           <div className="wd-profile--profile-info--image">
-            <img src={user.profileImage || noAvatar} alt="profile" />
+            <Avatar
+              sx={{
+                width: "inherit",
+                height: "inherit",
+                backgroundColor: user.profileImage ? "" : "#003049",
+              }}
+              src={user.profileImage}
+              alt={user.firstname + " " + user.lastname}
+            />
           </div>
           <p className="wd-profile--profile-info--name">
             {user.name} {user.surname}
