@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { likePost } from "../../redux/userSlice";
 import PostElementSkeleton from "../postElementSkeleton/PostElementSkeleton";
+import { Avatar } from "@mui/material";
+
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
 
 const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -26,7 +29,7 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
 
   useEffect(() => {
     const fetchOwner = async () => {
-      const res = await axios.get(`/users/${post.userId}`);
+      const res = await axios.get( API_ENDPOINT + `/users/${post.userId}`);
       setOwner(res.data);
     };
     fetchOwner();
@@ -111,17 +114,15 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
           </div>
           <div className="wd--search-content--elements-element-text--right">
             <div className="wd--search-content--elements-element-text--right-profile">
-              {owner.profileImage ? (
-                <img
-                  src={owner.profileImage}
-                  className="wd--search-content--elements-element-text--right-profile-img"
-                />
-              ) : (
-                <RiAccountCircleFill
-                  color="#5e5e5e"
-                  className="wd--search-content--elements-element-text--right-profile-img"
-                />
-              )}
+              <Avatar
+                sx={{
+                  width: "inherit",
+                  height: "inherit",
+                  backgroundColor: owner.profileImage ? "" : "#003049",
+                }}
+                src={owner.profileImage}
+                alt={owner.firstname + " " + owner.lastname}
+              />
             </div>
             {/* <div className="wd--search-content--elements-element-text--right-rating">
                 {} <AiFillStar />

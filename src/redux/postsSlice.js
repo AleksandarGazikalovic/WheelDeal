@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
   async (filter) => {
-    let url = "posts/filter/all?";
+    let url = API_ENDPOINT + "/posts/filter/all?";
 
     // Build the URL dynamically based on the presence of filter fields
     if (filter.fromDate) url += `startDate=${filter.fromDate}&`;
