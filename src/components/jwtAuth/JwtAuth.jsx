@@ -129,7 +129,7 @@ const JwtAuth = () => {
             <h1 className="session-expired-title">Vaša sesija je istekla!</h1>
               <h4 className="session-expired-body">Molimo Vas da se ponovo ulogujete</h4>
             <button
-              className="login-button"
+              className="confirm-button"
               type="submit"
               onClick={handleCloseSessionExpired}
             >
