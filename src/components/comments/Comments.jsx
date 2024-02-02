@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./comments.css";
+import { formatDistanceToNow } from "date-fns";
 
 const Comments = ({ user_id }) => {
   const [comments, setComments] = useState([]);
@@ -42,31 +43,54 @@ const Comments = ({ user_id }) => {
         comments.map((comment) => (
           <>
             <ListItem alignItems="flex-start">
-              <Box sx={{ minWidth: "100px" }} alignItems={"flex-start"}>
-                <ListItemAvatar>
+              <Box
+                sx={{
+                  minWidth: "100px",
+                }}
+              >
+                <ListItemAvatar
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
                   <Avatar
-                    alt={comment.firstname + " " + comment.lastname}
+                    sx={{
+                      backgroundColor: comment.profileImage ? "" : "#003049",
+                      width: "3rem",
+                      height: "3rem",
+                    }}
                     src={comment.profileImage}
+                    alt={comment.author.name + " " + comment.author.surname}
                   />
                 </ListItemAvatar>
                 <ListItemText
-                  primary={comment.firstname + " " + comment.lastname}
-                  secondary={comment.time}
+                  primary={comment.author.name}
+                  className="wd--comment-name"
+                  sx={{ marginBottom: "0rem", textAlign: "center" }}
+                />
+                <ListItemText
+                  sx={{ marginTop: "0rem", textAlign: "center" }}
+                  primary={comment.author.surname}
+                  secondary={formatDistanceToNow(new Date(comment.createdAt), {
+                    addSuffix: true,
+                  })}
                   className="wd--comment-name"
                 />
+              </Box>
+              <Box className="wd--comment-content">
                 <Rating
                   name="read-only"
                   value={comment.rating}
                   precision={0.5}
-                  size="small"
+                  size="medium"
                   readOnly
                 />
+                <ListItemText
+                  primary={comment.subject}
+                  secondary={comment.content}
+                />
               </Box>
-              <ListItemText
-                primary={comment.subject}
-                secondary={comment.content}
-                className="wd--comment-content"
-              />
             </ListItem>
             <Divider
               variant="inset"
