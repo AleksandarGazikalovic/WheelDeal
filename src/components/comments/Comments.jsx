@@ -41,7 +41,7 @@ const Comments = ({ user_id }) => {
     >
       {comments.length !== 0 ? (
         comments.map((comment) => (
-          <>
+          <React.Fragment key={comment._id}>
             <ListItem alignItems="flex-start">
               <Box
                 sx={{
@@ -56,11 +56,13 @@ const Comments = ({ user_id }) => {
                 >
                   <Avatar
                     sx={{
-                      backgroundColor: comment.profileImage ? "" : "#003049",
+                      backgroundColor: comment.author.profileImage
+                        ? ""
+                        : "#003049",
                       width: "3rem",
                       height: "3rem",
                     }}
-                    src={comment.profileImage}
+                    src={comment.author.profileImage}
                     alt={comment.author.name + " " + comment.author.surname}
                   />
                 </ListItemAvatar>
@@ -97,7 +99,7 @@ const Comments = ({ user_id }) => {
               component="li"
               sx={{ marginRight: "72px" }}
             />
-          </>
+          </React.Fragment>
         ))
       ) : (
         <ListItem alignItems="flex-start">
