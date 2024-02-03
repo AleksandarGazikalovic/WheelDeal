@@ -1,5 +1,3 @@
-// GoogleMaps.jsx
-
 import React, { useState } from "react";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import "./googleMaps.css";
@@ -24,11 +22,6 @@ const GoogleMaps = ({ selectedLocation }) => {
   };
 
   const zoomLevel = selectedLocation ? 15 : 12;
-
-  // const CarMarker = {
-  //   url: "/src/assets/carMarker.png", // Replace with the path to your car marker icon
-  //   scaledSize: new window.google.maps.Size(60, 60), // Adjust the size as needed
-  // };
 
   return (
     <div className="wd--google-maps-wrapper">

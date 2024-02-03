@@ -21,7 +21,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
-import noAvatar from "../../assets/noAvatar.png";
 import { Avatar } from "@mui/material";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
@@ -189,7 +188,7 @@ const CarPost = () => {
           </section>
           <div className="wd--post-wrapper-info-comments">
             <h2> Reviews </h2>
-            <Comments user_id={owner._id} />
+            {owner && <Comments user_id={owner._id} />}
           </div>
           <GoogleMaps selectedLocation={post.location} />
         </div>
