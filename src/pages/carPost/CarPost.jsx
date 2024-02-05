@@ -90,7 +90,7 @@ const CarPost = () => {
             <div className="wd--post-wrapper--info-top-left">
               <div className="wd--post-wrapper--info-top-left--title">
                 <h1>
-                  {post.brand} {post.model} {post.year}
+                  {post.brand} {post.carModel} {post.year}
                 </h1>
               </div>
               <div className="wd--post-wrapper--info-top-left--location">
