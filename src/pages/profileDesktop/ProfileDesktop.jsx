@@ -21,6 +21,8 @@ import { FiSettings } from "react-icons/fi";
 import Loading from "../../components/loading/Loading";
 import { IoIosArrowForward } from "react-icons/io";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 const ProfileDesktop = () => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const [likedPosts, setLikedPosts] = useState([]);
@@ -32,11 +34,11 @@ const ProfileDesktop = () => {
       return;
     }
     const fetchLikedPosts = async () => {
-      const res = await axios.get(`posts/liked/${userInfo._id}`);
+      const res = await axios.get( API_ENDPOINT + `/posts/liked/${userInfo._id}`);
       setLikedPosts(res.data);
     };
     const fetchUserPosts = async () => {
-      const res = await axios.get(`posts/profile/${userInfo._id}`);
+      const res = await axios.get( API_ENDPOINT + `/posts/profile/${userInfo._id}`);
       setUserPosts(res.data);
     };
     fetchUserPosts();

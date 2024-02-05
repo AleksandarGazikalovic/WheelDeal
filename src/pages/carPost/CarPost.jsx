@@ -23,6 +23,8 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import { Avatar } from "@mui/material";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 const CarPost = () => {
   const { postId } = useParams();
   const [post, setPost] = useState({});
@@ -35,14 +37,14 @@ const CarPost = () => {
     const fetchData = async () => {
       try {
         // Fetch the post data
-        const postResponse = await axios.get(`/posts/${postId}`);
+        const postResponse = await axios.get( API_ENDPOINT + `/posts/${postId}`);
 
         setPost(postResponse.data);
         setImages(postResponse.data.images);
 
         // Fetch the owner data using the post data
         const ownerResponse = await axios.get(
-          `/users/${postResponse.data.userId}`
+          API_ENDPOINT + `/users/${postResponse.data.userId}`
         );
         setOwner(ownerResponse.data);
         setTimeJoined(

@@ -17,9 +17,13 @@ const ProfileAccount = ({
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (user.id !== "") {
+    if (user._id) {
       setLoggedIn(true);
     }
+    if (user._id === undefined){
+      setLoggedIn(false);
+    }
+
   }, [user]);
   return (
     <>

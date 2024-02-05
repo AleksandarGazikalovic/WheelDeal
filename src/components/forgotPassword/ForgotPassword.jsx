@@ -4,6 +4,8 @@ import "./forgotPassword.css";
 import TextField from "@mui/material/TextField";
 import { ReactComponent as Loader } from "../../assets/spinner.svg";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 const ForgotPassword = ({ handleGoBack }) => {
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
@@ -13,7 +15,7 @@ const ForgotPassword = ({ handleGoBack }) => {
     e.preventDefault();
     try {
       setPending(true);
-      const response = await axios.post("/auth/forgot-password", { email });
+      const response = await axios.post( API_ENDPOINT + "/auth/forgot-password", { email });
       setPending(false);
       setSuccess(true);
 

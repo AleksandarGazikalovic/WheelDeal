@@ -5,8 +5,12 @@ import { Link } from "react-router-dom";
 import Logo from "../../assets/logoDark.png";
 import { useRef, useEffect } from "react";
 import OrangeButton from "../orangeButton/OrangeButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/userSlice";
+import { logoutUser } from "../../redux/userSlice";
+import { useNavigate } from "react-router-dom";
+
+
 
 const Menu = ({
   toggleMenu,
@@ -17,6 +21,8 @@ const Menu = ({
 }) => {
   const menuRef = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user.userInfo);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -34,11 +40,22 @@ const Menu = ({
       // Clean up the event listener when the component unmounts
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [user]);
 
   const handleLogout = () => {
-    dispatch(logout());
-    window.location.reload();
+     // Check if any of the fields is empty
+     dispatch(logout());
+     dispatch(
+      logoutUser({})
+      ).then((result) => {
+        if (logoutUser.fulfilled.match(result)) {
+          // dispatch(logout());
+          navigate("/")// Successful logout
+        } else {
+          console.log(result.payload);
+        }
+    });
+    //window.location.reload();
   };
 
   return (

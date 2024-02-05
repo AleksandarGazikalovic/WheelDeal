@@ -17,10 +17,15 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
   const user = useSelector((state) => state.user.userInfo);
 
   useEffect(() => {
-    if (user.id !== "") {
+    if (user._id) {
       setLoggedIn(true);
+      
     }
-  }, [user]);
+    if (user._id === undefined) {
+      setLoggedIn(false);
+      
+    }
+  }, [user._id]);
 
   const handleShowRegistrationForm = () => {
     setShowRegistrationForm(true);
