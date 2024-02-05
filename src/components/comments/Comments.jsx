@@ -13,13 +13,15 @@ import React, { useEffect, useState } from "react";
 import "./comments.css";
 import { formatDistanceToNow } from "date-fns";
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 const Comments = ({ user_id }) => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`/comments/${user_id}`);
+        const response = await axios.get( API_ENDPOINT + `/comments/${user_id}`);
         setComments(response.data);
       } catch (error) {
         console.log(error);

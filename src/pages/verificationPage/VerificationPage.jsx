@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./verificationPage.css"; // Import your CSS file
 
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 const VerificationPage = () => {
   const { token } = useParams();
   const [verified, setVerified] = useState(false);
@@ -13,7 +15,7 @@ const VerificationPage = () => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        await axios.get(`/auth/verify/${token}`);
+        await axios.get( API_ENDPOINT + `/auth/verify/${token}`);
         setVerified(true);
       } catch (error) {
         setVerified(false);
