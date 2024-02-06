@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./forgotPassword.css";
 import TextField from "@mui/material/TextField";
@@ -10,19 +10,32 @@ const ForgotPassword = ({ handleGoBack }) => {
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
   const [pending, setPending] = useState(false);
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    setError(null)
+  }, [])
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-    try {
-      setPending(true);
-      const response = await axios.post( API_ENDPOINT + "/auth/forgot-password", { email });
-      setPending(false);
-      setSuccess(true);
+    setPending(true);
+    await axios.post( API_ENDPOINT + "/auth/forgot-password", { email })
+      .then((response) => {
+        // Handle response
+        setPending(false);
+        setSuccess(true);
+        setError(null)
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          setError(error.response.data)
+        } else {
+          console.log(error)
+        }
+        setPending(false);
+      }
+    )
 
-      console.log("Forgot password request successful", response.data);
-    } catch (error) {
-      console.error("Error sending forgot password request", error);
-    }
   };
 
   return success ? (
@@ -49,7 +62,16 @@ const ForgotPassword = ({ handleGoBack }) => {
           size="small"
           sx={{ width: 300 }}
         />
-
+        {error && (
+          <span
+            className="error-msg-forgot-password"
+            style={{
+              display: `${error ? "flex" : ""}`,
+            }}
+          >
+            {error}
+          </span>
+        )}
         <button className="login-button" type="submit">
           {!pending ? "Confirm" : <Loader className="spinner" />}
         </button>
