@@ -70,7 +70,7 @@ const NewPosts = () => {
     userId: userInfo._id,
     images: "",
     brand: "",
-    model: "",
+    carModel: "",
     year: "",
     description: "",
     mileage: "",
@@ -246,7 +246,7 @@ const NewPosts = () => {
     if (
       postValues.images === "" ||
       postValues.brand === "" ||
-      postValues.model === "" ||
+      postValues.carModel === "" ||
       postValues.year === "" ||
       postValues.mileage === "" ||
       postValues.transmission === "" ||
@@ -429,10 +429,12 @@ const NewPosts = () => {
                     <select
                       required
                       className="wd--new-post--container-details-section1-div-input2 style-7"
-                      name="model"
-                      id="model"
+                      name="carModel"
+                      id="carModel"
                       value={
-                        postValues.model === "" ? "none" : postValues.model
+                        postValues.carModel === ""
+                          ? "none"
+                          : postValues.carModel
                       }
                       onChange={(e) =>
                         handleInputChange(e.target.name, e.target.value)

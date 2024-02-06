@@ -20,7 +20,7 @@ export const postSlice = createSlice({
       img: "",
       price: "",
       brand: "",
-      model: "",
+      carModel: "",
       year: "",
       from: "",
       to: "",

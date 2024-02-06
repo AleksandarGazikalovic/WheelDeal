@@ -92,7 +92,7 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
           <Link to={`/post/${post._id}`} key={post._id}>
             <img
               src={post.images[0]}
-              alt={post.brand + " " + post.model + " " + post.year}
+              alt={post.brand + " " + post.carModel + " " + post.year}
               onLoad={() => setIsLoaded(true)}
             />
           </Link>
@@ -100,7 +100,7 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
         <div className="wd--search-content--elements-element-text">
           <div className="wd--search-content--elements-element-text--left">
             <p className="wd--search-content--elements-element-text--left-model">
-              {post.brand + " " + post.model + " " + post.year}
+              {post.brand + " " + post.carModel + " " + post.year}
             </p>
             <p className="wd--search-content--elements-element-text--left-location">
               {post.location.address}
