@@ -4,9 +4,13 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { registerUser } from "../../redux/userSlice";
+import { registerUser, registerUserThirdParty, removeError } from "../../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import "./registrationInput.css";
+import { GoogleLogin } from "@react-oauth/google";
+import FacebookLogin from "react-facebook-login";
+
+const facebook_app_id = process.env.REACT_APP_FACEBOOK_APP_ID
 
 const RegistrationInput = ({ onClose, showLogin, setSuccesful }) => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -30,6 +34,10 @@ const RegistrationInput = ({ onClose, showLogin, setSuccesful }) => {
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    dispatch(removeError())
+  }, [onClose]);
 
   const handleInputChange = (name, value) => {
     validateInput(name, value);
@@ -110,6 +118,59 @@ const RegistrationInput = ({ onClose, showLogin, setSuccesful }) => {
     }
   };
 
+  // function for extracting payload from jwt token
+  function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+  }
+
+  const handleGoogleRegistration = (response) => {
+    console.log(response)
+    const userData = parseJwt(response?.credential)
+    dispatch(
+      registerUserThirdParty({
+        email: userData.email,
+        externID: userData.sub, // ovo isto obavezno hesiraj, umesto lozinke
+        name: userData.given_name,
+        surname: userData.family_name,
+        thirdParty: "google"
+      })
+    ).then((result) => {
+      if (registerUserThirdParty.fulfilled.match(result)) {
+        navigate("/profile"); // Successful registration with Google
+      } else {
+        console.log(result.payload);
+        setErrorMessage(result.payload);
+      }
+    });
+  }
+
+  const handleFacebookRegistration = (response) => {
+    console.log(response)
+    const userData = response
+    dispatch(
+      registerUserThirdParty({
+        email: userData.email,
+        externID: userData.id, // ovo isto obavezno hesiraj, umesto lozinke
+        name: userData.name.split(" ")[0],
+        surname: userData.name.split(" ").slice(1).join(" "),
+        thirdParty: "facebook"
+      })
+    ).then((result) => {
+      if (registerUserThirdParty.fulfilled.match(result)) {
+        navigate("/profile"); // Successful registration with Google
+      } else {
+        console.log(result.payload);
+        setErrorMessage(result.payload);
+      }
+    });
+  }
+ 
   const handleRegistration = (e) => {
     e.preventDefault();
 
@@ -138,16 +199,29 @@ const RegistrationInput = ({ onClose, showLogin, setSuccesful }) => {
         password: account.password,
       })
     ).then((result) => {
-      if (!registerUser.rejected.match(result)) {
-        setSuccesful(true);
+      if (registerUser.fulfilled.match(result)) {
+        setSuccesful(true); // Successful registration
+      } else {
+        console.log(result.payload);
+        setErrorMessage(result.payload);
       }
     });
+    // .then((result) => {
+    //   if (!registerUser.rejected.match(result)) {
+    //     setSuccesful(true);
+    //   }
+    //   else{
+    //     console.log(result.payload);
+    //     setErrorMessage(result);
+    //   }
+    // });
     // .then((result) => {
     //   if (registerUser.fulfilled.match(result)) {
     //     navigate("/profile"); // Successful login
     //   }
     // });
   };
+
   return (
     <form className="form-wrapper" onSubmit={handleRegistration}>
       <section>
@@ -298,7 +372,7 @@ const RegistrationInput = ({ onClose, showLogin, setSuccesful }) => {
           />
         )}
       </div>
-      {error && (
+      {/* {error && (
         <span
           className="error-msg-register"
           style={{
@@ -307,7 +381,7 @@ const RegistrationInput = ({ onClose, showLogin, setSuccesful }) => {
         >
           Account with this email address already exists!
         </span>
-      )}
+      )} */}
       <span
         className={`error-msg-register ${isShaking ? "shaking" : ""}`}
         style={{
@@ -343,8 +417,24 @@ const RegistrationInput = ({ onClose, showLogin, setSuccesful }) => {
         <span></span>
       </div>
       <div className="social-icons">
-        <FcGoogle size={40} className="icon" />
-        <FaFacebook size={40} className="icon" />
+        {/* <FcGoogle size={40} className="icon" /> */}
+        <GoogleLogin size="large" type="icon" theme="outline"
+          onSuccess={credentialResponse => handleGoogleRegistration(credentialResponse)}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+        />
+        <FacebookLogin
+        textButton=""
+          appId={facebook_app_id}
+          autoLoad={false}
+          fields="name,email"
+          scope="public_profile, email"
+          callback={response => handleFacebookRegistration(response)}
+          cssClass="my-facebook-button-class"
+          icon={<FaFacebook size={33} className="icon" />}
+          size="medium"
+        />
       </div>
       <p className="login">
         Already have an account? &nbsp;
