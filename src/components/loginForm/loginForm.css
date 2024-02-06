@@ -210,6 +210,15 @@
   animation-timing-function: linear;
 }
 
+.my-facebook-button-class {
+  background-color: white;
+}
+
+.my-facebook-button-class:hover {
+  background-color: rgba(57, 76, 146, 0.12);
+  transition: 0.7s;
+}
+
 .error-msg-login {
   color: red;
   position: absolute;
