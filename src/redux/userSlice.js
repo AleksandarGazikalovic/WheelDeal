@@ -5,9 +5,31 @@ const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
 
 export const registerUser = createAsyncThunk(
   "user/registerUser",
-  async (user) => {
-    const res = await axios.post( API_ENDPOINT + "/auth/register", user);
-    return res.data;
+  async (user, { rejectWithValue }) => {
+    try{
+      const res = await axios.post( API_ENDPOINT + "/auth/register", user);
+      return res.data;
+    }
+    catch (error) {
+      // Handle the registration error and set the error message in the Redux state
+      return rejectWithValue(error.response.data);
+    }
+    
+  }
+);
+
+export const registerUserThirdParty = createAsyncThunk(
+  "user/registerUserThirdParty",
+  async (userInfo, { rejectWithValue }) => {
+    try {
+      const res = await axios.post( API_ENDPOINT + "/auth/register/third_party", userInfo, {withCredentials: true});
+      const { user, accessToken } = res.data;
+
+      return { user, accessToken };
+    } catch (error) {
+      // Handle the registration error and set the error message in the Redux state
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -16,6 +38,21 @@ export const loginUser = createAsyncThunk(
   async (userInfo, { rejectWithValue }) => {
     try {
       const res = await axios.post( API_ENDPOINT + "/auth/login", userInfo, {withCredentials: true}); // probaj onemoguciti na produkciji
+      const { user, accessToken } = res.data;
+
+      return { user, accessToken };
+    } catch (error) {
+      // Handle the login error and set the error message in the Redux state
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const loginUserThirdParty = createAsyncThunk(
+  "user/loginUserThirdParty",
+  async (userInfo, { rejectWithValue }) => {
+    try {
+      const res = await axios.post( API_ENDPOINT + "/auth/login/third_party", userInfo, {withCredentials: true}); // probaj onemoguciti na produkciji
       const { user, accessToken } = res.data;
 
       return { user, accessToken };
@@ -96,6 +133,9 @@ export const userSlice = createSlice({
     setAccessToken: (state, action) => {
       console.log(action.payload)
       state.accessToken = action.payload;
+    },
+    removeError: (state, action) => {
+      state.error = false;
     }
   },
   extraReducers: {
@@ -107,6 +147,25 @@ export const userSlice = createSlice({
       state.pending = false;
     },
     [registerUser.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = action.error.message;
+    },
+    [registerUserThirdParty.pending]: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    [registerUserThirdParty.fulfilled]: (state, action) => {
+      state.pending = false;
+      state.userInfo = action.payload.user;
+      state.accessToken = action.payload.accessToken;
+
+      console.log("Access token after "+ action.payload.user.thirdParty +" registration: " + action.payload.accessToken)
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${action.payload.accessToken}`; // set Bearer to user's current accessToken
+      console.log("Bearer set in registerUserThirdParty.fulfilled")
+    },
+    [registerUserThirdParty.rejected]: (state, action) => {
       state.pending = false;
       state.error = action.error.message;
     },
@@ -126,6 +185,25 @@ export const userSlice = createSlice({
       console.log("Bearer set in loginUser.fulfilled")
     },
     [loginUser.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = action.error.message;
+    },
+    [loginUserThirdParty.pending]: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    [loginUserThirdParty.fulfilled]: (state, action) => {
+      state.pending = false;
+      state.userInfo = action.payload.user;
+      state.accessToken = action.payload.accessToken;
+      
+      console.log("Access token after " + action.payload.user.thirdParty +  " login: " + action.payload.accessToken)
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${action.payload.accessToken}`; // set Bearer to user's current accessToken
+      console.log("Bearer set in loginUserThirdParty.fulfilled")
+    },
+    [loginUserThirdParty.rejected]: (state, action) => {
       state.pending = false;
       state.error = action.error.message;
     },
@@ -184,5 +262,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { logout, setUser, setAccessToken } = userSlice.actions;
+export const { logout, setUser, setAccessToken, removeError } = userSlice.actions;
 export default userSlice.reducer;
