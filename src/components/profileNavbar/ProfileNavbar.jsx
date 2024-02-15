@@ -19,19 +19,19 @@ const ProfileNavbar = () => {
   useEffect(() => {
 
   }, [user])
-  
+
   const handleLogout = () => {
-     // Check if any of the fields is empty
-     dispatch(logout());
-     dispatch(
+    // Check if any of the fields is empty
+    dispatch(logout());
+    dispatch(
       logoutUser({})
-      ).then((result) => {
-        if (logoutUser.fulfilled.match(result)) {
-          // dispatch(logout());
-          navigate("/") // Successful logout
-        } else {
-          console.log(result.payload);
-        }
+    ).then((result) => {
+      if (logoutUser.fulfilled.match(result)) {
+        // dispatch(logout());
+        navigate("/") // Successful logout
+      } else {
+        console.log(result.payload.message);
+      }
     });
     //window.location.reload();
   };

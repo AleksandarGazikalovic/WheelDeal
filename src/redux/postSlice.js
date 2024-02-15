@@ -5,10 +5,10 @@ const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
 
 
 export const createPost = createAsyncThunk("post/createPost", async (post) => {
-  const res = await axios.post( API_ENDPOINT + "/posts/", post, {
+  const res = await axios.post(API_ENDPOINT + "/posts/", post, {
     headers: { "Content-Type": "multipart/form-data" },
   })
-  
+
   return res.data;
 });
 
@@ -38,7 +38,7 @@ export const postSlice = createSlice({
     },
     [createPost.fulfilled]: (state, action) => {
       state.pending = false;
-      state.userInfo = action.payload;
+      state.postInfo = action.payload;
     },
     [createPost.rejected]: (state, action) => {
       state.pending = false;

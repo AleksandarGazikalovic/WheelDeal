@@ -89,8 +89,8 @@ const LoginForm = ({ onClose, showRegistration }) => {
       if (loginUser.fulfilled.match(result)) {
         navigate("/profile"); // Successful login
       } else {
-        console.log(result.payload);
-        setErrorMessage(result.payload);
+        console.log(result.payload.message);
+        setErrorMessage(result.payload.message);
       }
     });
   };
