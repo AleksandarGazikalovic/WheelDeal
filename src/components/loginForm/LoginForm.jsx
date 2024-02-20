@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./loginForm.css";
 import { RiCloseLine } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
-import { loginUser, loginUserThirdParty, removeError } from "../../redux/userSlice";
+import {
+  loginUser,
+  loginUserThirdParty,
+  removeError,
+} from "../../redux/userSlice";
 import { ReactComponent as Loader } from "../../assets/spinner.svg";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
@@ -12,7 +16,7 @@ import PasswordInput from "../passwordInput/PasswordInput";
 import { GoogleLogin } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login";
 
-const facebook_app_id = process.env.REACT_APP_FACEBOOK_APP_ID
+const facebook_app_id = process.env.REACT_APP_FACEBOOK_APP_ID;
 
 const LoginForm = ({ onClose, showRegistration }) => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -100,22 +104,28 @@ const LoginForm = ({ onClose, showRegistration }) => {
   };
 
   // function for extracting payload from jwt token
-  function parseJwt (token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+  function parseJwt(token) {
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
 
     return JSON.parse(jsonPayload);
   }
 
   const handleGoogleLogin = (response) => {
-    const userData = parseJwt(response?.credential)
+    const userData = parseJwt(response?.credential);
     dispatch(
       loginUserThirdParty({
         email: userData.email,
-        externID: userData.sub
+        externID: userData.sub,
       })
     ).then((result) => {
       if (loginUserThirdParty.fulfilled.match(result)) {
@@ -125,14 +135,14 @@ const LoginForm = ({ onClose, showRegistration }) => {
         setErrorMessage(result.payload);
       }
     });
-  }
+  };
 
   const handleFacebookLogin = (response) => {
-    const userData = response
+    const userData = response;
     dispatch(
       loginUserThirdParty({
         email: userData.email,
-        externID: userData.id
+        externID: userData.id,
       })
     ).then((result) => {
       if (loginUserThirdParty.fulfilled.match(result)) {
@@ -142,13 +152,13 @@ const LoginForm = ({ onClose, showRegistration }) => {
         setErrorMessage(result.payload);
       }
     });
-  }
+  };
 
   useEffect(() => {
     const handleEscapeKey = (event) => {
       if (event.key === "Escape") {
         setErrorMessage(null); // Clear the error message
-        dispatch(removeError())
+        dispatch(removeError());
         onClose(); // Call the onClose function passed as a prop to close the login window
       }
     };
@@ -248,26 +258,31 @@ const LoginForm = ({ onClose, showRegistration }) => {
             </div>
             <div className="social-icons">
               {/* <FcGoogle size={40} className="icon" /> */}
-              <GoogleLogin size="large" type="icon" theme="outline"
-                onSuccess={credentialResponse => handleGoogleLogin(credentialResponse)}
+              <GoogleLogin
+                size="large"
+                type="icon"
+                theme="outline"
+                onSuccess={(credentialResponse) =>
+                  handleGoogleLogin(credentialResponse)
+                }
                 onError={() => {
-                  console.log('Login Failed');
+                  console.log("Login Failed");
                 }}
               />
               {/* <FaFacebook size={40} className="icon" /> */}
               {/* <div style={{width: "25%"}}> */}
-                <FacebookLogin
-                  buttonStyle={{height: 41, width: 40, borderRadius: 4}}
-                  textButton=""
-                  appId={facebook_app_id}
-                  autoLoad={false}
-                  fields="name,email"
-                  scope="public_profile, email"
-                  callback={response => handleFacebookLogin(response)}
-                  cssClass="my-facebook-button-class"
-                  icon={<FaFacebook size={26} className="icon"/>}
-                />
-                {/* </div> */}
+              <FacebookLogin
+                buttonStyle={{ height: 41, width: 40, borderRadius: 4 }}
+                textButton=""
+                appId={facebook_app_id}
+                autoLoad={false}
+                fields="name,email"
+                scope="public_profile, email"
+                callback={(response) => handleFacebookLogin(response)}
+                cssClass="my-facebook-button-class"
+                icon={<FaFacebook size={26} className="icon" />}
+              />
+              {/* </div> */}
             </div>
             <p className="signup">
               Don't have an account? &nbsp;
