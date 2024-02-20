@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { OrangeButton, PasswordInput } from "../../components";
+import { CustomButton, PasswordInput } from "../../components";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import "./resetPassword.css";
 import logoDark from "../../assets/logoDark.png";
 
-const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 const ResetPassword = () => {
   const { token } = useParams();
@@ -88,7 +88,7 @@ const ResetPassword = () => {
     e.preventDefault();
     if (account.password === account.confirmPassword) {
       try {
-        await axios.post( API_ENDPOINT + `/auth/reset-password/${token}`, {
+        await axios.post(API_ENDPOINT + `/auth/reset-password/${token}`, {
           newPassword: account.password,
         });
         setSuccess(true);
@@ -112,7 +112,7 @@ const ResetPassword = () => {
           <>
             <h2>Success!</h2>
             <p>Your password has been reset successfully.</p>
-            <OrangeButton
+            <CustomButton
               text={"Go back"}
               action={() => window.location.replace("/")}
             />
@@ -134,7 +134,7 @@ const ResetPassword = () => {
             <span className="wd--reset-password--container-error">
               {errorMessage}
             </span>
-            <OrangeButton text={"Reset Password"} action={resetPassword} />
+            <CustomButton text={"Reset Password"} action={resetPassword} />
           </>
         )}
       </div>

@@ -11,7 +11,7 @@ import { likePost } from "../../redux/userSlice";
 import PostElementSkeleton from "../postElementSkeleton/PostElementSkeleton";
 import { Avatar } from "@mui/material";
 
-const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -29,7 +29,7 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
 
   useEffect(() => {
     const fetchOwner = async () => {
-      const res = await axios.get( API_ENDPOINT + `/users/${post.userId}`);
+      const res = await axios.get(API_ENDPOINT + `/users/${post.userId}`);
       setOwner(res.data);
     };
     fetchOwner();
@@ -82,20 +82,30 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
         ref={ref}
       >
         <div className="wd--search-content--elements-element-image">
-          {userInfo._id === post.userId ? null : (
-            <FaHeart
-              onClick={handleHeartClick}
-              style={{ color: isLiked ? "red" : "black" }}
-              className="wd--search-content--elements-element-image--like-icon"
-            />
+          {userInfo._id === post.userId ? (
+            <Link to={`/profile/${post._id}`} key={post._id}>
+              <img
+                src={post.images[0]}
+                alt={post.brand + " " + post.carModel + " " + post.year}
+                onLoad={() => setIsLoaded(true)}
+              />
+            </Link>
+          ) : (
+            <>
+              <FaHeart
+                onClick={handleHeartClick}
+                style={{ color: isLiked ? "red" : "black" }}
+                className="wd--search-content--elements-element-image--like-icon"
+              />
+              <Link to={`/post/${post._id}`} key={post._id}>
+                <img
+                  src={post.images[0]}
+                  alt={post.brand + " " + post.carModel + " " + post.year}
+                  onLoad={() => setIsLoaded(true)}
+                />
+              </Link>
+            </>
           )}
-          <Link to={`/post/${post._id}`} key={post._id}>
-            <img
-              src={post.images[0]}
-              alt={post.brand + " " + post.carModel + " " + post.year}
-              onLoad={() => setIsLoaded(true)}
-            />
-          </Link>
         </div>
         <div className="wd--search-content--elements-element-text">
           <div className="wd--search-content--elements-element-text--left">

@@ -4,13 +4,11 @@ import ProfileAccount from "../profileAccount/ProfileAccount";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logoDark.png";
 import { useRef, useEffect } from "react";
-import OrangeButton from "../orangeButton/OrangeButton";
+import CustomButton from "../customButton/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/userSlice";
 import { logoutUser } from "../../redux/userSlice";
 import { useNavigate } from "react-router-dom";
-
-
 
 const Menu = ({
   toggleMenu,
@@ -45,12 +43,10 @@ const Menu = ({
   const handleLogout = () => {
     // Check if any of the fields is empty
     dispatch(logout());
-    dispatch(
-      logoutUser({})
-    ).then((result) => {
+    dispatch(logoutUser({})).then((result) => {
       if (logoutUser.fulfilled.match(result)) {
         // dispatch(logout());
-        navigate("/")// Successful logout
+        navigate("/"); // Successful logout
       } else {
         console.log(result.payload.message);
       }
@@ -95,7 +91,7 @@ const Menu = ({
                 </div>
                 {loggedIn && (
                   <div className="wd--menu-links-container-item">
-                    <OrangeButton text="Sign out" action={handleLogout} />
+                    <CustomButton text="Sign out" action={handleLogout} />
                   </div>
                 )}
               </div>

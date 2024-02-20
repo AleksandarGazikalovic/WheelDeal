@@ -21,7 +21,7 @@ export { default as ProfileAccount } from "./profileAccount/ProfileAccount";
 export { default as ProfileAccountBig } from "./profileAccountBig/ProfileAccountBig";
 export { default as ProfileAccountSmall } from "./profileAccountSmall/ProfileAccountSmall";
 export { default as Menu } from "./menu/Menu";
-export { default as OrangeButton } from "./orangeButton/OrangeButton";
+export { default as CustomButton } from "./customButton/CustomButton";
 export { default as PostElementSkeleton } from "./postElementSkeleton/PostElementSkeleton";
 export { default as EmailVerification } from "./emailVerification/EmailVerification";
 export { default as RegistrationInput } from "./registrationInput/RegistrationInput";
@@ -31,3 +31,7 @@ export { default as LocationAutocomplete } from "./locationAutocomplete/Location
 export { default as PasswordInput } from "./passwordInput/PasswordInput";
 export { default as CurrencyConverter } from "./currencyConverter/CurrencyConverter";
 export { default as Comments } from "./comments/Comments";
+export { default as Wave3 } from "./wave3/Wave3";
+export { default as Sidebar } from "./sidebar/Sidebar";
+
+export const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;

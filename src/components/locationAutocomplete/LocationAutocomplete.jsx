@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
 import "./locationAutocomplete.css";
 import { IoSearch } from "react-icons/io5";
 
-const LocationAutocomplete = ({ selectedLocation, onSelect }) => {
+const LocationAutocomplete = ({ selectedLocation, onSelect, disabled }) => {
   const [address, setAddress] = useState("");
 
   const handleSelect = async (selectedAddress) => {
@@ -34,7 +34,12 @@ const LocationAutocomplete = ({ selectedLocation, onSelect }) => {
       searchOptions={searchOptions}
     >
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-        <div className="location-container">
+        <div
+          className="location-container"
+          style={{
+            pointerEvents: disabled ? "none" : "auto",
+          }}
+        >
           <div className="location-input-wrapper">
             <input
               {...getInputProps({

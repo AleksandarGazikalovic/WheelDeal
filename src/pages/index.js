@@ -7,3 +7,6 @@ export { default as Profile } from "./profile/Profile";
 export { default as CarPost } from "./carPost/CarPost";
 export { default as VerificationPage } from "./verificationPage/VerificationPage";
 export { default as ResetPassword } from "./resetPassword/ResetPassword";
+export { default as MyPost } from "./myPost/MyPost";
+
+export const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT

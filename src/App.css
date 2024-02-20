@@ -36,28 +36,6 @@ a {
   animation: scale-up-center 1.5s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
 
-.wave3 {
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
-  pointer-events: none;
-}
-
-.wave3 svg {
-  position: relative;
-  display: block;
-  width: calc(205% + 1.3px);
-  height: 99px;
-}
-
-.wave3 .shape-fill3 {
-  fill: #1d1d1d;
-}
-
 @-webkit-keyframes scale-up-center {
   0% {
     -webkit-transform: scale(0.5);
@@ -87,12 +65,6 @@ a {
 
   .section__margin {
     margin: 4rem;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .wave3 svg {
-    height: 70px;
   }
 }
 

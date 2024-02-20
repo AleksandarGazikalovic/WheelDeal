@@ -1,6 +1,6 @@
 import "./profileMobile.css";
 import {
-  OrangeButton,
+  CustomButton,
   PostElement,
   ProfileInfo,
   ProfileInfoEdit,
@@ -15,7 +15,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 
-const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 const ProfileMobile = () => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
@@ -48,7 +48,7 @@ const ProfileMobile = () => {
                     You have no posts
                   </p>
                   <Link to={"/add-post"}>
-                    <OrangeButton
+                    <CustomButton
                       className="wd-profile--your-posts-no-posts-button"
                       text={"Add post"}
                     />
@@ -103,11 +103,15 @@ const ProfileMobile = () => {
       return;
     }
     const fetchLikedPosts = async () => {
-      const res = await axios.get( API_ENDPOINT + `/posts/liked/${userInfo._id}`);
+      const res = await axios.get(
+        API_ENDPOINT + `/posts/liked/${userInfo._id}`
+      );
       setLikedPosts(res.data);
     };
     const fetchUserPosts = async () => {
-      const res = await axios.get( API_ENDPOINT + `/posts/profile/${userInfo._id}`);
+      const res = await axios.get(
+        API_ENDPOINT + `/posts/profile/${userInfo._id}`
+      );
       setUserPosts(res.data);
     };
     fetchUserPosts();

@@ -3,7 +3,7 @@ import ProfileAccountBig from "../profileAccountBig/ProfileAccountBig";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import "./profileAccount.css";
-import OrangeButton from "../orangeButton/OrangeButton";
+import CustomButton from "../customButton/CustomButton";
 import ProfileAccountSmall from "../profileAccountSmall/ProfileAccountSmall";
 
 const ProfileAccount = ({
@@ -20,10 +20,9 @@ const ProfileAccount = ({
     if (user._id) {
       setLoggedIn(true);
     }
-    if (user._id === undefined){
+    if (user._id === undefined) {
       setLoggedIn(false);
     }
-
   }, [user]);
   return (
     <>
@@ -43,7 +42,7 @@ const ProfileAccount = ({
           >
             Log in
           </button>
-          <OrangeButton text="Sign up" action={handleShowRegistrationForm} />
+          <CustomButton text="Sign up" action={handleShowRegistrationForm} />
         </div>
       )}
     </>

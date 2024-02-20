@@ -4,7 +4,7 @@ import { GoHome, GoPlus } from "react-icons/go";
 import Logo from "../../assets/logoDark.png";
 import { useSelector } from "react-redux";
 import {
-  OrangeButton,
+  CustomButton,
   PostElement,
   ProfileInfo,
   ProfileInfoEdit,
@@ -20,8 +20,8 @@ import { IoStatsChartOutline } from "react-icons/io5";
 import { FiSettings } from "react-icons/fi";
 import Loading from "../../components/loading/Loading";
 import { IoIosArrowForward } from "react-icons/io";
-
-const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+import Sidebar from "../../components/sidebar/Sidebar";
+import { API_ENDPOINT } from "..";
 
 const ProfileDesktop = () => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
@@ -34,11 +34,15 @@ const ProfileDesktop = () => {
       return;
     }
     const fetchLikedPosts = async () => {
-      const res = await axios.get( API_ENDPOINT + `/posts/liked/${userInfo._id}`);
+      const res = await axios.get(
+        API_ENDPOINT + `/posts/liked/${userInfo._id}`
+      );
       setLikedPosts(res.data);
     };
     const fetchUserPosts = async () => {
-      const res = await axios.get( API_ENDPOINT + `/posts/profile/${userInfo._id}`);
+      const res = await axios.get(
+        API_ENDPOINT + `/posts/profile/${userInfo._id}`
+      );
       setUserPosts(res.data);
     };
     fetchUserPosts();
@@ -48,26 +52,7 @@ const ProfileDesktop = () => {
   return (
     <div className="wd-profile">
       <div className="wd-profile-wrapper">
-        <div className="wd-profile--sidebar">
-          <div className="wd-profile--sidebar-logo">
-            <img src={Logo} alt="logo" />
-          </div>
-          <div className="wd-profile--sidebar-icons">
-            <Link to="/">
-              <GoHome size={30} />
-            </Link>
-            <Link to="/search-options">
-              <AiFillCar size={30} />
-            </Link>
-            <Link to="/add-post">
-              <GoPlus size={30} />
-            </Link>
-            <IoStatsChartOutline size={30} />
-          </div>
-          <div className="wd-profile--sidebar-settings">
-            <FiSettings size={30} />
-          </div>
-        </div>
+        <Sidebar />
         <div className="wd-profile--main">
           <ProfileNavbar />
           <ProfileInfo setShowProfileInfoEdit={setShowProfileInfoEdit} />
@@ -85,7 +70,7 @@ const ProfileDesktop = () => {
                     You have no posts
                   </p>
                   <Link to={"/add-post"}>
-                    <OrangeButton
+                    <CustomButton
                       className="wd-profile--your-posts-no-posts-button"
                       text={"Add post"}
                     />

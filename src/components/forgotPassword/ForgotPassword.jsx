@@ -15,7 +15,7 @@ const ForgotPassword = ({ handleGoBack }) => {
     e.preventDefault();
     try {
       setPending(true);
-      const response = await axios.post( API_ENDPOINT + "/auth/forgot-password", { email });
+      const response = await axios.post(API_ENDPOINT + "/auth/forgot-password", { email });
       setPending(false);
       setSuccess(true);
 

@@ -8,7 +8,7 @@ const SmallPostCard = ({ post }) => {
   const toDate = new Date(post.to).toLocaleDateString(undefined, options);
   return (
     <Link
-      to={`/post/${post._id}`}
+      to={`/profile/${post._id}`}
       key={post._id}
       className="wd-profile--liked-posts-post"
     >

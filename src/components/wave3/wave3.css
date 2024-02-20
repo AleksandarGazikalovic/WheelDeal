@@ -1,0 +1,27 @@
+.wave3 {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+  pointer-events: none;
+}
+
+.wave3 svg {
+  position: relative;
+  display: block;
+  width: calc(205% + 1.3px);
+  height: 99px;
+}
+
+.wave3 .shape-fill3 {
+  fill: #1d1d1d;
+}
+
+@media screen and (max-width: 600px) {
+  .wave3 svg {
+    height: 70px;
+  }
+}

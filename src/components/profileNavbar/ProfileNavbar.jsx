@@ -4,7 +4,7 @@ import { IoSearchOutline, IoNotificationsOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import noAvatar from "../../assets/noAvatar.png";
 import ProfileAccount from "../profileAccount/ProfileAccount";
-import OrangeButton from "../orangeButton/OrangeButton";
+import CustomButton from "../customButton/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/userSlice";
 import { logoutUser } from "../../redux/userSlice";
@@ -16,19 +16,15 @@ const ProfileNavbar = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.userInfo);
 
-  useEffect(() => {
-
-  }, [user])
+  useEffect(() => {}, [user]);
 
   const handleLogout = () => {
     // Check if any of the fields is empty
     dispatch(logout());
-    dispatch(
-      logoutUser({})
-    ).then((result) => {
+    dispatch(logoutUser({})).then((result) => {
       if (logoutUser.fulfilled.match(result)) {
         // dispatch(logout());
-        navigate("/") // Successful logout
+        navigate("/"); // Successful logout
       } else {
         console.log(result.payload.message);
       }
@@ -42,7 +38,7 @@ const ProfileNavbar = () => {
         <input type="text" placeholder="Search" />
       </div>
       <div className="wd-profile--navbar-right">
-        <OrangeButton text="Sign out" action={handleLogout} />
+        <CustomButton text="Sign out" action={handleLogout} width={"100px"} />
         <div className="wd-profile--navbar-notifications">
           <IoNotificationsOutline size={25} />
         </div>

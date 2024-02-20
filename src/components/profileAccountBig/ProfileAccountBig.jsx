@@ -6,7 +6,7 @@ import { RiCloseLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/userSlice";
-import OrangeButton from "../orangeButton/OrangeButton";
+import CustomButton from "../customButton/CustomButton";
 import { Avatar } from "@mui/material";
 import { logoutUser } from "../../redux/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -17,21 +17,15 @@ const ProfileAccountBig = ({ color }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-
-  }, [user])
-
+  useEffect(() => {}, [user]);
 
   const handleLogout = () => {
-
     // Check if any of the fields is empty
     dispatch(logout());
-    dispatch(
-      logoutUser({})
-    ).then((result) => {
+    dispatch(logoutUser({})).then((result) => {
       if (logoutUser.fulfilled.match(result)) {
         // dispatch(logout());
-        navigate("/") // Successful logout
+        navigate("/"); // Successful logout
       } else {
         console.log(result.payload.message);
       }
@@ -83,7 +77,7 @@ const ProfileAccountBig = ({ color }) => {
                 <Link to="settings">Settings</Link>
               </p>
             </div>
-            <OrangeButton text="Sign out" action={handleLogout} />
+            <CustomButton text="Sign out" action={handleLogout} />
           </div>
         )}
       </div>
