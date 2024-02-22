@@ -45,6 +45,7 @@ function ImageGallery({ selectedImages, onClick, imageRef }) {
 const NewPosts = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [clickedPicture, setClickedPicture] = useState(null);
+  const [formData, setFormData] = useState(new FormData());
   const [firstPage, setFirstPage] = useState(true);
   const [secondPage, setSecondPage] = useState(false);
   const [thirdPage, setThirdPage] = useState(false);
@@ -99,8 +100,10 @@ const NewPosts = () => {
       ...postValues,
       from: fromDate,
       to: toDate,
+      images: formData.getAll("images[]"),
     });
-  }, [state]);
+    // console.log(formData.getAll("images[]"));
+  }, [state, selectedImages]);
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("en-US", {
@@ -124,10 +127,8 @@ const NewPosts = () => {
 
   const onSelectFile = (event) => {
     const selectedFiles = event.target.files;
-    const formData = new FormData();
 
     const selectedFilesArray = Array.from(selectedFiles);
-
     selectedFilesArray.forEach((file, index) => {
       formData.append(`images[]`, file); // You can use a unique name for each file
     });
@@ -180,6 +181,15 @@ const NewPosts = () => {
         updatedImages.splice(index, 1);
         setSelectedImages(updatedImages);
         setClickedPicture(null);
+
+        let images = formData.getAll("images[]");
+        formData.delete("images[]");
+        images.splice(index, 1);
+
+        const selectedFilesArray = Array.from(images);
+        selectedFilesArray.forEach((file, index) => {
+          formData.append(`images[]`, file); // You can use a unique name for each file
+        });
       }
     }
   };
