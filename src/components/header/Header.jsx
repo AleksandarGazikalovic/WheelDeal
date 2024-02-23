@@ -47,7 +47,7 @@ const Header = () => {
     setShowLoginForm(false);
   };
 
-  const cookies = new Cookies(null, { path: "/" });
+  // const cookies = new Cookies(null, { path: "/" });
   const fromDateRef = useRef();
   const toDateRef = useRef();
   const navigate = useNavigate();
@@ -63,9 +63,9 @@ const Header = () => {
       page: 1,
     };
     if (filterValues.fromDate !== "" || filterValues.toDate !== "") {
-      cookies.set("filter", filterValues);
+      // cookies.set("filter", filterValues);
     } else {
-      cookies.remove("filter");
+      // cookies.remove("filter");
     }
     dispatch(setFilter(filterValues));
     dispatch(clearPosts());

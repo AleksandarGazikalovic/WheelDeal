@@ -10,8 +10,9 @@ import { useDispatch } from "react-redux";
 import { setFilter } from "../../redux/filterSlice";
 import { clearPosts, fetchPosts, resetPosts } from "../../redux/postsSlice";
 import Cookies from "universal-cookie";
+import { useSelector } from "react-redux";
 
-function WhereFilter({ onChange, location }) {
+function WhereFilter({ onChange, location, defaultLocation }) {
   const handleChange = (newLocation) => {
     onChange(newLocation);
   };
@@ -21,6 +22,7 @@ function WhereFilter({ onChange, location }) {
       id="searchWhere"
       type="search"
       label="Search"
+      defaultValue={defaultLocation}
       value={location}
       onChange={(e) => handleChange({ location: e.target.value })}
       sx={{ width: 300 }}
@@ -35,7 +37,13 @@ function WhereFilter({ onChange, location }) {
   );
 }
 
-function HowLongFilter({ onChange, fromDate, toDate }) {
+function HowLongFilter({
+  onChange,
+  fromDate,
+  toDate,
+  defaultFromDate,
+  defaultToDate,
+}) {
   const handleDateChange = (newDates) => {
     // Call the onChange function to update the filter values
     onChange(newDates);
@@ -47,6 +55,7 @@ function HowLongFilter({ onChange, fromDate, toDate }) {
         <input
           type="date"
           id="how-long-from-input"
+          defaultValue={defaultFromDate}
           value={fromDate}
           onChange={(e) => handleDateChange({ fromDate: e.target.value })}
         />
@@ -57,6 +66,7 @@ function HowLongFilter({ onChange, fromDate, toDate }) {
         <input
           type="date"
           id="how-long-to-input"
+          defaultValue={defaultToDate}
           value={toDate}
           onChange={(e) => handleDateChange({ toDate: e.target.value })}
         />
@@ -65,7 +75,13 @@ function HowLongFilter({ onChange, fromDate, toDate }) {
   );
 }
 
-function HowMuchFilter({ onChange, fromPrice, toPrice }) {
+function HowMuchFilter({
+  onChange,
+  fromPrice,
+  toPrice,
+  defaultFromPrice,
+  defaultToPrice,
+}) {
   const handlePriceChange = (value, name) => {
     // Call the onChange function to update the filter values
     onChange({ [name]: value });
@@ -77,6 +93,7 @@ function HowMuchFilter({ onChange, fromPrice, toPrice }) {
         className="currency-input"
         name="fromPrice"
         placeholder="Start price"
+        defaultValue={defaultFromPrice}
         value={fromPrice}
         decimalsLimit={2}
         onValueChange={(value) => handlePriceChange(value, "fromPrice")}
@@ -87,6 +104,7 @@ function HowMuchFilter({ onChange, fromPrice, toPrice }) {
         className="currency-input"
         name="toPrice"
         placeholder="End price"
+        defaultValue={defaultToPrice}
         value={toPrice}
         decimalsLimit={2}
         onValueChange={(value) => handlePriceChange(value, "toPrice")}
@@ -96,7 +114,7 @@ function HowMuchFilter({ onChange, fromPrice, toPrice }) {
   );
 }
 
-function BrandFilter({ onChange, brand }) {
+function BrandFilter({ onChange, brand, defaultBrand }) {
   const handleChange = (newBrand) => {
     onChange(newBrand);
   };
@@ -106,6 +124,7 @@ function BrandFilter({ onChange, brand }) {
       id="searchBrand"
       type="search"
       label="Search"
+      defaultValue={defaultBrand}
       value={brand}
       onChange={(e) => handleChange({ brand: e.target.value })}
       sx={{ width: 300 }}
@@ -128,7 +147,7 @@ const Filters = ({
 }) => {
   let filterContent;
   const dispatch = useDispatch();
-  const cookies = new Cookies(null, { path: "/" });
+  // const cookies = new Cookies(null, { path: "/" });
   const [filterValues, setFilterValues] = useState({
     fromDate: undefined,
     toDate: undefined,
@@ -138,6 +157,8 @@ const Filters = ({
     brand: undefined,
     page: 1,
   });
+
+  const filterState = useSelector((state) => state.filter);
 
   useEffect(() => {
     if (resetFilters) {
@@ -155,7 +176,7 @@ const Filters = ({
   }, [resetFilters, setResetFilters]);
 
   const applyFilter = async () => {
-    cookies.set("filter", filterValues);
+    // cookies.set("filter", filterValues);
     dispatch(setFilter(filterValues));
     dispatch(clearPosts());
   };
@@ -170,6 +191,7 @@ const Filters = ({
         <WhereFilter
           onChange={handleFilterChange}
           location={filterValues.location}
+          defaultLocation={filterState.location}
         />
       );
       break;
@@ -179,6 +201,8 @@ const Filters = ({
           onChange={handleFilterChange}
           fromPrice={filterValues.fromPrice}
           toPrice={filterValues.toPrice}
+          defaultFromPrice={filterState.fromPrice}
+          defaultToPrice={filterState.toPrice}
         />
       );
       break;
@@ -188,12 +212,18 @@ const Filters = ({
           onChange={handleFilterChange}
           fromDate={filterValues.fromDate}
           toDate={filterValues.toDate}
+          defaultFromDate={filterState.fromDate}
+          defaultToDate={filterState.toDate}
         />
       );
       break;
     case "brand":
       filterContent = (
-        <BrandFilter onChange={handleFilterChange} brand={filterValues.brand} />
+        <BrandFilter
+          onChange={handleFilterChange}
+          brand={filterValues.brand}
+          defaultBrand={filterState.brand}
+        />
       );
       break;
     default:

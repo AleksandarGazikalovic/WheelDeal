@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Loading } from "../../components";
 import Cookies from "universal-cookie";
-import { setFilter } from "../../redux/filterSlice";
+import { clearFilter, setFilter } from "../../redux/filterSlice";
 import { clearPosts, fetchPosts } from "../../redux/postsSlice";
 
 const SearchOptions = () => {
@@ -26,6 +26,10 @@ const SearchOptions = () => {
   useEffect(() => {
     dispatch(fetchPosts(filterState));
   }, [dispatch, filterState]);
+
+  useEffect(() => {
+    dispatch(clearPosts());
+  }, []);
 
   const observer = useRef();
   const lastPostElementRef = useCallback(
@@ -59,31 +63,19 @@ const SearchOptions = () => {
         <div className="wd--search-content">
           <div className="wd--search-content--elements">
             {posts.length !== 0
-              ? posts.map((p, index) => {
-                if (posts.length === index + 1) {
-                  return (
-                    <PostElement
-                      post={p}
-                      key={p._id}
-                      setShowLoginForm={setShowLoginForm}
-                      ref={lastPostElementRef}
-                    />
-                  );
-                } else {
-                  return (
-                    <PostElement
-                      post={p}
-                      key={p._id}
-                      setShowLoginForm={setShowLoginForm}
-                    />
-                  );
-                }
-              })
+              ? posts.map((p, index) => (
+                  <PostElement
+                    post={p}
+                    key={p._id}
+                    setShowLoginForm={setShowLoginForm}
+                    ref={index === posts.length - 1 ? lastPostElementRef : null}
+                  />
+                ))
               : !pending && (
-                <div className="wd--search-content--elements-title">
-                  <h1>Sorry, there are no results for this search.</h1>
-                </div>
-              )}
+                  <div className="wd--search-content--elements-title">
+                    <h1>Sorry, there are no results for this search.</h1>
+                  </div>
+                )}
           </div>
           {pending && <Loading />}
         </div>

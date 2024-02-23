@@ -15,19 +15,24 @@ const TopFilter = () => {
   const topFilterRef = useRef(null);
   const dispatch = useDispatch();
   const [toggleDropdown, setToggleDropdown] = useState(false);
-  const cookies = new Cookies(null, { path: "/" });
+  // const cookies = new Cookies(null, { path: "/" });
 
   const resetFilter = async () => {
-    if (cookies.get("filter") !== undefined) {
-      cookies.remove("filter");
+    // if (cookies.get("filter") !== undefined) {
+    //   cookies.remove("filter");
+    //   dispatch(clearPosts());
+    //   dispatch(clearFilter());
+    //   setResetFilters(true);
+    // }
+    if (!resetFilters) {
       dispatch(clearPosts());
       dispatch(clearFilter());
       setResetFilters(true);
     }
   };
 
-  const handleFilterChange = (formName) => {
-    setActiveFilter(formName);
+  const handleFilterChange = (filterName) => {
+    setActiveFilter(filterName);
     setIsSlideDown(true);
   };
 
