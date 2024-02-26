@@ -5,6 +5,7 @@ import { setUser, setAccessToken } from "../../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./jwtAuth.css";
+import Loading from "../loading/Loading";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
@@ -14,6 +15,7 @@ const JwtAuth = () => {
   // const { userInfo, pending, error } = useSelector((state) => state.user);
   const { accessToken } = useSelector((state) => state.user);
   const [showSessionExpired, setShowSessionExpired] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // New state for loading
 
   const handleShowSessionExpired = () => {
     setShowSessionExpired(true);
@@ -58,6 +60,8 @@ const JwtAuth = () => {
           return axios(originalRequest);
         } catch (error) {
           // Handle refresh token error or redirect to login
+        } finally {
+          setIsLoading(false); // Set loading to false
         }
       }
       // case Refresh token expired -> "Vasa sesija je istekla" form
@@ -71,9 +75,9 @@ const JwtAuth = () => {
       ) {
         originalRequest._retry = true;
         console.log("Delete access token due to refresh token expiry");
-        navigate("/");
         dispatch(setAccessToken(""));
         dispatch(setUser({}));
+        navigate("/", { replace: true });
         handleShowSessionExpired();
         return axios(originalRequest);
       } else {
@@ -110,6 +114,7 @@ const JwtAuth = () => {
             res.status !== undefined &&
             res.status === 401
           ) {
+            navigate("/", { replace: true });
             // no refresh token
             // dont do anything
           } else if (
@@ -117,6 +122,7 @@ const JwtAuth = () => {
             res.status !== undefined &&
             res.status === 403
           ) {
+            navigate("/", { replace: true });
             // refresh token expired or potential exploit of token attempted
             // remove refresh token -> backend does this
           } else if (res !== undefined && res.data !== undefined) {
@@ -127,12 +133,15 @@ const JwtAuth = () => {
             ] = `Bearer ${res.data.accessToken}`; // set Bearer to user's current accessToken
             console.log("Bearer set in getAccessToken");
             fetchUser();
-            navigate("/profile");
           }
         })
         .catch((err) => {
+          navigate("/", { replace: true });
           // console.log(err)
           // console.log("Called from here")
+        })
+        .finally(() => {
+          setIsLoading(false); // Set loading to false
         });
     };
 
@@ -143,6 +152,11 @@ const JwtAuth = () => {
 
     getAccessToken();
   }, []);
+
+  // Render Loading component if isLoading is true
+  if (isLoading) {
+    return <Loading />; // Replace with your Loading component
+  }
 
   return showSessionExpired ? (
     <div className="session-expired-overlay">

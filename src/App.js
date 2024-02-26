@@ -17,36 +17,18 @@ import {
   MyPost,
 } from "./pages";
 import { useSelector } from "react-redux";
-import { Comments, JwtAuth } from "./components";
+import { Comments, JwtAuth, Loading } from "./components";
 
 const App = () => {
-  const user = useSelector((state) => state.user);
+  const { accessToken } = useSelector((state) => state.user);
   return (
     <Router>
       <JwtAuth />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search-options" element={<SearchOptions filter={1} />} />
-        <Route
-          path="/add-post"
-          element={
-            user.userInfo.email ? (
-              <NewPosts />
-            ) : (
-              <Navigate to="/search-options" replace />
-            )
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            user.userInfo.email ? (
-              <Profile />
-            ) : (
-              <Navigate to="/search-options" replace />
-            )
-          }
-        />
+        <Route path="/add-post" element={accessToken && <NewPosts />} />
+        <Route path="/profile" element={accessToken && <Profile />} />
         <Route path="/post/:postId" element={<CarPost />} />
         <Route path="/profile/:postId" element={<MyPost />} />
         <Route path="/verify/:token" element={<VerificationPage />} />
