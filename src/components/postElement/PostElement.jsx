@@ -92,11 +92,15 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
             </Link>
           ) : (
             <>
-              <FaHeart
+              <div
+                className="wd--search-content--elements-element-image--like"
                 onClick={handleHeartClick}
-                style={{ color: isLiked ? "red" : "black" }}
-                className="wd--search-content--elements-element-image--like-icon"
-              />
+              >
+                <FaHeart
+                  style={{ color: isLiked ? "red" : "black" }}
+                  className="wd--search-content--elements-element-image--like-icon"
+                />
+              </div>
               <Link to={`/post/${post._id}`} key={post._id}>
                 <img
                   src={post.images[0]}

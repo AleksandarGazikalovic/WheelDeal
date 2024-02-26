@@ -147,6 +147,7 @@
   .wd-profile--your-posts-wrapper,
   .wd-profile--liked-posts-wrapper {
     height: 70vh;
+    box-shadow: none;
   }
 
   .wd-profile--liked-posts-title,

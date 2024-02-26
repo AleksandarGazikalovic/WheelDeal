@@ -158,14 +158,11 @@
   }
 }
 
-@media screen and (max-width: 426px) {
+@media screen and (max-width: 600px) {
   .wd-profile--statistics-wrapper {
-    height: 80vh;
+    box-shadow: none;
   }
-  .wd-profile--calculations {
-    padding: 0;
-  }
-  .wd-profile--statistics {
-    padding: 0;
+  .wd-profile--statistics-wrapper {
+    height: 50vh;
   }
 }

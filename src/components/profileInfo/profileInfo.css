@@ -158,6 +158,12 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .wd-profile--profile-info-wrapper {
+    box-shadow: none;
+  }
+}
+
 @media screen and (max-width: 426px) {
   .wd-profile--profile-info-wrapper {
     border-radius: 0;

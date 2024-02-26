@@ -40,18 +40,29 @@
   transition: all 0.3s ease-in-out;
 }
 
-.wd--search-content--elements-element-image--like-icon {
+.wd--search-content--elements-element-image--like {
+  background-color: #ffffff;
   position: absolute;
-  color: black;
   top: 15px; /* Adjust this value to position the heart vertically */
-  right: 25px; /* Adjust this value to position the heart horizontally */
-  width: 30px; /* Set the width of the heart icon */
-  height: 30px; /* Set the height of the heart icon */
+  right: 15px; /* Adjust this value to position the heart horizontally */
+  padding: 0.4rem 0.4rem 0rem 0.4rem;
+  border-radius: 10px;
+}
+
+.wd--search-content--elements-element-image--like:hover {
+  background-color: #cdcdcd;
+}
+
+.wd--search-content--elements-element-image--like-icon {
+  position: relative;
+  width: 25px; /* Set the width of the heart icon */
+  height: 25px; /* Set the height of the heart icon */
   transition: all 0.3s ease-in-out;
 }
 
 .wd--search-content--elements-element-text {
   width: 300px;
+  height: 100px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

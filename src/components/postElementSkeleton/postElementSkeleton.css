@@ -4,8 +4,14 @@
   align-self: center;
 }
 
+.card-skeleton__image {
+  width: 310px;
+  height: 250px;
+}
+
 .card-skeleton__text {
   width: 300px;
+  height: 100px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
