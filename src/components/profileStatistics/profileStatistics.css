@@ -2,9 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
-  grid-area: 2 / 4 / 6 / 10;
+  grid-area: 6 / 9 / 12 / 13;
   background-color: #fff;
   border-radius: 20px;
   color: #243550;
@@ -25,6 +24,9 @@
   padding-bottom: 0.5rem;
 }
 
+.wd-profile--calculations{
+  margin-bottom: 15%;
+}
 .wd-profile--calculations,
 .wd-profile--statistics {
   display: flex;
@@ -34,6 +36,7 @@
   width: 90%;
   gap: 1rem;
 }
+
 
 .wd-profile--calculations-link {
   display: flex;
@@ -120,13 +123,13 @@
 
 @media screen and (max-width: 1400px) {
   .wd-profile--statistics-wrapper {
-    grid-area: 2 / 5 / 6 / 10;
+    grid-area: 6 / 9 / 10 / 13;
   }
 }
 
 @media screen and (max-width: 1100px) {
   .wd-profile--statistics-wrapper {
-    grid-area: 2 / 5 / 7 / 9;
+    grid-area: 7 / 9 / 12 / 13;
   }
   .wd-profile--calculations-link {
     width: 100%;
@@ -138,6 +141,9 @@
 }
 
 @media screen and (max-width: 900px) {
+  .wd-profile--statistics-wrapper {
+    grid-area: 11 / 1 / 12 / 13;
+  }
   .wd-profile--calculations-title,
   .wd-profile--statistics-title,
   .wd-profile--your-posts-title {
@@ -154,7 +160,7 @@
 
 @media screen and (max-width: 800px) {
   .wd-profile--statistics-wrapper {
-    grid-area: 2 / 6 / 6 / 13;
+    grid-area: 11 / 1 / 12 / 13;
   }
 }
 

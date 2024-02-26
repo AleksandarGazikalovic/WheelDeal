@@ -33,5 +33,8 @@ export { default as CurrencyConverter } from "./currencyConverter/CurrencyConver
 export { default as Comments } from "./comments/Comments";
 export { default as Wave3 } from "./wave3/Wave3";
 export { default as Sidebar } from "./sidebar/Sidebar";
+export { default as PopUpModel } from "./popUpModel/PopUpModel";
+export { default as ProfileNotification } from "./profileNotification/ProfileNotification";
+export { default as NotificationMessage } from "./notificationMessage/NotificationMessage";
 
 export const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;

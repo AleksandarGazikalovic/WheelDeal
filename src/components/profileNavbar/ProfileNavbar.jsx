@@ -39,9 +39,7 @@ const ProfileNavbar = () => {
       </div>
       <div className="wd-profile--navbar-right">
         <CustomButton text="Sign out" action={handleLogout} width={"100px"} />
-        <div className="wd-profile--navbar-notifications">
-          <IoNotificationsOutline size={25} />
-        </div>
+
         <ProfileAccount size={"small"} />
       </div>
     </div>

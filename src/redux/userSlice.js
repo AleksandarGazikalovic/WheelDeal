@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 export const registerUser = createAsyncThunk(
   "user/registerUser",
@@ -15,7 +15,9 @@ export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (userInfo, { rejectWithValue }) => {
     try {
-      const res = await axios.post(API_ENDPOINT + "/auth/login", userInfo, { withCredentials: true }); // probaj onemoguciti na produkciji
+      const res = await axios.post(API_ENDPOINT + "/auth/login", userInfo, {
+        withCredentials: true,
+      }); // probaj onemoguciti na produkciji
       const { user, accessToken } = res.data;
 
       return { user, accessToken };
@@ -30,8 +32,10 @@ export const logoutUser = createAsyncThunk(
   "user/logoutUser",
   async (userInfo, { rejectWithValue }) => {
     try {
-      console.log("Front - starting to log out")
-      const res = await axios.post(API_ENDPOINT + "/auth/logout", userInfo, { withCredentials: true }); // probaj onemoguciti na produkciji
+      console.log("Front - starting to log out");
+      const res = await axios.post(API_ENDPOINT + "/auth/logout", userInfo, {
+        withCredentials: true,
+      }); // probaj onemoguciti na produkciji
       //console.log(res.status)
       return res.data;
     } catch (error) {
@@ -43,7 +47,10 @@ export const logoutUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
   const { profileImage, ...userWithoutProfileImage } = user;
-  const res = await axios.put(API_ENDPOINT + `/users/${user._id}`, userWithoutProfileImage);
+  const res = await axios.put(
+    API_ENDPOINT + `/users/${user._id}`,
+    userWithoutProfileImage
+  );
 
   return res.data;
 });
@@ -51,15 +58,22 @@ export const updateUser = createAsyncThunk("user/updateUser", async (user) => {
 export const updateProfileImage = createAsyncThunk(
   "user/updateProfileImage",
   async (user) => {
-    const res = await axios.post(API_ENDPOINT + `/users/${user._id}/upload`, user, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    const res = await axios.post(
+      API_ENDPOINT + `/users/${user._id}/upload`,
+      user,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
     return res.data;
   }
 );
 
 export const likePost = createAsyncThunk("post/like", async (post) => {
-  const res = await axios.put(API_ENDPOINT + `/posts/${post.postId}/like`, post);
+  const res = await axios.put(
+    API_ENDPOINT + `/posts/${post.postId}/like`,
+    post
+  );
   return res.data;
 });
 
@@ -95,9 +109,9 @@ export const userSlice = createSlice({
       state.userInfo = action.payload;
     },
     setAccessToken: (state, action) => {
-      console.log(action.payload)
+      console.log(action.payload);
       state.accessToken = action.payload;
-    }
+    },
   },
   extraReducers: {
     [registerUser.pending]: (state) => {
@@ -120,11 +134,11 @@ export const userSlice = createSlice({
       state.userInfo = action.payload.user;
       state.accessToken = action.payload.accessToken;
 
-      console.log("Access token after login: " + action.payload.accessToken)
+      console.log("Access token after login: " + action.payload.accessToken);
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${action.payload.accessToken}`; // set Bearer to user's current accessToken
-      console.log("Bearer set in loginUser.fulfilled")
+      console.log("Bearer set in loginUser.fulfilled");
     },
     [loginUser.rejected]: (state, action) => {
       state.pending = false;
