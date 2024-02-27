@@ -9,13 +9,12 @@ import Loading from "../loading/Loading";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
-const JwtAuth = () => {
+const JwtAuth = ({ setIsLoading }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // const { userInfo, pending, error } = useSelector((state) => state.user);
   const { accessToken } = useSelector((state) => state.user);
   const [showSessionExpired, setShowSessionExpired] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // New state for loading
 
   const handleShowSessionExpired = () => {
     setShowSessionExpired(true);
@@ -77,7 +76,6 @@ const JwtAuth = () => {
         console.log("Delete access token due to refresh token expiry");
         dispatch(setAccessToken(""));
         dispatch(setUser({}));
-        navigate("/", { replace: true });
         handleShowSessionExpired();
         return axios(originalRequest);
       } else {
@@ -114,7 +112,6 @@ const JwtAuth = () => {
             res.status !== undefined &&
             res.status === 401
           ) {
-            navigate("/", { replace: true });
             // no refresh token
             // dont do anything
           } else if (
@@ -122,7 +119,6 @@ const JwtAuth = () => {
             res.status !== undefined &&
             res.status === 403
           ) {
-            navigate("/", { replace: true });
             // refresh token expired or potential exploit of token attempted
             // remove refresh token -> backend does this
           } else if (res !== undefined && res.data !== undefined) {
@@ -136,7 +132,6 @@ const JwtAuth = () => {
           }
         })
         .catch((err) => {
-          navigate("/", { replace: true });
           // console.log(err)
           // console.log("Called from here")
         })
@@ -152,11 +147,6 @@ const JwtAuth = () => {
 
     getAccessToken();
   }, []);
-
-  // Render Loading component if isLoading is true
-  if (isLoading) {
-    return <Loading />; // Replace with your Loading component
-  }
 
   return showSessionExpired ? (
     <div className="session-expired-overlay">

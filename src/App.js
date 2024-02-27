@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -21,21 +21,36 @@ import { Comments, JwtAuth, Loading } from "./components";
 
 const App = () => {
   const { accessToken } = useSelector((state) => state.user);
+  const [isLoading, setIsLoading] = useState(true); // New state for loading
+
   return (
     <Router>
-      <JwtAuth />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/search-options" element={<SearchOptions filter={1} />} />
-        <Route path="/add-post" element={accessToken && <NewPosts />} />
-        <Route path="/profile" element={accessToken && <Profile />} />
-        <Route path="/post/:postId" element={<CarPost />} />
-        <Route path="/profile/:postId" element={<MyPost />} />
-        <Route path="/verify/:token" element={<VerificationPage />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/comments/" element={<Comments />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <JwtAuth setIsLoading={setIsLoading} />
+      {!isLoading ? (
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/search-options"
+            element={<SearchOptions filter={1} />}
+          />
+          <Route
+            path="/add-post"
+            element={accessToken ? <NewPosts /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/profile"
+            element={accessToken ? <Profile /> : <Navigate to="/" replace />}
+          />
+          <Route path="/post/:postId" element={<CarPost />} />
+          <Route path="/profile/:postId" element={<MyPost />} />
+          <Route path="/verify/:token" element={<VerificationPage />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/comments/" element={<Comments />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      ) : (
+        <Loading />
+      )}
     </Router>
   );
 };
