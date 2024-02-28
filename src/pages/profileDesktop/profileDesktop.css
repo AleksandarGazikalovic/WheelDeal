@@ -32,7 +32,7 @@
   margin-left: calc(
     1rem + 100px
   ); /* Adjust the width of your sidebar as needed */
-  box-shadow: 0px 0px 10px 0px #ededed;
+box-shadow: 0px 0px 10px 0px #ededed;
 }
 
 .wd-profile--your-posts-wrapper {
@@ -46,7 +46,7 @@
   background-color: #fff;
   border-radius: 20px;
   color: #243550;
-  overflow-y: scroll;
+  overflow-y: auto;
   box-shadow: 0px 0px 10px 0px #e5e5e5;
 }
 
@@ -67,11 +67,11 @@
   padding-top: 2rem;
   padding-bottom: 2rem;
   width: 100%;
-  grid-area: 6 / 1 / 12 / 13;
+  grid-area: 6 / 1 / 12 / 9;
   background-color: #fff;
   border-radius: 20px;
   color: #243550;
-  overflow-y: scroll;
+  overflow-y: auto;
   box-shadow: 0px 0px 10px 0px #e5e5e5;
 }
 
@@ -106,16 +106,13 @@
   text-align: center;
 }
 
-.wd-profile--liked-posts-no-posts-offer {
-}
-
 @media screen and (max-width: 1100px) {
   .wd-profile--your-posts-wrapper {
     grid-area: 2 / 9 / 7 / 13;
   }
 
   .wd-profile--liked-posts-wrapper {
-    grid-area: 7 / 1 / 12 / 13;
+    grid-area: 7 / 1 / 12 / 9;
   }
 
   .wd-profile--your-posts-title {
@@ -124,6 +121,17 @@
 }
 
 @media screen and (max-width: 900px) {
+  .wd-profile{
+    height: 300vh;
+  }
+  .wd-profile--your-posts-wrapper {
+    grid-area: 6/ 1 / 8 / 13;  
+    padding: 0;
+  }
+
+  .wd-profile--liked-posts-wrapper {
+    grid-area: 8 / 1 / 11 / 13;
+  }
   .wd-profile--your-posts {
     padding: 1.5rem 0;
   }
@@ -131,12 +139,8 @@
 
 @media screen and (max-width: 800px) {
   .wd-profile--your-posts-wrapper {
-    grid-area: 6 / 1 / 9 / 13;
+    grid-area: 6 / 1 / 9 / 13;  
     padding: 0;
-  }
-
-  .wd-profile--liked-posts-wrapper {
-    grid-area: 9 / 1 / 13 / 13;
   }
 }
 

@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import { GoPlus } from "react-icons/go";
 import ProfileAccount from "../profileAccountBig/ProfileAccountBig";
 import Menu from "../menu/Menu";
+import { IoNotificationsSharp } from "react-icons/io5";
+import { ProfileNotification } from "../";
 
 const Navbar = ({ showLoginForm, setShowLoginForm }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -19,11 +21,9 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
   useEffect(() => {
     if (user._id) {
       setLoggedIn(true);
-      
     }
     if (user._id === undefined) {
       setLoggedIn(false);
-      
     }
   }, [user._id]);
 
@@ -41,6 +41,11 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
 
   const handleCloseLoginForm = () => {
     setShowLoginForm(false);
+  };
+
+  const [showInbox, setShowInbox] = useState(false);
+  const openMessageInbox = () => {
+    setShowInbox(!showInbox);
   };
 
   return (
@@ -94,6 +99,14 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
           )}
         </div>
 
+        {loggedIn && (
+          <div
+            className="wd-profile--navbar-notifications"
+            onClick={openMessageInbox}
+          >
+            <IoNotificationsSharp size={25} />
+          </div>
+        )}
         <div className="wd--navbar-menu">
           <RiMenu3Line
             color="#3e3e3e"
@@ -122,6 +135,11 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
           onClose={handleCloseLoginForm}
           showRegistration={handleShowRegistrationForm}
         />
+      )}
+      {showInbox && (
+        <div className="wd-profile--navbar--messageInbox">
+          <ProfileNotification />
+        </div>
       )}
     </div>
   );

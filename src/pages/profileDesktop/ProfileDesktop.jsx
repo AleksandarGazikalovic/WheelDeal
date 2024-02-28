@@ -11,6 +11,7 @@ import {
   ProfileNavbar,
   ProfileStatistics,
   SmallPostCard,
+  ProfileNotification,
 } from "../../components";
 import axios from "axios";
 import { useState } from "react";
@@ -57,6 +58,7 @@ const ProfileDesktop = () => {
           <ProfileNavbar />
           <ProfileInfo setShowProfileInfoEdit={setShowProfileInfoEdit} />
           <ProfileStatistics />
+          <ProfileNotification />
           <div className="wd-profile--your-posts-wrapper" id="style-7">
             <div className="wd-profile--your-posts">
               <p className="wd-profile--your-posts-title">Your posts</p>

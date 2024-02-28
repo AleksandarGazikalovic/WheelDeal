@@ -9,6 +9,9 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateProfileImage, updateUser } from "../../redux/userSlice";
 import { Avatar } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import zIndex from "@mui/material/styles/zIndex";
 
 const ProfileInfoEdit = ({ setShowProfileInfoEdit }) => {
   const user = useSelector((state) => state.user.userInfo);
@@ -64,6 +67,11 @@ const ProfileInfoEdit = ({ setShowProfileInfoEdit }) => {
     }
   };
 
+  const notify = () => {
+    toast.success("Uspešno ste aržurirali podatke", {
+      autoClose: 2000,
+    });
+  };
   return (
     <div className="wd-profile--profile-info-edit-wrapper">
       <div className="wd-profile--profile-info-edit slide-top">
@@ -216,13 +224,14 @@ const ProfileInfoEdit = ({ setShowProfileInfoEdit }) => {
         {
           <button
             className="wd-profile--profile-info-edit--save"
-            onClick={handleUpdate}
+            onClick={(handleUpdate, notify)}
             style={{ visibility: showSaveBtn ? "visible" : "hidden" }}
           >
             Save
           </button>
         }
       </div>
+      <ToastContainer />
     </div>
   );
 };
