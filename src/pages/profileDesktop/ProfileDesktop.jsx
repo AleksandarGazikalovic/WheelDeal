@@ -23,7 +23,7 @@ import Loading from "../../components/loading/Loading";
 import { IoIosArrowForward } from "react-icons/io";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { API_ENDPOINT } from "..";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ProfileDesktop = () => {
@@ -131,7 +131,6 @@ const ProfileDesktop = () => {
           setProfileInfoEditMessage={setProfileInfoEditMessage}
         />
       )}
-      <ToastContainer />
     </div>
   );
 };

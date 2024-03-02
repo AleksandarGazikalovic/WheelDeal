@@ -18,6 +18,7 @@ import {
 } from "./pages";
 import { useSelector } from "react-redux";
 import { Comments, JwtAuth, Loading } from "./components";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const { accessToken } = useSelector((state) => state.user);
@@ -25,6 +26,7 @@ const App = () => {
 
   return (
     <Router>
+      <ToastContainer />
       <JwtAuth setIsLoading={setIsLoading} />
       {!isLoading ? (
         <Routes>

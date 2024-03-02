@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
@@ -149,7 +149,6 @@ const ProfileMobile = () => {
           setProfileInfoEditMessage={setProfileInfoEditMessage}
         />
       )}
-      <ToastContainer />
     </div>
   );
 };
