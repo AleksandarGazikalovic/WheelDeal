@@ -9,11 +9,12 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateProfileImage, updateUser } from "../../redux/userSlice";
 import { Avatar } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import zIndex from "@mui/material/styles/zIndex";
 
-const ProfileInfoEdit = ({ setShowProfileInfoEdit }) => {
+const ProfileInfoEdit = ({
+  setShowProfileInfoEdit,
+  setProfileInfoEditMessage,
+}) => {
   const user = useSelector((state) => state.user.userInfo);
   const [userData, setUserData] = useState({});
   const [profileImage, setProfileImage] = useState(null);
@@ -57,7 +58,9 @@ const ProfileInfoEdit = ({ setShowProfileInfoEdit }) => {
         await dispatch(updateUser(userData));
       }
       setShowSaveBtn(false);
-      // If the update is successful, refresh the page
+      // If the update is successful, return to parent component
+      notify();
+      setShowProfileInfoEdit(false);
       //window.location.reload();
     } catch (error) {
       // If there is an error, you can handle it here
@@ -68,10 +71,12 @@ const ProfileInfoEdit = ({ setShowProfileInfoEdit }) => {
   };
 
   const notify = () => {
-    toast.success("Uspešno ste aržurirali podatke", {
-      autoClose: 2000,
+    setProfileInfoEditMessage({
+      status: "success",
+      message: "Uspešno ste ažurirali podatke",
     });
   };
+
   return (
     <div className="wd-profile--profile-info-edit-wrapper">
       <div className="wd-profile--profile-info-edit slide-top">
@@ -224,14 +229,13 @@ const ProfileInfoEdit = ({ setShowProfileInfoEdit }) => {
         {
           <button
             className="wd-profile--profile-info-edit--save"
-            onClick={(handleUpdate, notify)}
+            onClick={() => handleUpdate()}
             style={{ visibility: showSaveBtn ? "visible" : "hidden" }}
           >
             Save
           </button>
         }
       </div>
-      <ToastContainer />
     </div>
   );
 };

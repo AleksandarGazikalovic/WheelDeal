@@ -23,12 +23,18 @@ import Loading from "../../components/loading/Loading";
 import { IoIosArrowForward } from "react-icons/io";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { API_ENDPOINT } from "..";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProfileDesktop = () => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const [likedPosts, setLikedPosts] = useState([]);
   const [userPosts, setUserPosts] = useState([]);
   const [showProfileInfoEdit, setShowProfileInfoEdit] = useState(false);
+  const [profileInfoEditMessage, setProfileInfoEditMessage] = useState({
+    status: null,
+    message: null,
+  });
 
   useEffect(() => {
     if (userInfo._id === undefined) {
@@ -49,6 +55,18 @@ const ProfileDesktop = () => {
     fetchUserPosts();
     fetchLikedPosts();
   }, [userInfo._id]);
+
+  useEffect(() => {
+    const showToast = async () => {
+      if (profileInfoEditMessage.status === "success") {
+        toast.success(profileInfoEditMessage.message, {
+          autoClose: 3000,
+        });
+      }
+      setProfileInfoEditMessage({ status: null, message: null });
+    };
+    showToast();
+  }, [profileInfoEditMessage.message]);
 
   return (
     <div className="wd-profile">
@@ -108,8 +126,12 @@ const ProfileDesktop = () => {
       </div>
       {pending && <Loading />}
       {showProfileInfoEdit && (
-        <ProfileInfoEdit setShowProfileInfoEdit={setShowProfileInfoEdit} />
+        <ProfileInfoEdit
+          setShowProfileInfoEdit={setShowProfileInfoEdit}
+          setProfileInfoEditMessage={setProfileInfoEditMessage}
+        />
       )}
+      <ToastContainer />
     </div>
   );
 };

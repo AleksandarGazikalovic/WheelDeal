@@ -14,6 +14,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
@@ -25,6 +27,10 @@ const ProfileMobile = () => {
   const [activeTab, setActiveTab] = useState(
     <ProfileInfo setShowProfileInfoEdit={setShowProfileInfoEdit} />
   );
+  const [profileInfoEditMessage, setProfileInfoEditMessage] = useState({
+    status: null,
+    message: null,
+  });
 
   const handleTabClick = (tab) => {
     switch (tab) {
@@ -118,6 +124,18 @@ const ProfileMobile = () => {
     fetchLikedPosts();
   }, [userInfo._id]);
 
+  useEffect(() => {
+    const showToast = async () => {
+      if (profileInfoEditMessage.status === "success") {
+        toast.success(profileInfoEditMessage.message, {
+          autoClose: 3000,
+        });
+      }
+      setProfileInfoEditMessage({ status: null, message: null });
+    };
+    showToast();
+  }, [profileInfoEditMessage.message]);
+
   return (
     <div className="wd-profile2">
       <div className="wd-profile2-wrapper">
@@ -126,8 +144,12 @@ const ProfileMobile = () => {
       </div>
       <TabBar onTabClick={handleTabClick} />
       {showProfileInfoEdit && (
-        <ProfileInfoEdit setShowProfileInfoEdit={setShowProfileInfoEdit} />
+        <ProfileInfoEdit
+          setShowProfileInfoEdit={setShowProfileInfoEdit}
+          setProfileInfoEditMessage={setProfileInfoEditMessage}
+        />
       )}
+      <ToastContainer />
     </div>
   );
 };
