@@ -81,13 +81,13 @@
   font-weight: 300;
 }
 
-.rent-btn {
+.reset-btn {
   border: 1px solid #f77f00;
   border-left: none;
   color: white;
   border-radius: 0 50px 50px 0;
   background-color: #f77f00;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .wd--search--top-filter-dropdown {
@@ -184,7 +184,7 @@
   .where-btn {
     border-radius: 50px 50px 0 0;
   }
-  .rent-btn {
+  .reset-btn {
     border-radius: 0 0 50px 50px;
   }
 }

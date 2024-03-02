@@ -53,20 +53,19 @@
 
 .wd--header-content h1 {
   font-family: var(--font-family);
-  font-weight: 800;
+  font-weight: 600;
   font-size: 62px;
-  line-height: 75px;
-  letter-spacing: -0.04em;
-  color: #d0e5f2cc;
+  letter-spacing: 0.1rem;
+  color: #ffffffc5;
 }
 
 .wd--header-content p {
   font-family: var(--font-family);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 20px;
   line-height: 29px;
   margin-top: 2rem;
-  color: #d0e5f2cc;
+  color: #ffffffc5;
 }
 
 .wd--header-content--div {
@@ -90,7 +89,7 @@
   min-height: 30px;
   padding: 1rem 2rem;
   color: rgb(97, 97, 97);
-  background: #d0e5f2cc;
+  background: #ffffffc5;
   font-family: var(--font-family);
   color: #003049;
   font-weight: 100;
@@ -106,7 +105,7 @@
   width: 100%;
   min-height: 50px;
   padding: 1.16rem 2rem;
-  color: #d0e5f2cc;
+  color: #ffffffef;
   background: #f77f00;
   font-family: var(--font-family);
   font-weight: bold;
@@ -133,7 +132,7 @@
 .wd--header-content--label {
   top: 0;
   left: 10px;
-  color: #a6c1d1;
+  color: #ffffffc5;
   transform: translateY(-100%);
   font-family: var(--font-family);
   font-weight: 500;
@@ -147,7 +146,7 @@
   min-height: 30px;
   padding: 1rem 0rem;
   color: rgb(97, 97, 97);
-  background: #d0e5f2cc;
+  background: #ffffffc5;
   font-family: var(--font-family);
   color: #003049;
   border: none;
@@ -266,7 +265,7 @@
     border: none;
     outline: none;
     width: 100%;
-    color: #d0e5f2cc;
+    color: #ffffffc5;
     padding: 0;
     margin: 0;
   }

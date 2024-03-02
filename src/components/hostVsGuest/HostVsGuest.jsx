@@ -39,7 +39,7 @@ const HostVsGuest = () => {
               className="wd--host-vs-guest--content--part-header"
               ref={(element) => (animateRefs.current[0] = element)}
             >
-              <h3>Host</h3>
+              <h1>Host</h1>
             </div>
             <div
               className="wd--host-vs-guest--content--part-body"
@@ -68,7 +68,7 @@ const HostVsGuest = () => {
               className="wd--host-vs-guest--content--part-header"
               ref={(element) => (animateRefs.current[4] = element)}
             >
-              <h3>Guest</h3>
+              <h1>Guest</h1>
             </div>
             <div
               className="wd--host-vs-guest--content--part-body"

@@ -119,7 +119,7 @@ const Header = () => {
       )}
       <div className="wd--header-2">
         <div className="wd--header-content">
-          <h1 className="gradient--text">Cheapest car rental in Serbia</h1>
+          <h1>Cheapest car rental in Serbia</h1>
           <p>
             Discover seamless car sharing and rentals with WheelDeal, connecting
             you to a wide range of vehicles and a trusted community of owners

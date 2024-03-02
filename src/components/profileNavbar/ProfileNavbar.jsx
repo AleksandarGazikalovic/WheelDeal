@@ -38,7 +38,7 @@ const ProfileNavbar = () => {
         <input type="text" placeholder="Search" />
       </div>
       <div className="wd-profile--navbar-right">
-        <CustomButton text="Sign out" action={handleLogout} width={"100px"} />
+        <CustomButton text="Sign out" action={handleLogout} width={"120px"} />
 
         <ProfileAccount size={"small"} />
       </div>

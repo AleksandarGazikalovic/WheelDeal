@@ -3,7 +3,8 @@
   color: #fff;
   background: #f77f00;
   font-family: var(--font-family);
-  font-weight: 800;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
   font-size: 15px;
   line-height: 25px;
   border: none;

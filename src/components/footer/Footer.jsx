@@ -29,21 +29,21 @@ const Footer = () => {
         <div className="wd__footer-content__right">
           <h2>Follow us</h2>
           <a href="https://www.instagram.com/wheeldeal.rent/">
-            <BsInstagram fontSize={30}> </BsInstagram>
+            <BsInstagram> </BsInstagram>
           </a>
           <a
             href="https://facebook.com/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <BsFacebook fontSize={30}> </BsFacebook>
+            <BsFacebook> </BsFacebook>
           </a>
           <a
             href="https://linkedin.com/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <BsLinkedin fontSize={30}> </BsLinkedin>
+            <BsLinkedin> </BsLinkedin>
           </a>
         </div>
       </div>

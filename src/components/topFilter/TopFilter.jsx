@@ -97,7 +97,7 @@ const TopFilter = () => {
               >
                 Brand
               </button>
-              <button className="rent-btn" onClick={resetFilter}>
+              <button className="reset-btn" onClick={resetFilter}>
                 Reset filters
               </button>
             </div>
@@ -128,7 +128,7 @@ const TopFilter = () => {
           >
             Brand
           </button>
-          <button className="rent-btn" onClick={resetFilter}>
+          <button className="reset-btn" onClick={resetFilter}>
             Reset filters
           </button>
         </div>
