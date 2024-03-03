@@ -9,6 +9,7 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { useSelector, useDispatch } from "react-redux";
 import { createPost } from "../../redux/postSlice";
+import { setCreatedNewPost } from "../../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
@@ -290,13 +291,35 @@ const NewPosts = () => {
     return false;
   };
 
-  const handleCreatePost = () => {
-    if (handleError3()) return;
-    dispatch(createPost(postValues)).then(() => {
-      if (!error && !pending) {
-        navigate("/profile");
-      }
-    });
+  const handleCreatePost = async () => {
+    try {
+      if (handleError3()) return;
+      dispatch(createPost(postValues)).then((result) => {
+        if (createPost.fulfilled.match(result)) {
+          dispatch(
+            setCreatedNewPost({
+              status: "success",
+              message: "Uspešno napravljen novi oglas!",
+            })
+          );
+          navigate("/profile");
+        } else if (createPost.rejected.match(result)) {
+          dispatch(
+            setCreatedNewPost({
+              status: "error",
+              message: "Došlo je do greške prilikom pravljenja novog oglasa.",
+            })
+          );
+          navigate("/profile");
+        }
+        // if (!error && !pending) {
+        //   dispatch(setCreatedNewPost(true));
+        //   navigate("/profile");
+        // }
+      });
+    } catch (error) {
+      console.error("Error while creating post: " + error);
+    }
   };
 
   const handleLocationSelect = (selectedLocation) => {

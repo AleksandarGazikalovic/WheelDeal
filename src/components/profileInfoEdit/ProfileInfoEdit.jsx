@@ -52,14 +52,24 @@ const ProfileInfoEdit = ({
     try {
       if (profileImage !== null) {
         // await dispatch(updateUser(userData));
-        await dispatch(updateProfileImage(userData));
+        await dispatch(updateProfileImage(userData)).then((result) => {
+          if (updateProfileImage.fulfilled.match(result)) {
+            notifySuccess();
+          } else if (updateProfileImage.rejected.match(result)) {
+            notifyError();
+          }
+        });
         setProfileImage(null);
       } else {
-        await dispatch(updateUser(userData));
+        await dispatch(updateUser(userData)).then((result) => {
+          if (updateUser.fulfilled.match(result)) {
+            notifySuccess();
+          } else if (updateUser.rejected.match(result)) {
+            notifyError();
+          }
+        });
       }
       setShowSaveBtn(false);
-      // If the update is successful, return to parent component
-      notify();
       setShowProfileInfoEdit(false);
       //window.location.reload();
     } catch (error) {
@@ -70,10 +80,17 @@ const ProfileInfoEdit = ({
     }
   };
 
-  const notify = () => {
+  const notifySuccess = () => {
     setProfileInfoEditMessage({
       status: "success",
-      message: "Uspešno ste ažurirali podatke",
+      message: "Uspešno ste ažurirali podatke.",
+    });
+  };
+
+  const notifyError = () => {
+    setProfileInfoEditMessage({
+      status: "error",
+      message: "Došlo je do greške prilikom ažuriranja podataka.",
     });
   };
 

@@ -28,6 +28,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { deletePost, updatePost } from "../../redux/postSlice";
 import { MdOutlinePhotoLibrary } from "react-icons/md";
 import { DateRange } from "react-date-range";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MyPost = () => {
   const { postId } = useParams();
@@ -47,6 +49,10 @@ const MyPost = () => {
     },
   ]);
   const { pending, postInfo, error } = useSelector((state) => state.post);
+  const [postInfoEditMessage, setPostInfoEditMessage] = useState({
+    status: null,
+    message: null,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,6 +76,23 @@ const MyPost = () => {
     };
     fetchData();
   }, [postId]);
+
+  useEffect(() => {
+    const showToast = async () => {
+      if (postInfoEditMessage.status === "success") {
+        toast.success(postInfoEditMessage.message, {
+          autoClose: 5000,
+        });
+      }
+      if (postInfoEditMessage.status === "error") {
+        toast.error(postInfoEditMessage.message, {
+          autoClose: 5000,
+        });
+      }
+      setPostInfoEditMessage({ status: null, message: null });
+    };
+    showToast();
+  }, [postInfoEditMessage.message]);
 
   const handleNextImage = () => {
     const newImages = [...images];
@@ -123,6 +146,15 @@ const MyPost = () => {
         if (updatePost.fulfilled.match(result)) {
           setEdit(!edit);
           setDisableUpdate(true);
+          setPostInfoEditMessage({
+            status: "success",
+            message: "Uspešno ste ažurirali Vaš oglas.",
+          });
+        } else if (updatePost.rejected.match(result)) {
+          setPostInfoEditMessage({
+            status: "error",
+            message: "Došlo je do greške prilikom ažuriranja Vašeg oglasa.",
+          });
         }
       });
     } catch (error) {

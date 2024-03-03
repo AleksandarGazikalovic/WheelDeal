@@ -29,14 +29,10 @@ export const deletePost = createAsyncThunk(
 );
 
 export const updatePost = createAsyncThunk("post/updatePost", async (post) => {
-  try {
-    const res = await axios.put(API_ENDPOINT + `/posts/${post._id}`, post, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-    return res.data;
-  } catch (error) {
-    console.error("Error updating post:", error);
-  }
+  const res = await axios.put(API_ENDPOINT + `/posts/${post._id}`, post, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
 });
 
 export const postSlice = createSlice({

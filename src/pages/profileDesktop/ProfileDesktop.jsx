@@ -26,7 +26,7 @@ import { API_ENDPOINT } from "..";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ProfileDesktop = () => {
+const ProfileDesktop = ({ setConnectionError }) => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const [likedPosts, setLikedPosts] = useState([]);
   const [userPosts, setUserPosts] = useState([]);
@@ -41,16 +41,26 @@ const ProfileDesktop = () => {
       return;
     }
     const fetchLikedPosts = async () => {
-      const res = await axios.get(
-        API_ENDPOINT + `/posts/liked/${userInfo._id}`
-      );
-      setLikedPosts(res.data);
+      try {
+        const res = await axios.get(
+          API_ENDPOINT + `/posts/liked/${userInfo._id}`
+        );
+        setLikedPosts(res.data);
+      } catch (error) {
+        console.log("Error in fetching liked posts: " + error);
+        setConnectionError("Greška prilikom učitavanja stranice.");
+      }
     };
     const fetchUserPosts = async () => {
-      const res = await axios.get(
-        API_ENDPOINT + `/posts/profile/${userInfo._id}`
-      );
-      setUserPosts(res.data);
+      try {
+        const res = await axios.get(
+          API_ENDPOINT + `/posts/profile/${userInfo._id}`
+        );
+        setUserPosts(res.data);
+      } catch (error) {
+        console.log("Error in fetching users posts: " + error);
+        setConnectionError("Greška prilikom učitavanja stranice.");
+      }
     };
     fetchUserPosts();
     fetchLikedPosts();
@@ -60,7 +70,12 @@ const ProfileDesktop = () => {
     const showToast = async () => {
       if (profileInfoEditMessage.status === "success") {
         toast.success(profileInfoEditMessage.message, {
-          autoClose: 3000,
+          autoClose: 5000,
+        });
+      }
+      if (profileInfoEditMessage.status === "error") {
+        toast.error(profileInfoEditMessage.message, {
+          autoClose: 5000,
         });
       }
       setProfileInfoEditMessage({ status: null, message: null });
