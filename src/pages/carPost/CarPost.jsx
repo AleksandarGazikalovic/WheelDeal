@@ -52,6 +52,11 @@ const CarPost = () => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const postDates = {
+    startDate: new Date(post.from),
+    endDate: new Date(post.to),
+  };
+  const [disabledDates, setDisabledDates] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,8 +81,20 @@ const CarPost = () => {
         console.error("Error fetching data:", error);
       }
     };
+    const fetchBookings = async () => {
+      try {
+        const response = await axios.get(
+          API_ENDPOINT + `/bookings/post/${postId}/dates`
+        );
+        const dates = response.data.map((date) => new Date(date));
+        setDisabledDates(dates);
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
+      }
+    };
 
     fetchData();
+    fetchBookings();
   }, [postId]);
 
   const handleLike = async () => {
@@ -122,11 +139,9 @@ const CarPost = () => {
           <div className="wd--post-wrapper--info-top">
             <div className="wd--post-wrapper--info-top-left">
               <div className="wd--post-wrapper--info-top-left--text">
-                <div className="wd--post-wrapper--info-top-left--title">
-                  <h1>
-                    {post.brand} {post.carModel} {post.year}
-                  </h1>
-                </div>
+                <h1>
+                  {post.brand} {post.carModel} {post.year}
+                </h1>
                 <div className="wd--post-wrapper--info-top-left--rating">
                   <IoStar size={20} color="#ffd900" />
                   <h4>
@@ -181,7 +196,7 @@ const CarPost = () => {
                     <DateTimePicker
                       className="wd--post-wrapper--info-top-right--end-date"
                       label="Trip end"
-                      defaultValue={dayjs().add(3, "day")}
+                      defaultValue={dayjs().add(7, "day")}
                       ampm={false}
                       format="DD/MM/YYYY HH:mm"
                     />
@@ -305,11 +320,24 @@ const CarPost = () => {
             <div className="wd--post-wrapper--info-bottom-right--calendar">
               <h2>Available dates</h2>
               <DateRange
-                minDate={new Date()}
-                // ranges={state}
+                disabledDates={disabledDates}
+                ranges={
+                  [
+                    {
+                      startDate: postDates.startDate,
+                      endDate: postDates.endDate,
+                      key: "selection",
+                    },
+                  ] // Set the available dates
+                } // Convert the dates to the correct format
+                rangeColors={[""]}
                 style={{
-                  width: "300px",
+                  width: "270px",
+                  pointerEvents: "none",
                 }}
+                fixedHeight={true}
+                editableDateInputs={false}
+                showDateDisplay={false}
               />
             </div>
           </div>

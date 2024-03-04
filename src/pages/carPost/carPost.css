@@ -27,6 +27,11 @@
   width: 100%;
 }
 
+.rdrDayDisabled {
+  background-color: #efefef; /* Light grey background */
+  color: #cccccc; /* Dimmed text color */
+}
+
 .wd--post-wrapper--info-top-left {
   width: 100%;
   display: flex;
@@ -192,9 +197,7 @@
 
 .wd--post-wrapper--info-top-right--socials button:hover svg {
   color: red;
-}
-
-.wd--post-wrapper--info-top-right--socials button:hover {
+  scale: 1.1;
 }
 
 .wd--post-wrapper--info-top-right--socials-buttons {
@@ -365,13 +368,13 @@
 }
 
 .wd--post-wrapper--info-bottom-right--calendar {
-  pointer-events: none;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1rem;
   padding: 2rem 0;
+  width: 270px;
 }
 
 @media screen and (max-width: 1200px) {
@@ -412,6 +415,14 @@
   .wd--post-wrapper--info {
     width: 100%;
     gap: 2rem;
+  }
+
+  .wd--post-wrapper--info-top-left--text {
+    width: 90%;
+    align-self: center;
+  }
+  .wd--post-wrapper--info-top-left--text h1 {
+    font-size: 1.5rem;
   }
 
   .wd--post-wrapper--info-top-right--price {
