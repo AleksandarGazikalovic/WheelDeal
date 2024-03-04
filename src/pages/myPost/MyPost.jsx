@@ -72,6 +72,9 @@ const MyPost = () => {
       } catch (error) {
         // Handle errors if necessary
         console.error("Error fetching data:", error);
+        // navigate to component that shows that this post is no longer available (and leave a link to navigate back to search options)
+        // should be implemented in case that user saved a link in browser and after a while tries to access it, but user deleted a post in meantime
+        navigate("/not-found");
       }
     };
     fetchData();
