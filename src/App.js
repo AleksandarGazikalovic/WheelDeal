@@ -19,6 +19,7 @@ import {
 import { useSelector } from "react-redux";
 import { Comments, JwtAuth, Loading } from "./components";
 import { ToastContainer } from "react-toastify";
+import NotFound from "./pages/notFound/NotFound";
 
 const App = () => {
   const { accessToken } = useSelector((state) => state.user);
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/verify/:token" element={<VerificationPage />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/comments/" element={<Comments />} />
+          <Route path="/not-found" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       ) : (
