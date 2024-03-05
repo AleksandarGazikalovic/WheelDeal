@@ -194,7 +194,6 @@ export const userSlice = createSlice({
     },
     [likePost.fulfilled]: (state, action) => {
       state.pending = false;
-      console.log(action.payload);
       state.userInfo.likedPosts = action.payload;
     },
     [likePost.rejected]: (state, action) => {

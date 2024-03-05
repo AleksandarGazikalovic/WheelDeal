@@ -481,19 +481,18 @@ const MyPost = () => {
               <GoogleMaps selectedLocation={post.location} />
             </div>
           </div>
-          <div
-            className="wd--my-post--content--date"
-            style={edit ? { pointerEvents: "auto" } : { pointerEvents: "none" }}
-          >
+          <div className="wd--my-post--content--date">
             <DateRange
-              editableDateInputs={true}
+              editableDateInputs={false}
               onChange={(item) => setState([item.selection])}
               moveRangeOnFirstSelection={false}
               minDate={new Date()}
               dragSelectionEnabled={true}
+              fixedHeight={true}
               ranges={state}
               style={{
                 width: "300px",
+                pointerEvents: edit ? "auto" : "none",
               }}
             />
           </div>
