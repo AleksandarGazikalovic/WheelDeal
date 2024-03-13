@@ -7,7 +7,6 @@ const GoogleMaps = ({ selectedLocation }) => {
   const mapContainerStyle = {
     width: "100%",
     height: "100%",
-    borderRadius: "2rem",
   };
   const latLng = selectedLocation
     ? {

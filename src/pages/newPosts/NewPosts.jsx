@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Footer, Navbar, Loading, GoogleMaps, Wave3 } from "../../components";
 import { useState } from "react";
 import "./newPosts.css";
@@ -14,34 +14,23 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { LocationAutocomplete } from "../../components";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import {
   PiNumberOneBold,
   PiNumberTwoBold,
   PiNumberThreeBold,
   PiNumberFourBold,
 } from "react-icons/pi";
+import { useDropzone } from "react-dropzone";
 import carModelsArray from "../../models/car-models.json";
+import { IoCloseSharp, IoCloudUploadOutline } from "react-icons/io5";
 
-function ImageItem({ image, onClick }) {
-  return (
-    <div
-      className="wd--new-post--container-images-image"
-      onClick={() => onClick(image)}
-    >
-      <img src={image} alt="" />
-    </div>
-  );
-}
-
-function ImageGallery({ selectedImages, onClick, imageRef }) {
-  return (
-    <div className="wd--new-post--container-images" ref={imageRef} id="style-7">
-      {selectedImages.map((image, index) => (
-        <ImageItem key={index} image={image} onClick={onClick} />
-      ))}
-    </div>
-  );
-}
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+};
 
 const NewPosts = () => {
   const [selectedImages, setSelectedImages] = useState([]);
@@ -93,6 +82,61 @@ const NewPosts = () => {
     });
   };
 
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      // Update state with the new uploaded images
+      const newImages = acceptedFiles.map((file) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        })
+      );
+      setSelectedImages((prevImages) => [...prevImages, ...newImages]);
+
+      // Append new images to formData
+      acceptedFiles.forEach((file) => {
+        formData.append("images[]", file);
+      });
+
+      setPostValues({
+        ...postValues,
+        images: formData.getAll("images[]"),
+      });
+    },
+    [formData]
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  console.log(postValues);
+  // This function is called when the final drop event occurs
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const items = reorder(
+      selectedImages,
+      result.source.index,
+      result.destination.index
+    );
+
+    setSelectedImages(items);
+
+    // Reorder formData based on the new order of images
+    // First, clear the existing 'images[]' entries from formData
+    formData.delete("images[]");
+
+    // Then, append reordered images to formData
+    items.forEach((item) => {
+      // Assuming `item` still contains the File object
+      formData.append("images[]", item);
+    });
+
+    setPostValues({
+      ...postValues,
+      images: formData.getAll("images[]"),
+    });
+  };
+
   useEffect(() => {
     const fromDate = state[0].startDate;
     const toDate = state[0].endDate;
@@ -124,28 +168,6 @@ const NewPosts = () => {
       setPrice(roundedValue);
       handleInputChange("price", roundedValue);
     }
-  };
-
-  const onSelectFile = (event) => {
-    const selectedFiles = event.target.files;
-
-    const selectedFilesArray = Array.from(selectedFiles);
-    selectedFilesArray.forEach((file, index) => {
-      formData.append(`images[]`, file); // You can use a unique name for each file
-    });
-
-    const imagesArray = selectedFilesArray.map((file) => {
-      return URL.createObjectURL(file);
-    });
-
-    setSelectedImages((previousImages) => previousImages.concat(imagesArray));
-
-    setPostValues({
-      ...postValues,
-      images: formData.getAll("images[]"),
-    });
-
-    event.target.value = "";
   };
 
   useEffect(() => {
@@ -364,59 +386,79 @@ const NewPosts = () => {
           )}
           <div className="wd--new-post--container">
             {selectedImages.length === 0 ? (
-              <div className="wd--new-post--container-upload-photo">
-                <label>
-                  <AiOutlineCloudUpload size={80} />
-                  <span>Add up to 10 images</span>
-                  <input
-                    className="wd--new-post--container-upload-photo-input"
-                    type="file"
-                    name="images"
-                    onChange={onSelectFile}
-                    multiple
-                    accept="image/png , image/jpeg, image/webp"
-                  />
-                </label>
+              <div
+                {...getRootProps({ className: "dropzone" })}
+                className={
+                  `wd--new-post--container-upload-photo` +
+                  (isDragActive
+                    ? " wd--new-post--container-upload-photo-active"
+                    : "")
+                }
+              >
+                <input
+                  {...getInputProps()}
+                  className="wd--new-post--container-upload-photo-input"
+                />
+                <IoCloudUploadOutline />
+                <p>Drag 'n' drop some files here, or click to select files</p>
               </div>
             ) : null}
             {selectedImages.length > 0 && firstPage ? (
-              <div
-                className={`wd--new-post--container-wrapper ${
-                  isFadingOut ? "fade-out" : ""
-                }`}
-              >
-                <div className="wd--new-post--container-main-photo">
-                  {selectedImages.length > 0 && (
-                    <img src={selectedImages[0]} alt="" />
-                  )}
+              <div>
+                <h1 className="wd--new-post--container-images-title">
+                  Basic Information
+                </h1>
+                <div
+                  className={`wd--new-post--container-wrapper ${
+                    isFadingOut ? "fade-out" : ""
+                  }`}
+                >
+                  <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="droppable" direction="vertical">
+                      {(provided, snapshot) => (
+                        <div
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          className="wd--new-post--container-images"
+                        >
+                          {selectedImages.map((item, index) => (
+                            <Draggable
+                              key={item.preview}
+                              draggableId={item.preview}
+                              index={index}
+                            >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  onClick={() => handleImageClick(item)}
+                                  className="wd--new-post--container-images-image"
+                                >
+                                  <div className="wd--new-post--container-images-number">
+                                    {index + 1}
+                                  </div>
+                                  <img
+                                    src={item.preview}
+                                    alt={`preview-${index}`}
+                                  />
+                                  {clickedPicture === item && (
+                                    <IoCloseSharp
+                                      className="wd--new-pot-container-images-delete-image"
+                                      onClick={handleDelete}
+                                      ref={deleteBtnRef}
+                                    />
+                                  )}
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  </DragDropContext>
                 </div>
-
-                {selectedImages.length > 1 && (
-                  <ImageGallery
-                    selectedImages={selectedImages.slice(1)}
-                    onClick={handleImageClick}
-                    imageRef={imageRef}
-                  />
-                )}
-                {clickedPicture && (
-                  <button
-                    className="delete-btn"
-                    onClick={handleDelete}
-                    ref={deleteBtnRef}
-                  >
-                    <span className="delete-text">Delete</span>
-                    <span className="delete-icon">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path>
-                      </svg>
-                    </span>
-                  </button>
-                )}
               </div>
             ) : null}
             {secondPage ? (
@@ -690,58 +732,35 @@ const NewPosts = () => {
 
           {selectedImages.length > 0 ? (
             <div className="wd--new-post--container-buttons">
-              {!firstPage ? (
-                <button
-                  style={{ visibility: "visible" }}
-                  disabled={isFadingOut}
-                  type="button"
-                  className="wd--new-post--back-btn"
-                  onClick={handleBack}
-                >
-                  Back
-                </button>
-              ) : (
-                <button
-                  style={{ visibility: "hidden" }}
-                  type="button"
-                  className="wd--new-post--back-btn"
-                  onClick={handleBack}
-                >
-                  Back
-                </button>
-              )}
+              <button
+                style={{ visibility: !firstPage ? "visible" : "hidden" }}
+                disabled={isFadingOut}
+                type="button"
+                className="wd--new-post--back-btn"
+                onClick={handleBack}
+              >
+                Back
+              </button>
 
-              {firstPage ? (
-                <label
-                  className="wd--new-post--add-btn"
-                  style={{ visibility: "visible" }}
-                >
-                  <input
-                    className="wd--new-post--add-btn-input"
-                    type="file"
-                    name="images"
-                    onChange={onSelectFile}
-                    multiple
-                    accept="image/png , image/jpeg, image/webp"
-                  />
-                  Add Photo
-                </label>
-              ) : (
-                <label
-                  className="wd--new-post--add-btn"
-                  style={{ visibility: "hidden" }}
-                >
-                  <input
-                    className="wd--new-post--add-btn-input"
-                    type="file"
-                    name="images"
-                    onChange={onSelectFile}
-                    multiple
-                    accept="image/*"
-                  />
-                  Add Photo
-                </label>
-              )}
+              <label
+                className="wd--new-post--add-btn"
+                style={{
+                  visibility: firstPage ? "visible" : "hidden",
+                  marginRight: firstPage ? "" : "0",
+                }}
+              >
+                <input
+                  {...getInputProps()}
+                  className="wd--new-post--add-btn-input"
+                  type="file"
+                  name="images"
+                  //onChange={onSelectFile}
+                  multiple
+                  accept="image/png , image/jpeg, image/webp"
+                />
+                Add Photo
+              </label>
+
               {!filled ? (
                 <span style={{ fontWeight: 700 }}>
                   "Please fill in all the fields!"
