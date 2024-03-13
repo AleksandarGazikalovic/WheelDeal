@@ -46,6 +46,12 @@
   cursor: pointer;
 }
 
+.apply-filter[disabled] {
+  pointer-events: auto;
+  background-color: gray;
+  opacity: 0.8;
+}
+
 .how-long-filter,
 .how-much-filter {
   width: 600px;
