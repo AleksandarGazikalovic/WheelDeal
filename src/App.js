@@ -50,7 +50,7 @@ const App = () => {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/comments/" element={<Comments />} />
           <Route path="/not-found" element={<NotFound />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       ) : (
         <Loading />
