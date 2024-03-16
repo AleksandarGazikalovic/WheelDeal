@@ -90,10 +90,9 @@
   font-weight: 600;
 }
 
-.reset-btn[disabled] {
-  pointer-events: auto;
-  background-color: gray;
-  opacity: 0.8;
+.reset-btn:disabled {
+  background: #ffb565;
+  cursor: not-allowed;
 }
 
 .wd--search--top-filter-dropdown {
