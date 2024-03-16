@@ -11,10 +11,11 @@ import Cookies from "universal-cookie";
 const TopFilter = () => {
   const [activeFilter, setActiveFilter] = useState(""); // Initial form value
   const [isSlideDown, setIsSlideDown] = useState(false);
-  const [resetFilters, setResetFilters] = useState(false); // Initial form value
+  const [canResetFilters, setCanResetFilters] = useState(false); // Initial form value
   const topFilterRef = useRef(null);
   const dispatch = useDispatch();
   const [toggleDropdown, setToggleDropdown] = useState(false);
+  const [filterChanged, setFilterChanged] = useState(false);
   // const cookies = new Cookies(null, { path: "/" });
 
   const resetFilter = async () => {
@@ -22,12 +23,15 @@ const TopFilter = () => {
     //   cookies.remove("filter");
     //   dispatch(clearPosts());
     //   dispatch(clearFilter());
-    //   setResetFilters(true);
+    //   setCanResetFilters(true);
     // }
-    if (!resetFilters) {
+    if (canResetFilters /* && filterChanged*/) {
+      console.log(canResetFilters);
+      console.log(filterChanged);
       dispatch(clearPosts());
       dispatch(clearFilter());
-      setResetFilters(true);
+      setCanResetFilters(false);
+      setIsSlideDown(false);
     }
   };
 
@@ -97,7 +101,16 @@ const TopFilter = () => {
               >
                 Brand
               </button>
-              <button className="reset-btn" onClick={resetFilter}>
+              <button
+                className="reset-btn"
+                onClick={resetFilter}
+                disabled={!canResetFilters}
+                title={
+                  canResetFilters
+                    ? "Reset previously applied filters"
+                    : "There are no applied filters"
+                }
+              >
                 Reset filters
               </button>
             </div>
@@ -128,7 +141,16 @@ const TopFilter = () => {
           >
             Brand
           </button>
-          <button className="reset-btn" onClick={resetFilter}>
+          <button
+            className="reset-btn"
+            onClick={resetFilter}
+            disabled={!canResetFilters}
+            title={
+              canResetFilters
+                ? "Reset previously applied filters"
+                : "There are no applied filters"
+            }
+          >
             Reset filters
           </button>
         </div>
@@ -137,8 +159,10 @@ const TopFilter = () => {
             <Filters
               activeFilter={activeFilter}
               isSlideDown={isSlideDown}
-              resetFilters={resetFilters}
-              setResetFilters={setResetFilters}
+              canResetFilters={canResetFilters}
+              setCanResetFilters={setCanResetFilters}
+              filterChanged={filterChanged}
+              setFilterChanged={setFilterChanged}
             />
           ) : null // If the activeFilter is empty, don't render the form
         }

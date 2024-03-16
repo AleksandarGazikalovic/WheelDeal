@@ -46,6 +46,11 @@
   cursor: pointer;
 }
 
+.apply-filter:disabled {
+  background: #ffb565;
+  cursor: not-allowed;
+}
+
 .how-long-filter,
 .how-much-filter {
   width: 600px;

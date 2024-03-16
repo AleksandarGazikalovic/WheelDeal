@@ -7,7 +7,7 @@ import {
   Comments,
   Wave3,
 } from "../../components";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./carPost.css";
 import axios from "axios";
@@ -51,6 +51,7 @@ const CarPost = () => {
   const [like, setLike] = useState(false);
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const postDates = {
     startDate: new Date(post.from),
@@ -79,6 +80,9 @@ const CarPost = () => {
       } catch (error) {
         // Handle errors if necessary
         console.error("Error fetching data:", error);
+        // navigate to component that shows that this post is no longer available (and leave a link to navigate back to search options)
+        // should be implemented in case that user saved a link in browser and after a while tries to access it, but user deleted a post in meantime
+        navigate("/not-found");
       }
     };
     const fetchBookings = async () => {

@@ -90,6 +90,11 @@
   font-weight: 600;
 }
 
+.reset-btn:disabled {
+  background: #ffb565;
+  cursor: not-allowed;
+}
+
 .wd--search--top-filter-dropdown {
   display: none;
   border: none;

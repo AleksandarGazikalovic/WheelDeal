@@ -7,10 +7,12 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
-import { setFilter } from "../../redux/filterSlice";
+import { clearFilter, setFilter } from "../../redux/filterSlice";
 import { clearPosts, fetchPosts, resetPosts } from "../../redux/postsSlice";
 import Cookies from "universal-cookie";
 import { useSelector } from "react-redux";
+import carModelsArray from "../../models/car-models.json";
+import { Box, MenuItem } from "@mui/material";
 
 function WhereFilter({ onChange, location, defaultLocation }) {
   const handleChange = (newLocation) => {
@@ -120,30 +122,67 @@ function BrandFilter({ onChange, brand, defaultBrand }) {
   };
 
   return (
-    <TextField
-      id="searchBrand"
-      type="search"
-      label="Search"
-      defaultValue={defaultBrand}
-      value={brand}
-      onChange={(e) => handleChange({ brand: e.target.value })}
-      sx={{ width: 300 }}
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <SearchIcon />
-          </InputAdornment>
-        ),
+    <Box
+      component="form"
+      sx={{
+        "& .MuiTextField-root": { m: 1, width: "25ch" },
       }}
-    />
+      noValidate
+      autoComplete="off"
+    >
+      <TextField
+        id="searchBrand"
+        select={true}
+        focused
+        type="search"
+        label="Search"
+        defaultValue={defaultBrand}
+        value={brand}
+        onChange={(e) => handleChange({ brand: e.target.value })}
+        sx={{ width: 300 }}
+        SelectProps={{
+          MenuProps: {
+            anchorEl: this,
+          },
+        }}
+        // InputProps={{
+        //   endAdornment: (
+        //     <InputAdornment position="end">
+        //       <SearchIcon />
+        //     </InputAdornment>
+        //   ),
+        // }}
+      >
+        <MenuItem
+          key={""}
+          value={undefined}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
+          {"- Isprazni izbor -"}
+        </MenuItem>
+        {carModelsArray
+          .sort((a, b) => a.brand.localeCompare(b.brand))
+          .map((item) => (
+            <MenuItem
+              key={item.brand}
+              value={item.brand}
+              onMouseDown={(e) => e.stopPropagation()}
+            >
+              {item.brand}
+            </MenuItem>
+          ))}
+      </TextField>
+    </Box>
   );
 }
 
 const Filters = ({
   activeFilter,
   isSlideDown,
-  resetFilters,
-  setResetFilters,
+  canResetFilters,
+  setCanResetFilters,
+  filterChanged,
+  setFilterChanged,
 }) => {
   let filterContent;
   const dispatch = useDispatch();
@@ -161,7 +200,34 @@ const Filters = ({
   const filterState = useSelector((state) => state.filter);
 
   useEffect(() => {
-    if (resetFilters) {
+    // console.log(canResetFilters);
+    // console.log(filterChanged);
+    // if (!canResetFilters) {
+    //   console.log("BPP!");
+    //   setFilterValues({
+    //     fromDate: "",
+    //     toDate: "",
+    //     fromPrice: "",
+    //     toPrice: "",
+    //     location: "",
+    //     brand: "",
+    //     page: 1,
+    //   });
+    // }
+    if (!canResetFilters /*&& filterChanged*/) {
+      // console.log("HERE");
+      if (
+        (filterValues.brand === undefined || filterValues.brand === "") &&
+        filterValues.fromDate === undefined &&
+        filterValues.toDate === undefined &&
+        filterValues.fromPrice === undefined &&
+        filterValues.toPrice === undefined &&
+        filterValues.location === undefined
+      ) {
+      } else {
+        dispatch(clearFilter());
+        dispatch(clearPosts());
+      }
       setFilterValues({
         fromDate: undefined,
         toDate: undefined,
@@ -171,18 +237,75 @@ const Filters = ({
         brand: undefined,
         page: 1,
       });
-      setResetFilters(false);
     }
-  }, [resetFilters, setResetFilters]);
+  }, [canResetFilters, setCanResetFilters]);
 
   const applyFilter = async () => {
     // cookies.set("filter", filterValues);
     dispatch(setFilter(filterValues));
     dispatch(clearPosts());
+    // console.log(filterChanged);
+    // if (canResetFilters && filterChanged) {
+    //   dispatch(clearPosts());
+    // }
+
+    if (
+      (filterValues.brand === undefined || filterValues.brand === "") &&
+      filterValues.fromDate === undefined &&
+      filterValues.toDate === undefined &&
+      filterValues.fromPrice === undefined &&
+      filterValues.toPrice === undefined &&
+      filterValues.location === undefined
+    ) {
+      console.log("A1");
+      setCanResetFilters(false);
+    } else {
+      console.log("B1");
+      setCanResetFilters(true);
+    }
+
+    setFilterChanged(false);
+    // setCanResetFilters(true);
   };
 
   const handleFilterChange = (newValues) => {
     setFilterValues({ ...filterValues, ...newValues });
+    console.log({ ...filterValues });
+    console.log({ ...newValues });
+
+    let isObjectEmpty = true;
+    let count = 0;
+    for (let key in filterValues) {
+      if (filterValues[key] !== undefined) {
+        console.log(key);
+        if (filterValues[key] !== "" && key.toString() != "page") {
+          count++;
+        }
+        if (newValues.hasOwnProperty(key)) {
+          if (newValues[key] === undefined || newValues[key] === "") {
+            console.log(key);
+            count--;
+          }
+        }
+      }
+    }
+
+    console.log("Count: " + count);
+    if (count > 0) {
+      isObjectEmpty = false;
+    }
+
+    if (isObjectEmpty) {
+      setCanResetFilters(false);
+      setFilterChanged(true);
+      // console.log("A");
+    } else {
+      setCanResetFilters(true);
+      setFilterChanged(true);
+      // console.log("B");
+    }
+    // console.log(canResetFilters);
+    // console.log(filterChanged);
   };
 
   switch (activeFilter) {
@@ -233,7 +356,16 @@ const Filters = ({
   return (
     <div className={`filter-holder ${isSlideDown ? "active" : ""}`}>
       {filterContent}
-      <button className="apply-filter" onClick={applyFilter}>
+      <button
+        className="apply-filter"
+        onClick={applyFilter}
+        disabled={!filterChanged}
+        title={
+          filterChanged
+            ? "Apply filter"
+            : "You must change filter in order to apply it"
+        }
+      >
         Apply
       </button>
     </div>
