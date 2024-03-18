@@ -88,6 +88,7 @@ const Filters = ({
     if (!filterChanged) {
       // if filters haven't changed since last time, just pretend to make API call by rendering loading animation
       setLoading(true);
+      setIsSlideDown(false);
       return;
     }
 
