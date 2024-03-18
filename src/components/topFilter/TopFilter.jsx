@@ -16,6 +16,7 @@ const TopFilter = () => {
   const dispatch = useDispatch();
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const [filterChanged, setFilterChanged] = useState(false);
+  const [isFilterReset, setIsFilterReset] = useState(false);
   // const cookies = new Cookies(null, { path: "/" });
 
   const resetFilter = async () => {
@@ -32,6 +33,8 @@ const TopFilter = () => {
       dispatch(clearFilter());
       setCanResetFilters(false);
       setIsSlideDown(false);
+      setIsFilterReset(!isFilterReset);
+      setActiveFilter("");
     }
   };
 
@@ -78,25 +81,43 @@ const TopFilter = () => {
           {toggleDropdown ? (
             <div className="wd--search--top-filter-dropdown-content">
               <button
-                className="where-btn"
+                // added this so that button has same appearance when typing into that filter (as if focused in)
+                // isSlideDown is there so that button loses focus if clicked outside of component and filter dissapears
+                className={
+                  activeFilter === "where" && isSlideDown
+                    ? "where-btn-focused"
+                    : "where-btn"
+                }
                 onClick={() => handleFilterChange("where")}
               >
                 Where
               </button>
               <button
-                className="how-much-btn"
+                className={
+                  activeFilter === "howmuch" && isSlideDown
+                    ? "other-btn-focused"
+                    : "how-much-btn"
+                }
                 onClick={() => handleFilterChange("howmuch")}
               >
                 How much
               </button>
               <button
-                className="how-long-btn"
+                className={
+                  activeFilter === "howlong" && isSlideDown
+                    ? "other-btn-focused"
+                    : "how-long-btn"
+                }
                 onClick={() => handleFilterChange("howlong")}
               >
                 How long
               </button>
               <button
-                className="brand-btn"
+                className={
+                  activeFilter === "brand" && isSlideDown
+                    ? "other-btn-focused"
+                    : "brand-btn"
+                }
                 onClick={() => handleFilterChange("brand")}
               >
                 Brand
@@ -118,25 +139,41 @@ const TopFilter = () => {
         </div>
         <div className="wd--search--top-filter-btns">
           <button
-            className="where-btn"
+            className={
+              activeFilter === "where" && isSlideDown
+                ? "where-btn-focused"
+                : "where-btn"
+            }
             onClick={() => handleFilterChange("where")}
           >
             Where
           </button>
           <button
-            className="how-much-btn"
+            className={
+              activeFilter === "howmuch" && isSlideDown
+                ? "other-btn-focused"
+                : "how-much-btn"
+            }
             onClick={() => handleFilterChange("howmuch")}
           >
             How much
           </button>
           <button
-            className="how-long-btn"
+            className={
+              activeFilter === "howlong" && isSlideDown
+                ? "other-btn-focused"
+                : "how-long-btn"
+            }
             onClick={() => handleFilterChange("howlong")}
           >
             How long
           </button>
           <button
-            className="brand-btn"
+            className={
+              activeFilter === "brand" && isSlideDown
+                ? "other-btn-focused"
+                : "brand-btn"
+            }
             onClick={() => handleFilterChange("brand")}
           >
             Brand
@@ -158,11 +195,14 @@ const TopFilter = () => {
           activeFilter ? (
             <Filters
               activeFilter={activeFilter}
+              setActiveFilter={setActiveFilter}
               isSlideDown={isSlideDown}
+              setIsSlideDown={setIsSlideDown}
               canResetFilters={canResetFilters}
               setCanResetFilters={setCanResetFilters}
               filterChanged={filterChanged}
               setFilterChanged={setFilterChanged}
+              isFilterReset={isFilterReset}
             />
           ) : null // If the activeFilter is empty, don't render the form
         }
