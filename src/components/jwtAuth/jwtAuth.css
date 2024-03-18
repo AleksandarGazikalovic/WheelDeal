@@ -42,7 +42,7 @@
   width: 100%;
 }
 
-.session-expired-body{
+.session-expired-body {
   font-family: var(--font-family);
   font-size: 18px;
   font-weight: bold;
@@ -50,11 +50,9 @@
   align-self: center;
   color: rgb(77, 77, 77);
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 3rem;
   width: 100%;
 }
-
-
 
 .confirm-button {
   padding: 0.5rem 1rem;
@@ -73,7 +71,7 @@
   width: 100%;
   transition: background-color 0.3s ease;
   user-select: none;
-  margin-top: 3rem;
+  margin-top: 1rem;
 
   &:hover {
     background-color: #fa972d;
@@ -83,8 +81,6 @@
 .confirm-button:disabled {
   cursor: not-allowed;
 }
-
-
 
 @media screen and (max-width: 1050px) {
   .session-expired {

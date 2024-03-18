@@ -24,34 +24,35 @@ const JwtAuth = ({ setIsLoading }) => {
     setShowSessionExpired(false);
   };
 
+  const setBearer = (accessToken) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  };
+
   axios.interceptors.response.use(
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
 
       // If the error status is 401 and there is no originalRequest._retry flag,
-      // it means the token has expired and we need to refresh it
+      // it means the access token has expired and we need to refresh it (access token expiry)
+      // or refresh token has expired and we need to invalidate access token if we have one (refresh token expiry)
 
       // case Access token expired
       if (
-        error.response &&
         error.response.status === 401 &&
-        error.response.data !== undefined &&
-        error.response.data.message !== undefined &&
         error.response.data.message === "Access token expired" &&
         !originalRequest._retry
       ) {
         originalRequest._retry = true;
         console.log("Access token expired");
         try {
+          // try to issue new access token
           const response = await axios.get(
             API_ENDPOINT + `/auth/handleAccessTokenExpiry`,
             { withCredentials: true }
           );
           const { accessToken } = response.data;
-          axios.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${accessToken}`;
+          setBearer(accessToken);
 
           // Retry the original request with the new token
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
@@ -63,43 +64,28 @@ const JwtAuth = ({ setIsLoading }) => {
           setIsLoading(false); // Set loading to false
         }
       }
-      // case Refresh token expired -> "Vasa sesija je istekla" form
+      // case Refresh token expired -> "Your session has expired" form
       else if (
-        error.response &&
-        error.response.status === 401 &&
-        error.response.data !== undefined &&
-        error.response.data.message !== undefined &&
-        error.response.data.message === "Refresh token expired" &&
+        error?.response?.status === 401 &&
+        error?.response?.data?.message === "Refresh token expired" &&
         !originalRequest._retry
       ) {
+        // remove refresh token due to expiry -> can't issue new access token until new login
         originalRequest._retry = true;
         console.log("Delete access token due to refresh token expiry");
         dispatch(setAccessToken(""));
         dispatch(setUser({}));
         handleShowSessionExpired();
         return axios(originalRequest);
-      } else {
-        // console.log("Delete access token")
-        // dispatch(setAccessToken(""))
-        // dispatch(setUser({}))
       }
 
       return Promise.reject(error);
     }
   );
 
-  // useEffect(() => {
-  //   axios
-  //     .post("/auth/refresh")
-  //     .then((res) => {
-  //       localStorage.setItem("refreshToken", res.data.refreshToken);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
   useEffect(() => {
+    // call when client enters the site - if user has been logged in earlier,
+    // try to issue him a new access token using refresh token (if present)
     const getAccessToken = async () => {
       //console.log(userInfo.accessToken)
       await axios
@@ -107,33 +93,14 @@ const JwtAuth = ({ setIsLoading }) => {
           withCredentials: true,
         })
         .then((res) => {
-          if (
-            res !== undefined &&
-            res.status !== undefined &&
-            res.status === 401
-          ) {
-            // no refresh token
-            // dont do anything
-          } else if (
-            res !== undefined &&
-            res.status !== undefined &&
-            res.status === 403
-          ) {
-            // refresh token expired or potential exploit of token attempted
-            // remove refresh token -> backend does this
-          } else if (res !== undefined && res.data !== undefined) {
-            // refresh token is present an hasn't expired ->
-            dispatch(setAccessToken(res.data.accessToken));
-            axios.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${res.data.accessToken}`; // set Bearer to user's current accessToken
-            console.log("Bearer set in getAccessToken");
-            fetchUser();
-          }
+          // refresh token is present and hasn't expired ->
+          dispatch(setAccessToken(res.data.accessToken));
+          setBearer(res.data.accessToken); // set Bearer to user's current accessToken
+          console.log("Bearer set in getAccessToken");
+          fetchUser();
         })
         .catch((err) => {
-          // console.log(err)
-          // console.log("Called from here")
+          // console.log(err);
         })
         .finally(() => {
           setIsLoading(false); // Set loading to false
@@ -151,10 +118,8 @@ const JwtAuth = ({ setIsLoading }) => {
   return showSessionExpired ? (
     <div className="session-expired-overlay">
       <div className="session-expired slide-top">
-        <h1 className="session-expired-title">Vaša sesija je istekla!</h1>
-        <h4 className="session-expired-body">
-          Molimo Vas da se ponovo ulogujete
-        </h4>
+        <h1 className="session-expired-title">Your session has expired!</h1>
+        <h4 className="session-expired-body">Please log in again</h4>
         <button
           className="confirm-button"
           type="submit"
