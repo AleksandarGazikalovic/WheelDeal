@@ -38,6 +38,7 @@ import {
 } from "react-icons/io5";
 import { DateRange } from "react-date-range";
 import { likePost } from "../../redux/userSlice";
+import { MdOutlineDriveEta } from "react-icons/md";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
@@ -66,7 +67,7 @@ const CarPost = () => {
         const postResponse = await axios.get(API_ENDPOINT + `/posts/${postId}`);
 
         setPost(postResponse.data);
-        setImages(postResponse.data.images);
+        setImages(postResponse.data.vehicle.images);
 
         // Fetch the owner data using the post data
         const ownerResponse = await axios.get(
@@ -144,7 +145,8 @@ const CarPost = () => {
             <div className="wd--post-wrapper--info-top-left">
               <div className="wd--post-wrapper--info-top-left--text">
                 <h1>
-                  {post.brand} {post.carModel} {post.year}
+                  {post.vehicle.brand} {post.vehicle.carModel}{" "}
+                  {post.vehicle.year}
                 </h1>
                 <div className="wd--post-wrapper--info-top-left--rating">
                   <IoStar size={20} color="#ffd900" />
@@ -191,7 +193,7 @@ const CarPost = () => {
                     <DateTimePicker
                       className="wd--post-wrapper--info-top-right--start-date"
                       label="Trip start"
-                      defaultValue={dayjs()}
+                      defaultValue={dayjs(postDates.startDate)}
                       ampm={false}
                       format="DD/MM/YYYY HH:mm"
                     />
@@ -274,18 +276,19 @@ const CarPost = () => {
                 <div className="wd--post-wrapper--info-bottom-left-specs-grid">
                   <div className="wd--post-wrapper--info-bottom-left--drive">
                     <GiCartwheel size={30} />
-                    <p>{post.drive}</p>
+                    <p>{post.vehicle.drive}</p>
                   </div>
                   <div className="wd--post-wrapper--info-bottom-left--transmission">
-                    <p>{post.transmission}</p>
+                    <MdOutlineDriveEta size={30} />
+                    <p>{post.vehicle.transmission}</p>
                   </div>
                   <div className="wd--post-wrapper--info-bottom-left--fuel">
                     <PiGasPump size={30} />
-                    <p>{post.fuel}</p>
+                    <p>{post.vehicle.fuel}</p>
                   </div>
                   <div className="wd--post-wrapper--info-bottom-left--engine">
                     <PiEngineLight size={30} />
-                    <p>{post.engine}</p>
+                    <p>{post.vehicle.engine}HP</p>
                   </div>
                 </div>
               </section>
@@ -349,9 +352,10 @@ const CarPost = () => {
             <h2> Reviews </h2>
             {owner && <Comments user_id={owner._id} />}
           </div>
-          <GoogleMaps selectedLocation={post.location} />
+          <div className="wd--post-wrapper--maps-wrapper">
+            <GoogleMaps selectedLocation={post.location} />
+          </div>
         </div>
-        <Wave3 />
       </div>
       <Footer />
     </div>

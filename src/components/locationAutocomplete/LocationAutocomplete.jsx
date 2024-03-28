@@ -43,7 +43,7 @@ const LocationAutocomplete = ({ selectedLocation, onSelect, disabled }) => {
           <div className="location-input-wrapper">
             <input
               {...getInputProps({
-                placeholder: selectedLocation?.address || "Search Location...",
+                placeholder: selectedLocation || "Search Location...",
                 className: "location-search-input",
               })}
             />

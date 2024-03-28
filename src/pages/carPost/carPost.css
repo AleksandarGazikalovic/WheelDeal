@@ -367,6 +367,11 @@
   margin-bottom: 5rem;
 }
 
+.wd--post-wrapper--maps-wrapper {
+  height: 650px;
+  width: 100%;
+}
+
 .wd--post-wrapper--info-bottom-right--calendar {
   display: flex;
   flex-direction: column;
@@ -411,10 +416,20 @@
   }
 }
 
+@media screen and (max-width: 830px) {
+  .wd--post-wrapper--maps-wrapper {
+    height: 400px;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .wd--post-wrapper--info {
     width: 100%;
     gap: 2rem;
+  }
+
+  .wd--post-wrapper--maps-wrapper {
+    height: 300px;
   }
 
   .wd--post-wrapper--info-top-left--text {

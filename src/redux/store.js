@@ -4,6 +4,7 @@ import filterReducer from "./filterSlice";
 import postsReducer from "./postsSlice";
 import postReducer from "./postSlice";
 import currencyReducer from "./currencySlice";
+import vehicleReducer from "./vehicleSlice";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     posts: postsReducer,
     post: postReducer,
     currency: currencyReducer,
+    vehicle: vehicleReducer,
   },
 });

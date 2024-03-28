@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import { Comments, JwtAuth, Loading } from "./components";
 import { ToastContainer } from "react-toastify";
 import NotFound from "./pages/notFound/NotFound";
+import NewVehicle from "./pages/newVehicle/NewVehicle";
 
 const App = () => {
   const { accessToken } = useSelector((state) => state.user);
@@ -39,6 +40,10 @@ const App = () => {
           <Route
             path="/add-post"
             element={accessToken ? <NewPosts /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/add-vehicle"
+            element={accessToken ? <NewVehicle /> : <Navigate to="/" replace />}
           />
           <Route
             path="/profile"
