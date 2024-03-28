@@ -1,25 +1,35 @@
+.wd__footer_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: relative;
+  width: 100%;
+  height: 550px;
+}
+
 .wd__footer {
   background-color: #1d1d1d;
   color: #fff;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   gap: 2rem;
   align-items: center;
-  padding-bottom: 3rem;
   font-family: var(--font-family);
   width: 100%;
+  height: 85%;
 }
 
 .wd__footer-logo {
-  width: 200px;
+  width: 150px;
 }
 
 .wd__footer-logo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .wd__footer-content {

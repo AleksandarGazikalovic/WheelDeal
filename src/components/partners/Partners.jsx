@@ -3,7 +3,6 @@ import React from "react";
 import FON from "../../assets/Partners/FON.png";
 import IRC from "../../assets/Partners/IRC_FON.png";
 import R2L from "../../assets/Partners/Route2Launch.png";
-import Wave3 from "../wave3/Wave3";
 
 const Partners = () => {
   return (
@@ -30,7 +29,6 @@ const Partners = () => {
           </a>
         </div>
       </div>
-      <Wave3 />
     </div>
   );
 };

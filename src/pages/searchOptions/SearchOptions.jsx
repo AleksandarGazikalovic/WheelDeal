@@ -4,7 +4,6 @@ import {
   Navbar,
   PostElementSkeleton,
   TopFilter,
-  Wave3,
 } from "../../components";
 import "./searchOptions.css";
 import { PostElement } from "../../components";
@@ -79,7 +78,6 @@ const SearchOptions = () => {
           </div>
           {pending && <Loading />}
         </div>
-        <Wave3 />
       </div>
 
       <Footer />
