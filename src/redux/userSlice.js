@@ -95,11 +95,11 @@ export const userSlice = createSlice({
       address: "",
       profileImage: "",
       isAdmin: false,
+      phoneNumber: "",
     },
     accessToken: "",
     pending: null,
     error: false,
-    createdNewPost: { status: "", message: "" },
   },
   reducers: {
     logout: (state) => {
@@ -112,9 +112,6 @@ export const userSlice = createSlice({
     setAccessToken: (state, action) => {
       console.log(action.payload);
       state.accessToken = action.payload;
-    },
-    setCreatedNewPost: (state, action) => {
-      state.createdNewPost = action.payload;
     },
   },
   extraReducers: {
@@ -203,6 +200,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { logout, setUser, setAccessToken, setCreatedNewPost } =
-  userSlice.actions;
+export const { logout, setUser, setAccessToken } = userSlice.actions;
 export default userSlice.reducer;

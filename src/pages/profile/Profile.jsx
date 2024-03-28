@@ -2,24 +2,26 @@ import React, { useEffect, useState } from "react";
 import "./profile.css";
 import { ProfileDesktop, ProfileMobile } from "../";
 import { useDispatch, useSelector } from "react-redux";
-import { setCreatedNewPost } from "../../redux/userSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  setCreatedNewPost,
+  setCreatedNewVehicle,
+} from "../../redux/notificationsSlice";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const [connectionErrorDesktop, setConnectionErrorDesktop] = useState(null);
   const [connectionErrorMobile, setConnectionErrorMobile] = useState(null);
   const [errorRendered, setErrorRendered] = useState(false);
-  const { userInfo, pending, createdNewPost, error } = useSelector(
-    (state) => state.user
+  const { createdNewPost, createdNewVehicle } = useSelector(
+    (state) => state.notifications
   );
 
   useEffect(() => {
     const showNewPostToast = async () => {
       if (createdNewPost.status != null) {
         if (createdNewPost.status === "success") {
-          console.log("HERE 1");
           toast.success(createdNewPost.message, {
             autoClose: 5000,
           });
@@ -34,6 +36,25 @@ const Profile = () => {
     showNewPostToast();
     dispatch(setCreatedNewPost({ status: null, message: null }));
   }, [createdNewPost.status]);
+
+  useEffect(() => {
+    const showNewVehicleToast = async () => {
+      if (createdNewVehicle.status != null) {
+        if (createdNewVehicle.status === "success") {
+          toast.success(createdNewVehicle.message, {
+            autoClose: 5000,
+          });
+        }
+        if (createdNewVehicle.status === "error") {
+          toast.error(createdNewVehicle.message, {
+            autoClose: 5000,
+          });
+        }
+      }
+    };
+    showNewVehicleToast();
+    dispatch(setCreatedNewVehicle({ status: null, message: null }));
+  }, [createdNewVehicle.status]);
 
   useEffect(() => {
     if (

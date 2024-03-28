@@ -5,6 +5,7 @@ import postsReducer from "./postsSlice";
 import postReducer from "./postSlice";
 import currencyReducer from "./currencySlice";
 import vehicleReducer from "./vehicleSlice";
+import notificationsReducer from "./notificationsSlice";
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     post: postReducer,
     currency: currencyReducer,
     vehicle: vehicleReducer,
+    notifications: notificationsReducer,
   },
 });
