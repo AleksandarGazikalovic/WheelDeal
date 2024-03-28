@@ -5,7 +5,7 @@ import {
   Loading,
   GoogleMaps,
   Comments,
-  Wave3,
+  PopUpModel,
 } from "../../components";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -49,6 +49,7 @@ const CarPost = () => {
   const [images, setImages] = useState([]);
   const [timeJoined, setTimeJoined] = useState("");
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
   const [like, setLike] = useState(false);
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -129,6 +130,18 @@ const CarPost = () => {
     fetchLikes();
   }, [post._id]);
 
+  const reserveACar = () => {
+    if (userInfo._id) {
+      if (userInfo.isLicenceVerified === false) {
+        setShowPopUp(true);
+      } else {
+        alert("Car booked successfully!");
+      }
+    } else {
+      setShowLoginForm(true);
+    }
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -202,15 +215,30 @@ const CarPost = () => {
                     <DateTimePicker
                       className="wd--post-wrapper--info-top-right--end-date"
                       label="Trip end"
-                      defaultValue={dayjs().add(7, "day")}
+                      defaultValue={dayjs(postDates.startDate).add(7, "day")}
                       ampm={false}
                       format="DD/MM/YYYY HH:mm"
                     />
                   </DemoContainer>
                 </LocalizationProvider>
-                <button className="wd--post-wrapper--info-top-right--button">
+                <button
+                  onClick={reserveACar}
+                  className="wd--post-wrapper--info-top-right--button"
+                >
                   Book
                 </button>
+                {
+                  /* Show the popup if the user hasn't accepted the terms and conditions */
+                  showPopUp && (
+                    <PopUpModel
+                      title="Terms and conditions"
+                      textContent="Ukoliko se slazete sa svim pravilima i obavezama, molim Vas cekirajte da biste nastavili."
+                      checkedBox={true}
+                      closePopup={setShowPopUp}
+                      accepted={setShowPopUp}
+                    />
+                  )
+                }
                 <div className="wd--post-wrapper--info-top-right--offers">
                   <Link to="/search-options">
                     <h4>
