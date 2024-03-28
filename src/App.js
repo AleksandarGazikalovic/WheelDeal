@@ -15,6 +15,7 @@ import {
   VerificationPage,
   ResetPassword,
   MyPost,
+  Onboarding,
 } from "./pages";
 import { useSelector } from "react-redux";
 import { Comments, JwtAuth, Loading } from "./components";
@@ -53,6 +54,10 @@ const App = () => {
           <Route path="/profile/:postId" element={<MyPost />} />
           <Route path="/verify/:token" element={<VerificationPage />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route
+            path="/onboarding"
+            element={accessToken ? <Onboarding /> : <Navigate to="/" replace />}
+          />
           <Route path="/comments/" element={<Comments />} />
           <Route path="/not-found" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />

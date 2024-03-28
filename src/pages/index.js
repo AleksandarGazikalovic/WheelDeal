@@ -8,5 +8,6 @@ export { default as CarPost } from "./carPost/CarPost";
 export { default as VerificationPage } from "./verificationPage/VerificationPage";
 export { default as ResetPassword } from "./resetPassword/ResetPassword";
 export { default as MyPost } from "./myPost/MyPost";
+export { default as Onboarding } from "./onboarding/Onboarding";
 
-export const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+export const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
