@@ -17,6 +17,7 @@ const TopFilter = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const [filterChanged, setFilterChanged] = useState(false);
   const [isFilterReset, setIsFilterReset] = useState(false);
+  const [open, setOpen] = useState(false);
   // const cookies = new Cookies(null, { path: "/" });
 
   const resetFilter = async () => {
@@ -49,6 +50,9 @@ const TopFilter = () => {
         topFilterRef.current &&
         !topFilterRef.current.contains(event.target)
       ) {
+        // we call setOpen to close the Brand filter popup if rendered,
+        // otherwise select popup remains rendered and gets attached to this component
+        setOpen(false);
         setIsSlideDown(false);
       }
     }
@@ -203,6 +207,8 @@ const TopFilter = () => {
               filterChanged={filterChanged}
               setFilterChanged={setFilterChanged}
               isFilterReset={isFilterReset}
+              open={open}
+              setOpen={setOpen}
             />
           ) : null // If the activeFilter is empty, don't render the form
         }
