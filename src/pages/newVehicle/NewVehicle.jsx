@@ -218,7 +218,7 @@ const NewVehicle = () => {
               message: "You have successfully added your vehicle!",
             })
           );
-          navigate("/profile");
+          navigate("/onboarding");
         } else if (createVehicle.rejected.match(result)) {
           dispatch(
             setCreatedNewVehicle({
