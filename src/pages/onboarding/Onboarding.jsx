@@ -26,11 +26,11 @@ import { setUser, updateUser } from "../../redux/userSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from "react-toastify";
 import {
-  setDriverLicense,
   setIDCard,
+  setVehicleLicense,
+  setRegistrationExpiry,
   setVehicleInsurance,
-  setVehicleRegistration,
-  uploadDocuments,
+  uploadDocument,
 } from "../../redux/documentSlice";
 import { FaCircleCheck } from "react-icons/fa6";
 
@@ -41,39 +41,38 @@ const Onboarding = () => {
     state.documents.documents,
     state.documents.pending,
   ]);
-  const [driverLicense, vehicleRegistration, vehicleInsurance, IDCard] =
-    useSelector((state) => [
-      state.documents.driverLicense,
-      state.documents.vehicleRegistration,
-      state.documents.vehicleInsurance,
-      state.documents.idCard,
-    ]);
+  const [IDCard, vehicleLicense, registrationExpiry] = useSelector((state) => [
+    state.documents.idCard,
+    state.documents.vehicleLicense,
+    state.documents.registrationExpiry,
+    // state.documents.vehicleInsurance,
+  ]);
 
   const inputFields = [
-    {
-      id: "drivingLicense",
-      label: "Driving License",
-      action: setDriverLicense,
-      image: driverLicense,
-    },
-    {
-      id: "vehicleRegistration",
-      label: "Vehicle Registration",
-      action: setVehicleRegistration,
-      image: vehicleRegistration,
-    },
-    {
-      id: "vehicleInsurance",
-      label: "Vehicle Insurance",
-      action: setVehicleInsurance,
-      image: vehicleInsurance,
-    },
     {
       id: "idCard",
       label: "ID Card",
       action: setIDCard,
       image: IDCard,
     },
+    {
+      id: "vehicleLicense",
+      label: "Vehicle License",
+      action: setVehicleLicense,
+      image: vehicleLicense,
+    },
+    {
+      id: "RegistrationExpiry",
+      label: "Registration Expiry",
+      action: setRegistrationExpiry,
+      image: registrationExpiry,
+    },
+    // {
+    //   id: "vehicleInsurance",
+    //   label: "Vehicle Insurance",
+    //   action: setVehicleInsurance,
+    //   image: vehicleInsurance,
+    // },
   ];
 
   const dispatch = useDispatch();
@@ -105,7 +104,7 @@ const Onboarding = () => {
   };
 
   const handleImageUpload = (field) => {
-    dispatch(uploadDocuments(field.image.file)).then((res) => {
+    dispatch(uploadDocument(field.image.file)).then((res) => {
       console.log(res);
       if (res.error) {
         toast.error("Failed to upload document");
@@ -185,7 +184,8 @@ const Onboarding = () => {
           </ListItemButton>
           <Collapse in={open.email} timeout="auto" unmountOnExit>
             <Box className="wd-onboarding--list-item-box">
-              <ListItemText secondary="Please verify your email first so we can make sure we can contact you." />
+              <ListItemText secondary="Great news – your email is already verified, and you're good to go! 🎉" />
+              <ListItemText secondary="Now, let's complete your vehicle data to get the full experience. 🚀" />
             </Box>
           </Collapse>
           <Divider
@@ -216,8 +216,16 @@ const Onboarding = () => {
             <Box className="wd-onboarding--list-item-box">
               <ListItemText secondary="Please provide a valid phone number so we can contact you if needed." />
               <Box>
-                <MuiPhone value={phone} onChange={onPhoneChange} />
-                <CustomButton text="Continue" action={submitPhone} />
+                <MuiPhone
+                  defaultValue={userInfo.phone}
+                  value={phone}
+                  onChange={onPhoneChange}
+                />
+                <CustomButton
+                  text="Continue"
+                  action={submitPhone}
+                  disabled={userInfo.phone !== ""}
+                />
               </Box>
             </Box>
           </Collapse>
@@ -234,7 +242,7 @@ const Onboarding = () => {
             onClick={() => toggleListItem("license")}
           >
             <ListItemText
-              primary="Driver's license"
+              primary="Documents"
               className="wd-onboarding--list-item-title"
             />
             <ListItemIcon>
@@ -365,7 +373,7 @@ const Onboarding = () => {
             component="li"
             sx={{ width: "100%", margin: "0 auto" }}
           />
-          <ListItemButton
+          {/* <ListItemButton
             sx={{
               height: userInfo.paymentMethod ? "50px" : "70px",
               transition: "height 0.3s",
@@ -392,7 +400,7 @@ const Onboarding = () => {
             variant="inset"
             component="li"
             sx={{ width: "100%", margin: "0 auto" }}
-          />
+          /> */}
         </List>
         <CustomButton text="Continue" disabled={true} />
       </div>

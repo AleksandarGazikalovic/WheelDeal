@@ -11,10 +11,10 @@ export const fetchDocuments = createAsyncThunk(
   }
 );
 
-export const uploadDocuments = createAsyncThunk(
+export const uploadDocument = createAsyncThunk(
   "documents/uploadDocument",
-  async (documents) => {
-    const res = await axios.post(API_ENDPOINT + "/documents", documents, {
+  async (document) => {
+    const res = await axios.post(API_ENDPOINT + "/documents", document, {
       headers: { "Content-Type": "multipart/form-data" },
     });
     return res.data;
@@ -25,46 +25,49 @@ export const documentsSlice = createSlice({
   name: "documents",
   initialState: {
     documents: [],
-    driverLicense: {
-      file: null,
-      error: null,
-      size: null,
-      name: null,
-    },
-    vehicleRegistration: {
-      file: null,
-      error: null,
-      size: null,
-      name: null,
-    },
-    vehicleInsurance: {
-      file: null,
-      error: null,
-      size: null,
-      name: null,
-    },
     idCard: {
       file: null,
       error: null,
       size: null,
       name: null,
+      type: "idCard",
     },
+    vehicleLicense: {
+      file: null,
+      error: null,
+      size: null,
+      name: null,
+      type: "vehicleLicense",
+    },
+    registrationExpiry: {
+      file: null,
+      error: null,
+      size: null,
+      name: null,
+      type: "registrationExpiry",
+    },
+    // vehicleInsurance: {
+    //   file: null,
+    //   error: null,
+    //   size: null,
+    //   name: null,
+    // },
     pending: null,
     error: null,
   },
   reducers: {
-    setDriverLicense: (state, action) => {
-      state.driverLicense = action.payload;
-    },
-    setVehicleRegistration: (state, action) => {
-      state.vehicleRegistration = action.payload;
-    },
-    setVehicleInsurance: (state, action) => {
-      state.vehicleInsurance = action.payload;
-    },
     setIDCard: (state, action) => {
       state.idCard = action.payload;
     },
+    setVehicleLicense: (state, action) => {
+      state.vehicleLicense = action.payload;
+    },
+    setRegistrationExpiry: (state, action) => {
+      state.registrationExpiry = action.payload;
+    },
+    // setVehicleInsurance: (state, action) => {
+    //   state.vehicleInsurance = action.payload;
+    // },
   },
   extraReducers: {
     [fetchDocuments.pending]: (state) => {
@@ -79,15 +82,15 @@ export const documentsSlice = createSlice({
       state.pending = false;
       state.error = action.error.message;
     },
-    [uploadDocuments.pending]: (state) => {
+    [uploadDocument.pending]: (state) => {
       state.pending = true;
       state.error = false;
     },
-    [uploadDocuments.fulfilled]: (state, action) => {
+    [uploadDocument.fulfilled]: (state, action) => {
       state.pending = null;
       state.documents = action.payload;
     },
-    [uploadDocuments.rejected]: (state, action) => {
+    [uploadDocument.rejected]: (state, action) => {
       state.pending = null;
       state.error = action.error.message;
     },
@@ -95,10 +98,10 @@ export const documentsSlice = createSlice({
 });
 
 export const {
-  setDriverLicense,
-  setVehicleRegistration,
-  setVehicleInsurance,
   setIDCard,
+  setVehicleLicense,
+  setRegistrationExpiry,
+  // setVehicleInsurance,
 } = documentsSlice.actions;
 
 export default documentsSlice.reducer;
