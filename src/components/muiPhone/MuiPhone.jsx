@@ -15,10 +15,10 @@ import {
   usePhoneInput,
 } from "react-international-phone";
 
-export const MuiPhone = ({ value, onChange }) => {
+export const MuiPhone = ({ defaultValue, value, onChange }) => {
   const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } =
     usePhoneInput({
-      defaultCountry: "us",
+      defaultCountry: "rs",
       value,
       countries: defaultCountries,
       onChange: (data) => {
@@ -33,7 +33,8 @@ export const MuiPhone = ({ value, onChange }) => {
       label="Phone number"
       color="primary"
       placeholder="Phone number"
-      value={inputValue}
+      value={defaultValue || value}
+      disabled={defaultValue !== undefined}
       onChange={handlePhoneValueChange}
       type="tel"
       inputRef={inputRef}
