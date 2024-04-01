@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { forwardRef, useEffect } from "react";
 import "./hostVsGuest.css";
 import { useRef } from "react";
 import { GiPayMoney, GiMoneyStack } from "react-icons/gi";
@@ -7,7 +7,7 @@ import { Ri24HoursLine } from "react-icons/ri";
 import { BsFillCarFrontFill } from "react-icons/bs";
 import { GiReceiveMoney } from "react-icons/gi";
 
-const HostVsGuest = () => {
+const HostVsGuest = forwardRef(({ props }, ref) => {
   const animateRefs = useRef([]);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const HostVsGuest = () => {
   }, []);
 
   return (
-    <div className="wd--host-vs-guest--wrapper">
+    <div ref={ref} className="wd--host-vs-guest--wrapper">
       <div className="wd--host-vs-guest--container">
         <div className="wd--host-vs-guest--content">
           <div className="wd--host-vs-guest--content--part">
@@ -118,6 +118,6 @@ const HostVsGuest = () => {
       </div>
     </div>
   );
-};
+});
 
 export default HostVsGuest;

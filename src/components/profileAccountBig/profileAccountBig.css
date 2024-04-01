@@ -30,7 +30,7 @@
 .wd--header--sign-dropdown {
   display: flex;
   position: relative;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .wd--header--sign-dropdown svg {

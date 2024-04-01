@@ -85,8 +85,14 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
           {userInfo._id === post.userId ? (
             <Link to={`/profile/${post._id}`} key={post._id}>
               <img
-                src={post.images[0]}
-                alt={post.brand + " " + post.carModel + " " + post.year}
+                src={post.vehicle.images[0]}
+                alt={
+                  post.vehicle.brand +
+                  " " +
+                  post.vehicle.carModel +
+                  " " +
+                  post.vehicle.year
+                }
                 onLoad={() => setIsLoaded(true)}
               />
             </Link>
@@ -99,8 +105,14 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
               />
               <Link to={`/post/${post._id}`} key={post._id}>
                 <img
-                  src={post.images[0]}
-                  alt={post.brand + " " + post.carModel + " " + post.year}
+                  src={post.vehicle.images[0]}
+                  alt={
+                    post.vehicle.brand +
+                    " " +
+                    post.vehicle.carModel +
+                    " " +
+                    post.vehicle.year
+                  }
                   onLoad={() => setIsLoaded(true)}
                 />
               </Link>
@@ -110,7 +122,11 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
         <div className="wd--search-content--elements-element-text">
           <div className="wd--search-content--elements-element-text--left">
             <p className="wd--search-content--elements-element-text--left-model">
-              {post.brand + " " + post.carModel + " " + post.year}
+              {post.vehicle.brand +
+                " " +
+                post.vehicle.carModel +
+                " " +
+                post.vehicle.year}
             </p>
             <p className="wd--search-content--elements-element-text--left-location">
               {post.location.address}

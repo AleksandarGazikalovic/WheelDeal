@@ -1,12 +1,12 @@
 .wave3 {
   position: absolute;
-  bottom: -1px;
+  top: 1px;
   left: 0;
   width: 100%;
-  overflow: hidden;
   line-height: 0;
   transform: rotate(180deg);
   pointer-events: none;
+  height: 15%;
 }
 
 .wave3 svg {

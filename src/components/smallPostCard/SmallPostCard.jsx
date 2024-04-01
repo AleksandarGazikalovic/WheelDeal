@@ -13,11 +13,11 @@ const SmallPostCard = ({ post }) => {
       className="wd-profile--liked-posts-post"
     >
       <div className="wd-profile--liked-posts-post-image">
-        <img src={post.images[0]} alt="post" />
+        <img src={post.vehicle.images[0]} alt="post" />
       </div>
       <div className="wd-profile--liked-posts-post-text">
         <p className="wd-profile--liked-posts-post-text-model">
-          {post.brand} {post.model} {post.year}
+          {post.vehicle.brand} {post.vehicle.model} {post.vehicle.year}
         </p>
         <p className="wd-profile--liked-posts-post-text-date">
           {fromDate} - {toDate}

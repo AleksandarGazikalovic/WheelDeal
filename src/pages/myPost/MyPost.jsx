@@ -54,7 +54,7 @@ const MyPost = () => {
         // Fetch the post data
         const postResponse = await axios.get(API_ENDPOINT + `/posts/${postId}`);
         setPost(postResponse.data);
-        setImages(postResponse.data.images);
+        setImages(postResponse.data.vehicle.images);
         setState([
           {
             startDate: new Date(postResponse.data.from),
@@ -87,14 +87,14 @@ const MyPost = () => {
 
   const validateUpdatedPost = (post) => {
     if (
-      post.brand === "" ||
-      post.carModel === "" ||
-      post.year === "" ||
-      post.mileage === "" ||
-      post.transmission === "" ||
-      post.fuel === "" ||
-      post.drive === "" ||
-      post.engine === "" ||
+      post.vehicle.brand === "" ||
+      post.vehicle.carModel === "" ||
+      post.vehicle.year === "" ||
+      post.vehicle.mileage === "" ||
+      post.vehicle.transmission === "" ||
+      post.vehicle.fuel === "" ||
+      post.vehicle.drive === "" ||
+      post.vehicle.engine === "" ||
       post.price === "" ||
       post.from === "" ||
       post.to === "" ||
@@ -106,9 +106,14 @@ const MyPost = () => {
     return false;
   };
 
+  //forbidden for now
   const handleEdit = () => {
-    setEdit(!edit);
+    setEdit(false);
+    // setEdit(!edit);
     setDisableUpdate(true);
+    toast.warn("Edit is disabled for now", {
+      autoClose: 5000,
+    });
   };
 
   const handleUpdate = async () => {
@@ -275,14 +280,20 @@ const MyPost = () => {
             />
           </div>
           <div className="wd--my-post--content--info">
-            <h1>{post.brand + " " + post.carModel + " " + post.year}</h1>
+            <h1>
+              {post.vehicle.brand +
+                " " +
+                post.vehicle.carModel +
+                " " +
+                post.vehicle.year}
+            </h1>
             <div className="wd--my-post--content--info-details">
               <TextField
                 size="small"
                 select
                 disabled={!edit}
                 label="Brand"
-                value={post.brand}
+                value={post.vehicle.brand}
                 name="brand"
                 required
                 className="wd--my-post--content--info-details-field"
@@ -301,15 +312,16 @@ const MyPost = () => {
                 select
                 disabled={!edit}
                 label="Model"
-                value={post.carModel}
+                value={post.vehicle.carModel}
                 name="carModel"
                 required
                 className="wd--my-post--content--info-details-field"
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
               >
-                {post.brand !== ""
+                {post.vehicle.brand !== ""
                   ? carModelsArray.map((item) =>
-                      item.brand.toLowerCase() === post.brand.toLowerCase()
+                      item.brand.toLowerCase() ===
+                      post.vehicle.brand.toLowerCase()
                         ? item.models
                             .sort((a, b) => a.localeCompare(b))
                             .map((option, index) => (
@@ -326,7 +338,7 @@ const MyPost = () => {
                 disabled={!edit}
                 label="Year"
                 type="number"
-                value={post.year}
+                value={post.vehicle.year}
                 name="year"
                 required
                 className="wd--my-post--content--info-details-field"
@@ -337,7 +349,7 @@ const MyPost = () => {
                 disabled={!edit}
                 label="Mileage"
                 type="number"
-                value={post.mileage}
+                value={post.vehicle.mileage}
                 name="mileage"
                 required
                 className="wd--my-post--content--info-details-field"
@@ -348,7 +360,7 @@ const MyPost = () => {
                 select
                 disabled={!edit}
                 label="Transmission"
-                value={post.transmission}
+                value={post.vehicle.transmission}
                 name="transmission"
                 required
                 className="wd--my-post--content--info-details-field"
@@ -362,7 +374,7 @@ const MyPost = () => {
                 select
                 disabled={!edit}
                 label="Fuel"
-                value={post.fuel}
+                value={post.vehicle.fuel}
                 name="fuel"
                 required
                 className="wd--my-post--content--info-details-field"
@@ -380,7 +392,7 @@ const MyPost = () => {
                 select
                 disabled={!edit}
                 label="Drive"
-                value={post.drive}
+                value={post.vehicle.drive}
                 name="drive"
                 required
                 className="wd--my-post--content--info-details-field"
@@ -395,7 +407,7 @@ const MyPost = () => {
                 disabled={!edit}
                 label="HP"
                 type="number"
-                value={post.engine}
+                value={post.vehicle.engine}
                 name="engine"
                 required
                 className="wd--my-post--content--info-details-field"
@@ -438,7 +450,7 @@ const MyPost = () => {
         <div className="wd--my-post--content-bottom">
           <div className="wd--my-post--content--location">
             <LocationAutocomplete
-              selectedLocation={post.location}
+              selectedLocation={post.location.address}
               onSelect={handleLocationSelect}
               disabled={!edit}
             />

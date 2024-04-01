@@ -3,9 +3,7 @@ import axios from "axios";
 import { API_ENDPOINT } from "../components";
 
 export const createPost = createAsyncThunk("post/createPost", async (post) => {
-  const res = await axios.post(API_ENDPOINT + "/posts/", post, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  const res = await axios.post(API_ENDPOINT + "/posts", post);
   return res.data;
 });
 
@@ -43,16 +41,21 @@ export const postSlice = createSlice({
   name: "post",
   initialState: {
     postInfo: {
+      id: "",
       userId: "",
-      img: "",
+      vehicleId: "",
       price: "",
-      brand: "",
-      carModel: "",
-      year: "",
       from: "",
       to: "",
-      location: "",
-      profileImage: "",
+      isArchived: false,
+      location: {
+        address: "",
+        searchAddress: "",
+        searchStreet: "",
+        searchCity: "",
+        lat: "",
+        lng: "",
+      },
     },
     pending: null,
     error: false,

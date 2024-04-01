@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   Partners,
   Header,
@@ -9,20 +9,28 @@ import {
 import "./home.css";
 
 const Home = () => {
-  const [isEverythingRendered, setIsEverythingRendered] = useState(false);
+  const [showBackground, setShowBackground] = useState(false);
 
-  // Use useLayoutEffect to set the state variable when everything is rendered
-  useLayoutEffect(() => {
-    setIsEverythingRendered(true);
+  const observer = useRef();
+
+  const hostVsGuestRef = useCallback((node) => {
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setShowBackground(true);
+      } else {
+        setShowBackground(false);
+      }
+    });
+    if (node) observer.current.observe(node);
   }, []);
+
   return (
     <>
-      {isEverythingRendered && (
-        <div className="wd--home-page--background"></div>
-      )}
+      {showBackground && <div className="wd--home-page--background"></div>}
       <Header />
       <Roadmap />
-      <HostVsGuest />
+      <HostVsGuest ref={hostVsGuestRef} />
       <Partners />
       <Footer />
     </>

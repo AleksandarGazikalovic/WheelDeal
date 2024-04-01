@@ -95,6 +95,7 @@ export const userSlice = createSlice({
       address: "",
       profileImage: "",
       isAdmin: false,
+      phoneNumber: "",
     },
     accessToken: "",
     pending: null,
