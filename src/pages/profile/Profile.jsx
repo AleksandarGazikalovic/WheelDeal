@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./profile.css";
 import { ProfileDesktop, ProfileMobile } from "../";
 import { useDispatch, useSelector } from "react-redux";
@@ -85,8 +85,8 @@ const Profile = () => {
 
   return (
     <>
-      <ProfileDesktop />
-      <ProfileMobile />
+      <ProfileDesktop setConnectionError={setConnectionErrorDesktop} />
+      <ProfileMobile setConnectionError={setConnectionErrorMobile} />
     </>
   );
 };

@@ -38,13 +38,13 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
   const handleHeartClick = async () => {
     try {
       if (userInfo._id !== undefined) {
-        setIsLiked(!isLiked); // Toggle the like state
         dispatch(
           likePost({
             postId: post._id,
             userId: userInfo._id,
           })
         );
+        setIsLiked(!isLiked); // Toggle the like state
       } else setShowLoginForm(true);
     } catch (error) {
       console.error("Error liking post:", error);
@@ -61,6 +61,9 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
 
   useEffect(() => {
     const fetchLikes = async () => {
+      console.log(userInfo);
+      console.log(userInfo.likedPosts);
+      console.log(post._id);
       try {
         // Check if the post ID is in the likedPosts array
         if (userInfo.likedPosts.includes(post._id)) {
@@ -69,7 +72,7 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
       } catch (error) {}
     };
     fetchLikes();
-  }, []);
+  }, [post._id]);
 
   return (
     <>
@@ -98,11 +101,15 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
             </Link>
           ) : (
             <>
-              <FaHeart
+              <div
+                className="wd--search-content--elements-element-image--like"
                 onClick={handleHeartClick}
-                style={{ color: isLiked ? "red" : "black" }}
-                className="wd--search-content--elements-element-image--like-icon"
-              />
+              >
+                <FaHeart
+                  style={{ color: isLiked ? "red" : "black" }}
+                  className="wd--search-content--elements-element-image--like-icon"
+                />
+              </div>
               <Link to={`/post/${post._id}`} key={post._id}>
                 <img
                   src={post.vehicle.images[0]}

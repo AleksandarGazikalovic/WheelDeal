@@ -157,7 +157,8 @@
   background: #f77f00;
   font-family: var(--font-family);
   color: white;
-  font-weight: 800;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
   font-size: 15px;
   display: flex;
   text-align: center;

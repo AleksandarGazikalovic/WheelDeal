@@ -1,0 +1,61 @@
+.wd-not-found--wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: var(--font-family);
+  color: #243550;
+}
+
+.wd-not-found--header {
+  font-weight: 800;
+  font-size: 2rem;
+  margin-top: 25vh;
+  text-align: center;
+  color: #243550;
+}
+
+.wd-not-found--message {
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin-top: 6vh;
+  margin-bottom: 2vh;
+  text-align: center;
+  line-height: 2rem;
+  color: #243550;
+}
+
+.wd-not-found--redirect-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.wd-not-found--redirect-buttons--left-button {
+  margin-right: 2vw;
+}
+
+.wd-not-found--redirect-buttons--right-button {
+  margin-left: 2vw;
+}
+
+@media screen and (max-width: 450px) {
+  .wd-not-found--redirect-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: column;
+    margin-top: 2vh;
+  }
+
+  .wd-not-found--redirect-buttons--left-button {
+    margin-right: 0vw;
+    margin-bottom: 1vh;
+  }
+
+  .wd-not-found--redirect-buttons--right-button {
+    margin-left: 0vw;
+    margin-top: 1vh;
+  }
+}

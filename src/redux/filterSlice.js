@@ -3,12 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 export const filterSlice = createSlice({
   name: "fliter",
   initialState: {
-    fromDate: undefined,
-    toDate: undefined,
-    fromPrice: undefined,
-    toPrice: undefined,
-    location: undefined,
-    brand: undefined,
+    fromDate: "",
+    toDate: "",
+    fromPrice: "",
+    toPrice: "",
+    location: "",
+    brand: "",
     page: 1,
   },
   reducers: {
@@ -22,12 +22,12 @@ export const filterSlice = createSlice({
       state.page = action.payload.page;
     },
     clearFilter: (state) => {
-      state.fromDate = undefined;
-      state.toDate = undefined;
-      state.fromPrice = undefined;
-      state.toPrice = undefined;
-      state.location = undefined;
-      state.brand = undefined;
+      state.fromDate = "";
+      state.toDate = "";
+      state.fromPrice = "";
+      state.toPrice = "";
+      state.location = "";
+      state.brand = "";
       state.page = 1;
     },
   },

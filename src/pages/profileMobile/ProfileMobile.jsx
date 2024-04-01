@@ -14,10 +14,12 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
-const ProfileMobile = () => {
+const ProfileMobile = ({ setConnectionError }) => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const [showProfileInfoEdit, setShowProfileInfoEdit] = useState(false);
   const [likedPosts, setLikedPosts] = useState([]);
@@ -25,6 +27,10 @@ const ProfileMobile = () => {
   const [activeTab, setActiveTab] = useState(
     <ProfileInfo setShowProfileInfoEdit={setShowProfileInfoEdit} />
   );
+  const [profileInfoEditMessage, setProfileInfoEditMessage] = useState({
+    status: null,
+    message: null,
+  });
 
   const handleTabClick = (tab) => {
     switch (tab) {
@@ -103,20 +109,47 @@ const ProfileMobile = () => {
       return;
     }
     const fetchLikedPosts = async () => {
-      const res = await axios.get(
-        API_ENDPOINT + `/posts/liked/${userInfo._id}`
-      );
-      setLikedPosts(res.data);
+      try {
+        const res = await axios.get(
+          API_ENDPOINT + `/posts/liked/${userInfo._id}`
+        );
+        setLikedPosts(res.data);
+      } catch (error) {
+        console.log("Error in fetching liked posts: " + error);
+        setConnectionError("Greška prilikom učitavanja stranice.");
+      }
     };
     const fetchUserPosts = async () => {
-      const res = await axios.get(
-        API_ENDPOINT + `/posts/profile/${userInfo._id}`
-      );
-      setUserPosts(res.data);
+      try {
+        const res = await axios.get(
+          API_ENDPOINT + `/posts/profile/${userInfo._id}`
+        );
+        setUserPosts(res.data);
+      } catch (error) {
+        console.log("Error in fetching users posts: " + error);
+        setConnectionError("Greška prilikom učitavanja stranice.");
+      }
     };
     fetchUserPosts();
     fetchLikedPosts();
   }, [userInfo._id]);
+
+  useEffect(() => {
+    const showToast = async () => {
+      if (profileInfoEditMessage.status === "success") {
+        toast.success(profileInfoEditMessage.message, {
+          autoClose: 5000,
+        });
+      }
+      if (profileInfoEditMessage.status === "error") {
+        toast.error(profileInfoEditMessage.message, {
+          autoClose: 5000,
+        });
+      }
+      setProfileInfoEditMessage({ status: null, message: null });
+    };
+    showToast();
+  }, [profileInfoEditMessage.message]);
 
   return (
     <div className="wd-profile2">
@@ -126,7 +159,10 @@ const ProfileMobile = () => {
       </div>
       <TabBar onTabClick={handleTabClick} />
       {showProfileInfoEdit && (
-        <ProfileInfoEdit setShowProfileInfoEdit={setShowProfileInfoEdit} />
+        <ProfileInfoEdit
+          setShowProfileInfoEdit={setShowProfileInfoEdit}
+          setProfileInfoEditMessage={setProfileInfoEditMessage}
+        />
       )}
     </div>
   );

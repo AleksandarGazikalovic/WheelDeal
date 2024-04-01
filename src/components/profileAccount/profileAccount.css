@@ -1,14 +1,15 @@
 #login {
-  color: #d0e5f2cc;
+  color: #ffffffc5;
   outline: none;
   border: none;
   background-color: transparent;
   font-family: var(--font-family);
-  font-weight: 800;
+  font-weight: 600;
   font-size: 15px;
   line-height: 25px;
   text-transform: capitalize;
   border-radius: 20px;
+  letter-spacing: 0.1rem;
   cursor: pointer;
 }
 

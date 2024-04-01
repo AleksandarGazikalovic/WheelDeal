@@ -7,8 +7,8 @@ import {
   Comments,
   PopUpModel,
 } from "../../components";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import "./carPost.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -78,13 +78,29 @@ const CarPost = () => {
         setTimeJoined(
           format(new Date(ownerResponse.data.createdAt), "MMM yyyy")
         );
+        setLoading(false);
       } catch (error) {
         // Handle errors if necessary
         console.error("Error fetching data:", error);
+        // navigate to component that shows that this post is no longer available (and leave a link to navigate back to search options)
+        // should be implemented in case that user saved a link in browser and after a while tries to access it, but user deleted a post in meantime
+        navigate("/not-found");
+      }
+    };
+    const fetchBookings = async () => {
+      try {
+        const response = await axios.get(
+          API_ENDPOINT + `/bookings/post/${postId}/dates`
+        );
+        const dates = response.data.map((date) => new Date(date));
+        setDisabledDates(dates);
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
       }
     };
 
     fetchData();
+    fetchBookings();
   }, [postId]);
 
   const handleLike = async () => {
@@ -137,24 +153,41 @@ const CarPost = () => {
         setShowLoginForm={setShowLoginForm}
       />
       <div className="wd--post-wrapper">
-        <div className="wd--post-wrapper--images">
-          <img src={images[0]} alt="car" />
-          <div className="wd--post-wrapper--images--btns">
-            <HiArrowSmLeft onClick={handlePreviousImage} />
-            <HiArrowSmRight onClick={handleNextImage} />
-          </div>
-        </div>
         <div className="wd--post-wrapper--info">
-          <section className="wd--post-wrapper--info-top">
+          <div className="wd--post-wrapper--info-top">
             <div className="wd--post-wrapper--info-top-left">
-              <div className="wd--post-wrapper--info-top-left--title">
+              <div className="wd--post-wrapper--info-top-left--text">
                 <h1>
                   {post.vehicle.brand} {post.vehicle.carModel}{" "}
                   {post.vehicle.year}
                 </h1>
+                <div className="wd--post-wrapper--info-top-left--rating">
+                  <IoStar size={20} color="#ffd900" />
+                  <h4>
+                    {post.rating ? post.rating : "No rating available yet"}
+                  </h4>
+                </div>
+                <div className="wd--post-wrapper--info-top-left--location">
+                  <IoLocationSharp size={20} color="#f77f00" />
+                  <h4>{post.location != null && post.location.address}</h4>
+                </div>
               </div>
-              <div className="wd--post-wrapper--info-top-left--location">
-                <p>{post.location != null && post.location.address}</p>
+              <div className="wd--post-wrapper--info-top-left--images">
+                <Carousel
+                  showArrows={true}
+                  autoPlay={true}
+                  interval={3000}
+                  swipeable={true}
+                  emulateTouch={true}
+                  infiniteLoop={true}
+                  showThumbs={false}
+                >
+                  {images.map((image, index) => (
+                    <div key={index}>
+                      <img src={image} alt="car" />
+                    </div>
+                  ))}
+                </Carousel>
               </div>
             </div>
             <div className="wd--post-wrapper--info-top-right">
@@ -268,8 +301,8 @@ const CarPost = () => {
             <div className="wd--post-wrapper--info-bottom-left">
               <section className="wd--post-wrapper--info-bottom-left-specs">
                 <h2>Car Specifications</h2>
-                <div className="wd--post-wrapper--info-top-left-specs-grid">
-                  <div className="wd--post-wrapper--info-top-left--drive">
+                <div className="wd--post-wrapper--info-bottom-left-specs-grid">
+                  <div className="wd--post-wrapper--info-bottom-left--drive">
                     <GiCartwheel size={30} />
                     <p>{post.vehicle.drive}</p>
                   </div>
@@ -277,20 +310,20 @@ const CarPost = () => {
                     <MdOutlineDriveEta size={30} />
                     <p>{post.vehicle.transmission}</p>
                   </div>
-                  <div className="wd--post-wrapper--info-top-left--fuel">
+                  <div className="wd--post-wrapper--info-bottom-left--fuel">
                     <PiGasPump size={30} />
                     <p>{post.vehicle.fuel}</p>
                   </div>
-                  <div className="wd--post-wrapper--info-top-left--engine">
+                  <div className="wd--post-wrapper--info-bottom-left--engine">
                     <PiEngineLight size={30} />
                     <p>{post.vehicle.engine}HP</p>
                   </div>
                 </div>
               </section>
-              <section className="wd--post-wrapper--info-top-left--profile">
+              <section className="wd--post-wrapper--info-bottom-left--profile">
                 <h2>Host</h2>
-                <div className="wd--post-wrapper--info-top-left--profile-info">
-                  <div className="wd--post-wrapper--info-top-left--profile-info-image">
+                <div className="wd--post-wrapper--info-bottom-left--profile-info">
+                  <div className="wd--post-wrapper--info-bottom-left--profile-info-image">
                     <Avatar
                       sx={{
                         width: "inherit",
@@ -301,8 +334,8 @@ const CarPost = () => {
                       alt={owner.firstname + " " + owner.lastname}
                     />
                   </div>
-                  <div className="wd--post-wrapper--info-top-left--profile-info-right">
-                    <p className="wd--post-wrapper--info-top-left--profile-info-name">
+                  <div className="wd--post-wrapper--info-bottom-left--profile-info-right">
+                    <p className="wd--post-wrapper--info-bottom-left--profile-info-name">
                       {owner.name} {owner.surname}
                     </p>
                     <span>{owner.email}</span>
@@ -310,7 +343,7 @@ const CarPost = () => {
                   </div>
                 </div>
               </section>
-              <div className="wd--post-wrapper--info-top-left--description">
+              <div className="wd--post-wrapper--info-bottom-left--description">
                 <h2>Description</h2>
                 <p>
                   {post.description
@@ -319,39 +352,30 @@ const CarPost = () => {
                 </p>
               </div>
             </div>
-            <div className="wd--post-wrapper--info-top-right">
-              <div className="wd--post-wrapper--info-top-right--booking">
-                <div className="wd--post-wrapper--info-top-right--price">
-                  <h1>
-                    <b>{post.price} € </b>/ day
-                  </h1>
-                </div>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={["DateTimePicker"]}>
-                    <DateTimePicker
-                      className="wd--post-wrapper--info-top-right--start-date"
-                      label="Trip start"
-                      defaultValue={dayjs()}
-                      ampm={false}
-                      format="DD/MM/YYYY HH:mm"
-                    />
-                  </DemoContainer>
-                  <DemoContainer components={["DateTimePicker"]}>
-                    <DateTimePicker
-                      className="wd--post-wrapper--info-top-right--end-date"
-                      label="Trip end"
-                      defaultValue={dayjs().add(3, "day")}
-                      ampm={false}
-                      format="DD/MM/YYYY HH:mm"
-                    />
-                  </DemoContainer>
-                </LocalizationProvider>
-                <button className="wd--post-wrapper--info-top-right--button">
-                  Book
-                </button>
-              </div>
+            <div className="wd--post-wrapper--info-bottom-right--calendar">
+              <h2>Available dates</h2>
+              <DateRange
+                disabledDates={disabledDates}
+                ranges={
+                  [
+                    {
+                      startDate: postDates.startDate,
+                      endDate: postDates.endDate,
+                      key: "selection",
+                    },
+                  ] // Set the available dates
+                } // Convert the dates to the correct format
+                rangeColors={[""]}
+                style={{
+                  width: "270px",
+                  pointerEvents: "none",
+                }}
+                fixedHeight={true}
+                editableDateInputs={false}
+                showDateDisplay={false}
+              />
             </div>
-          </section>
+          </div>
           <div className="wd--post-wrapper-info-comments">
             <h2> Reviews </h2>
             {owner && <Comments user_id={owner._id} />}

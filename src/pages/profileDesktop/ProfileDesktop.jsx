@@ -23,32 +23,65 @@ import Loading from "../../components/loading/Loading";
 import { IoIosArrowForward } from "react-icons/io";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { API_ENDPOINT } from "..";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const ProfileDesktop = () => {
+const ProfileDesktop = ({ setConnectionError }) => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const [likedPosts, setLikedPosts] = useState([]);
   const [userPosts, setUserPosts] = useState([]);
   const [showProfileInfoEdit, setShowProfileInfoEdit] = useState(false);
+  const [profileInfoEditMessage, setProfileInfoEditMessage] = useState({
+    status: null,
+    message: null,
+  });
 
   useEffect(() => {
     if (userInfo._id === undefined) {
       return;
     }
     const fetchLikedPosts = async () => {
-      const res = await axios.get(
-        API_ENDPOINT + `/posts/liked/${userInfo._id}`
-      );
-      setLikedPosts(res.data);
+      try {
+        const res = await axios.get(
+          API_ENDPOINT + `/posts/liked/${userInfo._id}`
+        );
+        setLikedPosts(res.data);
+      } catch (error) {
+        console.log("Error in fetching liked posts: " + error);
+        setConnectionError("Greška prilikom učitavanja stranice.");
+      }
     };
     const fetchUserPosts = async () => {
-      const res = await axios.get(
-        API_ENDPOINT + `/posts/profile/${userInfo._id}`
-      );
-      setUserPosts(res.data);
+      try {
+        const res = await axios.get(
+          API_ENDPOINT + `/posts/profile/${userInfo._id}`
+        );
+        setUserPosts(res.data);
+      } catch (error) {
+        console.log("Error in fetching users posts: " + error);
+        setConnectionError("Greška prilikom učitavanja stranice.");
+      }
     };
     fetchUserPosts();
     fetchLikedPosts();
   }, [userInfo._id]);
+
+  useEffect(() => {
+    const showToast = async () => {
+      if (profileInfoEditMessage.status === "success") {
+        toast.success(profileInfoEditMessage.message, {
+          autoClose: 5000,
+        });
+      }
+      if (profileInfoEditMessage.status === "error") {
+        toast.error(profileInfoEditMessage.message, {
+          autoClose: 5000,
+        });
+      }
+      setProfileInfoEditMessage({ status: null, message: null });
+    };
+    showToast();
+  }, [profileInfoEditMessage.message]);
 
   return (
     <div className="wd-profile">
@@ -108,7 +141,10 @@ const ProfileDesktop = () => {
       </div>
       {pending && <Loading />}
       {showProfileInfoEdit && (
-        <ProfileInfoEdit setShowProfileInfoEdit={setShowProfileInfoEdit} />
+        <ProfileInfoEdit
+          setShowProfileInfoEdit={setShowProfileInfoEdit}
+          setProfileInfoEditMessage={setProfileInfoEditMessage}
+        />
       )}
     </div>
   );

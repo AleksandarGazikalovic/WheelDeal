@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
 
 :root {
-  --font-family: "Manrope", sans-serif;
+  --font-family: "Ariel", sans-serif;
 
   --gradient-text: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%);
   --gradient-bar: linear-gradient(103.22deg, #ae67fa -13.86%, #f49867 99.55%);
@@ -13,8 +13,37 @@
 
   --color-bg: #040c18;
   --color-footer: #031b34;
-  --color-text: #a6c1d1;
-  --color-subtext: #ff8a71;
+  --color-text: #003049;
+  --color-subtext: #002f4991;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #003049;
+  letter-spacing: 0.1rem;
+  width: 100%;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.05rem;
+  color: #243550;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.05rem;
+  color: #243550;
+}
+
+h4 {
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.05rem;
+  color: #243550;
 }
 
 *::-webkit-scrollbar-track {

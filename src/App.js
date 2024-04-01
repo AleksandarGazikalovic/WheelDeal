@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -23,9 +23,15 @@ import { Comments, JwtAuth, Loading } from "./components";
 import { ToastContainer } from "react-toastify";
 import NotFound from "./pages/notFound/NotFound";
 import NewVehicle from "./pages/newVehicle/NewVehicle";
+import { Comments, JwtAuth, Loading } from "./components";
+import { ToastContainer } from "react-toastify";
+import NotFound from "./pages/notFound/NotFound";
+import NewVehicle from "./pages/newVehicle/NewVehicle";
 
 const App = () => {
-  const user = useSelector((state) => state.user);
+  const { accessToken } = useSelector((state) => state.user);
+  const [isLoading, setIsLoading] = useState(true); // New state for loading
+
   return (
     <Router>
       <ToastContainer />

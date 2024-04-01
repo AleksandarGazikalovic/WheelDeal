@@ -7,7 +7,7 @@
   height: 50px;
   border: 10px;
   border-radius: 30px;
-  background-color: #d0e5f2cc;
+  background-color: #c5d0d6;
   border: 1px solid #e5e5e5;
 }
 
@@ -43,7 +43,7 @@
   align-items: center;
   text-align: center;
   flex-direction: column;
-  background: #d0e5f2cc;
+  background: #c5d0d6cc;
   position: absolute;
   right: -10px;
   top: 40px;

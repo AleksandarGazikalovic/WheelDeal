@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 import "./comments.css";
 import { formatDistanceToNow } from "date-fns";
 
-const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 const Comments = ({ user_id }) => {
   const [comments, setComments] = useState([]);
@@ -21,7 +21,7 @@ const Comments = ({ user_id }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get( API_ENDPOINT + `/comments/${user_id}`);
+        const response = await axios.get(API_ENDPOINT + `/comments/${user_id}`);
         setComments(response.data);
       } catch (error) {
         console.log(error);
@@ -99,7 +99,7 @@ const Comments = ({ user_id }) => {
             <Divider
               variant="inset"
               component="li"
-              sx={{ marginRight: "72px" }}
+              sx={{ width: "100%", margin: "0 auto" }}
             />
           </React.Fragment>
         ))

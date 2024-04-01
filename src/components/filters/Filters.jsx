@@ -7,182 +7,147 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
-import { setFilter } from "../../redux/filterSlice";
+import { clearFilter, setFilter } from "../../redux/filterSlice";
 import { clearPosts, fetchPosts, resetPosts } from "../../redux/postsSlice";
 import Cookies from "universal-cookie";
 import { useSelector } from "react-redux";
+import { Box, MenuItem } from "@mui/material";
 
-function WhereFilter({ onChange, location, defaultLocation }) {
-  const handleChange = (newLocation) => {
-    onChange(newLocation);
-  };
-
-  return (
-    <TextField
-      id="searchWhere"
-      type="search"
-      label="Search"
-      defaultValue={defaultLocation}
-      value={location}
-      onChange={(e) => handleChange({ location: e.target.value })}
-      sx={{ width: 300 }}
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}
-    />
-  );
-}
-
-function HowLongFilter({
-  onChange,
-  fromDate,
-  toDate,
-  defaultFromDate,
-  defaultToDate,
-}) {
-  const handleDateChange = (newDates) => {
-    // Call the onChange function to update the filter values
-    onChange(newDates);
-  };
-  return (
-    <div className="how-long-filter">
-      <div className="how-long-from">
-        <label htmlFor="how-long-from-input">From</label>
-        <input
-          type="date"
-          id="how-long-from-input"
-          defaultValue={defaultFromDate}
-          value={fromDate}
-          onChange={(e) => handleDateChange({ fromDate: e.target.value })}
-        />
-      </div>
-      <AiOutlineMinus />
-      <div className="how-long-to">
-        <label htmlFor="how-long-to-input">To</label>
-        <input
-          type="date"
-          id="how-long-to-input"
-          defaultValue={defaultToDate}
-          value={toDate}
-          onChange={(e) => handleDateChange({ toDate: e.target.value })}
-        />
-      </div>
-    </div>
-  );
-}
-
-function HowMuchFilter({
-  onChange,
-  fromPrice,
-  toPrice,
-  defaultFromPrice,
-  defaultToPrice,
-}) {
-  const handlePriceChange = (value, name) => {
-    // Call the onChange function to update the filter values
-    onChange({ [name]: value });
-  };
-
-  return (
-    <div className="how-much-filter">
-      <CurrencyInput
-        className="currency-input"
-        name="fromPrice"
-        placeholder="Start price"
-        defaultValue={defaultFromPrice}
-        value={fromPrice}
-        decimalsLimit={2}
-        onValueChange={(value) => handlePriceChange(value, "fromPrice")}
-        prefix="€"
-      />
-      <AiOutlineMinus />
-      <CurrencyInput
-        className="currency-input"
-        name="toPrice"
-        placeholder="End price"
-        defaultValue={defaultToPrice}
-        value={toPrice}
-        decimalsLimit={2}
-        onValueChange={(value) => handlePriceChange(value, "toPrice")}
-        prefix="€"
-      />
-    </div>
-  );
-}
-
-function BrandFilter({ onChange, brand, defaultBrand }) {
-  const handleChange = (newBrand) => {
-    onChange(newBrand);
-  };
-
-  return (
-    <TextField
-      id="searchBrand"
-      type="search"
-      label="Search"
-      defaultValue={defaultBrand}
-      value={brand}
-      onChange={(e) => handleChange({ brand: e.target.value })}
-      sx={{ width: 300 }}
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}
-    />
-  );
-}
+import WhereFilter from "./filterParts/WhereFilter";
+import HowLongFilter from "./filterParts/HowLongFilter";
+import HowMuchFilter from "./filterParts/HowMuchFilter";
+import BrandFilter from "./filterParts/BrandFilter";
+import Loading from "../loading/Loading";
 
 const Filters = ({
   activeFilter,
+  setActiveFilter,
   isSlideDown,
-  resetFilters,
-  setResetFilters,
+  setIsSlideDown,
+  canResetFilters,
+  setCanResetFilters,
+  filterChanged,
+  setFilterChanged,
+  isFilterReset,
+  open,
+  setOpen,
 }) => {
   let filterContent;
   const dispatch = useDispatch();
   // const cookies = new Cookies(null, { path: "/" });
+  const filterState = useSelector((state) => state.filter);
   const [filterValues, setFilterValues] = useState({
-    fromDate: undefined,
-    toDate: undefined,
-    fromPrice: undefined,
-    toPrice: undefined,
-    location: undefined,
-    brand: undefined,
+    fromDate: filterState.fromDate,
+    toDate: filterState.toDate,
+    fromPrice: filterState.fromPrice,
+    toPrice: filterState.toPrice,
+    location: filterState.location,
+    brand: filterState.brand,
     page: 1,
   });
-
-  const filterState = useSelector((state) => state.filter);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (resetFilters) {
-      setFilterValues({
-        fromDate: undefined,
-        toDate: undefined,
-        fromPrice: undefined,
-        toPrice: undefined,
-        location: undefined,
-        brand: undefined,
-        page: 1,
-      });
-      setResetFilters(false);
+    setFilterValues({
+      fromDate: filterState.fromDate,
+      toDate: filterState.toDate,
+      fromPrice: filterState.fromPrice,
+      toPrice: filterState.toPrice,
+      location: filterState.location,
+      brand: filterState.brand,
+      page: 1,
+    });
+  }, [isFilterReset]);
+
+  useEffect(() => {
+    // compare current filter values to filterState values on each change
+    if (
+      filterValues.brand === filterState.brand &&
+      filterValues.fromDate === filterState.fromDate &&
+      filterValues.toDate === filterState.toDate &&
+      filterValues.fromPrice === filterState.fromPrice &&
+      filterValues.toPrice === filterState.toPrice &&
+      filterValues.location === filterState.location
+    ) {
+      setFilterChanged(false);
     }
-  }, [resetFilters, setResetFilters]);
+  }, [filterValues]);
+
+  useEffect(() => {
+    if (loading) {
+      // reset loading to false (timeout is used to simulate API call if filters are the same)
+      const timeoutId = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [loading]);
 
   const applyFilter = async () => {
     // cookies.set("filter", filterValues);
+
+    if (!filterChanged) {
+      // if filters haven't changed since last time, just pretend to make API call by rendering loading animation
+      setLoading(true);
+      setIsSlideDown(false);
+      return;
+    }
+
     dispatch(setFilter(filterValues));
     dispatch(clearPosts());
+
+    if (
+      filterValues.brand === "" &&
+      filterValues.fromDate === "" &&
+      filterValues.toDate === "" &&
+      filterValues.fromPrice === "" &&
+      filterValues.toPrice === "" &&
+      filterValues.location === ""
+    ) {
+      setCanResetFilters(false);
+    } else {
+      setCanResetFilters(true);
+    }
+
+    setFilterChanged(false);
+    setIsSlideDown(false);
+    setActiveFilter("");
   };
 
   const handleFilterChange = (newValues) => {
     setFilterValues({ ...filterValues, ...newValues });
+
+    // collect all current filters to currFilter object
+    let currFilter = {};
+    for (let key in filterValues) {
+      currFilter[key] = "";
+      if (filterValues[key] !== "" && key.toString() != "page") {
+        currFilter[key] = filterValues[key];
+      }
+      if (newValues.hasOwnProperty(key)) {
+        currFilter[key] = newValues[key];
+      }
+    }
+
+    // console.log(filterState);
+    // console.log(currFilter);
+
+    // if current filter is different than filterState
+    // (in other words, if current filter in this component differs from previously applied filter),
+    // then after you click "Apply" the API call will be performed and new filter will be applied.
+    if (
+      filterState.brand === currFilter.brand &&
+      filterState.fromDate === currFilter.fromDate &&
+      filterState.toDate === currFilter.toDate &&
+      filterState.fromPrice === currFilter.fromPrice &&
+      filterState.toPrice === currFilter.toPrice &&
+      filterState.location === currFilter.location
+    ) {
+      setFilterChanged(false);
+    } else {
+      setFilterChanged(true);
+    }
   };
 
   switch (activeFilter) {
@@ -191,7 +156,6 @@ const Filters = ({
         <WhereFilter
           onChange={handleFilterChange}
           location={filterValues.location}
-          defaultLocation={filterState.location}
         />
       );
       break;
@@ -222,7 +186,8 @@ const Filters = ({
         <BrandFilter
           onChange={handleFilterChange}
           brand={filterValues.brand}
-          defaultBrand={filterState.brand}
+          open={open}
+          setOpen={setOpen}
         />
       );
       break;
@@ -230,10 +195,18 @@ const Filters = ({
       filterContent = null;
   }
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className={`filter-holder ${isSlideDown ? "active" : ""}`}>
       {filterContent}
-      <button className="apply-filter" onClick={applyFilter}>
+      <button
+        className="apply-filter"
+        onClick={applyFilter}
+        title="Apply filter"
+      >
         Apply
       </button>
     </div>

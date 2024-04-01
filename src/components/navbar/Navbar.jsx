@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { GoPlus } from "react-icons/go";
 import ProfileAccount from "../profileAccountBig/ProfileAccountBig";
 import Menu from "../menu/Menu";
+import CustomButton from "../customButton/CustomButton";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { ProfileNotification } from "../";
 
@@ -79,7 +80,7 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
                 size="40"
                 onClick={handleShowLoginForm}
               />
-              <div>
+              <div style={{ display: "flex", flexDirection: "row" }}>
                 <button
                   type="button"
                   id="login-navbar"
@@ -87,13 +88,10 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
                 >
                   Log in
                 </button>
-                <button
-                  type="button"
-                  id="register-navbar"
-                  onClick={handleShowRegistrationForm}
-                >
-                  Sign up
-                </button>
+                <CustomButton
+                  text="Sign up"
+                  action={handleShowRegistrationForm}
+                />
               </div>
             </>
           )}

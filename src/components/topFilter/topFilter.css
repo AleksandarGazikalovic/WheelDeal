@@ -49,6 +49,25 @@
   color: white;
 }
 
+/* this one is separate from the others because of the border radius */
+.where-btn-focused {
+  background-color: #f77f00;
+  border: 1px solid #f77f00;
+  border-right: none;
+  color: white;
+  border-radius: 50px 0 0 50px;
+  font-weight: 300;
+}
+
+.other-btn-focused {
+  border: 1px solid #f77f00;
+  background-color: #f77f00;
+  color: white;
+  border-left: none;
+  border-right: none;
+  font-weight: 300;
+}
+
 .where-btn {
   border: 1px solid #e5e5e5;
   background-color: #fff;
@@ -81,13 +100,24 @@
   font-weight: 300;
 }
 
-.rent-btn {
+.reset-btn {
   border: 1px solid #f77f00;
   border-left: none;
   color: white;
   border-radius: 0 50px 50px 0;
   background-color: #f77f00;
-  font-weight: 800;
+  font-weight: 600;
+}
+
+.reset-btn:disabled {
+  background: #ffb565;
+  cursor: not-allowed;
+  border: 1px solid #ffb565;
+}
+
+.reset-btn:disabled:hover {
+  background-color: #ffb565;
+  border-color: #ffb565;
 }
 
 .wd--search--top-filter-dropdown {
@@ -184,7 +214,7 @@
   .where-btn {
     border-radius: 50px 50px 0 0;
   }
-  .rent-btn {
+  .reset-btn {
     border-radius: 0 0 50px 50px;
   }
 }

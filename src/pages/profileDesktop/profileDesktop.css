@@ -151,6 +151,7 @@ box-shadow: 0px 0px 10px 0px #ededed;
   .wd-profile--your-posts-wrapper,
   .wd-profile--liked-posts-wrapper {
     height: 70vh;
+    box-shadow: none;
   }
 
   .wd-profile--liked-posts-title,
