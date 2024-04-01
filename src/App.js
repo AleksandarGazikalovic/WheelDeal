@@ -15,45 +15,56 @@ import {
   VerificationPage,
   ResetPassword,
   MyPost,
+  Onboarding,
+  AdminPage,
 } from "./pages";
 import { useSelector } from "react-redux";
-import { Comments, JwtAuth } from "./components";
+import { Comments, JwtAuth, Loading } from "./components";
+import { ToastContainer } from "react-toastify";
+import NotFound from "./pages/notFound/NotFound";
+import NewVehicle from "./pages/newVehicle/NewVehicle";
 
 const App = () => {
   const user = useSelector((state) => state.user);
   return (
     <Router>
-      <JwtAuth />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/search-options" element={<SearchOptions filter={1} />} />
-        <Route
-          path="/add-post"
-          element={
-            user.userInfo.email ? (
-              <NewPosts />
-            ) : (
-              <Navigate to="/search-options" replace />
-            )
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            user.userInfo.email ? (
-              <Profile />
-            ) : (
-              <Navigate to="/search-options" replace />
-            )
-          }
-        />
-        <Route path="/post/:postId" element={<CarPost />} />
-        <Route path="/profile/:postId" element={<MyPost />} />
-        <Route path="/verify/:token" element={<VerificationPage />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/comments/" element={<Comments />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <ToastContainer />
+      <JwtAuth setIsLoading={setIsLoading} />
+      {!isLoading ? (
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/search-options"
+            element={<SearchOptions filter={1} />}
+          />
+          <Route
+            path="/add-post"
+            element={accessToken ? <NewPosts /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/add-vehicle"
+            element={accessToken ? <NewVehicle /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/profile"
+            element={accessToken ? <Profile /> : <Navigate to="/" replace />}
+          />
+          <Route path="/post/:postId" element={<CarPost />} />
+          <Route path="/profile/:postId" element={<MyPost />} />
+          <Route path="/verify/:token" element={<VerificationPage />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route
+            path="/onboarding"
+            element={accessToken ? <Onboarding /> : <Navigate to="/" replace />}
+          />
+          <Route path="/comments/" element={<Comments />} />
+          <Route path="/not-found" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/admin" element={<AdminPage />} />
+        </Routes>
+      ) : (
+        <Loading />
+      )}
     </Router>
   );
 };
