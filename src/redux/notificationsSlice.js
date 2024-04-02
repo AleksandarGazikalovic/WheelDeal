@@ -7,7 +7,18 @@ export const fetchNotifications = createAsyncThunk(
   async (user) => {
     let url = API_ENDPOINT + `/notification/${user._id}`;
     const res = await axios.get(url);
-    return res.json();
+    return res.data;
+  }
+);
+
+export const updateNotification = createAsyncThunk(
+  "notification/updateNotification",
+  async (notification) => {
+    const res = await axios.put(
+      API_ENDPOINT + `/notification/${notification._id}`,
+      notification
+    );
+    return res.data;
   }
 );
 
@@ -17,10 +28,18 @@ export const notificationsSlice = createSlice({
     notifications: [],
     pending: null,
     error: false,
+    createdNewVehicle: { status: "", message: "" },
+    createdNewPost: { status: "", message: "" },
   },
   reducers: {
     clearnotifications: (state) => {
       state.notifications = [];
+    },
+    setCreatedNewVehicle: (state, action) => {
+      state.createdNewVehicle = action.payload;
+    },
+    setCreatedNewPost: (state, action) => {
+      state.createdNewPost = action.payload;
     },
   },
   extraReducers: {
@@ -36,9 +55,21 @@ export const notificationsSlice = createSlice({
       state.error = action.error.message;
       state.pending = false;
     },
+    [updateNotification.pending]: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    [updateNotification.fulfilled]: (state) => {
+      state.pending = false;
+    },
+    [updateNotification.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = action.error.message;
+    },
   },
 });
 
-export const { clearnotifications } = notificationsSlice.actions;
+export const { clearnotifications, setCreatedNewVehicle, setCreatedNewPost } =
+  notificationsSlice.actions;
 
 export default notificationsSlice.reducer;

@@ -59,22 +59,22 @@ const ProfileNotification = () => {
   const dispatch = useDispatch();
   const { userInfo, pending, error } = useSelector((state) => state.user);
   useEffect(() => {
-    dispatch(fetchNotifications(userInfo));
-  }, [dispatch]);
+    if (userInfo._id != null) dispatch(fetchNotifications(userInfo));
+  }, [userInfo]);
 
-  const fetchNotifications = useSelector((state) => state.notifications);
+  const { notifications } = useSelector((state) => state.notifications);
 
-  fetchNotifications.sort((a, b) =>
-    a.opened === b.opened ? 0 : a.opened ? 1 : -1
+  notifications.sort((a, b) =>
+    a.isOpened === b.isOpened ? 0 : a.isOpened ? 1 : -1
   );
   return (
     <div className="wd-profile--notifications-wrapper">
       <p className="wd-profile--notifications--title">Messages inbox</p>
       <div className="wd-profile--notifications--container">
-        {fetchNotifications.length === 0 ? (
+        {notifications.length === 0 ? (
           <p>You have no messages</p>
         ) : (
-          fetchNotifications.map((message) => (
+          notifications.map((message) => (
             <NotificationMessage message={message} key={message.id} />
           ))
         )}

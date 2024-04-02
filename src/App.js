@@ -23,10 +23,6 @@ import { Comments, JwtAuth, Loading } from "./components";
 import { ToastContainer } from "react-toastify";
 import NotFound from "./pages/notFound/NotFound";
 import NewVehicle from "./pages/newVehicle/NewVehicle";
-import { Comments, JwtAuth, Loading } from "./components";
-import { ToastContainer } from "react-toastify";
-import NotFound from "./pages/notFound/NotFound";
-import NewVehicle from "./pages/newVehicle/NewVehicle";
 
 const App = () => {
   const { accessToken } = useSelector((state) => state.user);

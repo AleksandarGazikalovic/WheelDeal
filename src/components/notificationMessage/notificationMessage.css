@@ -12,15 +12,27 @@
     align-items: center;
   }
 
+  .wd-profile--notifications--message.opened .wd-profile--notifications--message-content-title{
+    font-size: large;
+    font-weight: 600;
+    width: 100%;
+  }
+
   .wd-profile--notifications--message.opened .wd-profile--notifications--message-content--text{
     padding: 10px;
     font-weight: 400;
   }
+  .wd-profile--notifications--message-content--text{
+    padding-top: 0px;
+    width: 80%;
+    padding-left: 5%;
+    padding-top: 2%;
+  }
+
   
   .wd-profile--notifications--message.opened{
-    height: auto !important;
+    height: auto;
     border: 0.5px solid #243550;
-
   }
 
   .wd-profile--notifications--message:hover {
@@ -66,19 +78,15 @@
     overflow: hidden;
     word-break: normal;
   }
-.wd-profile--notifications--message--right{
-  display: flex;
-  flex-direction: column ;
-  align-items: center;
-  justify-content: center;
-  padding-right: 5%; 
-}
-.wd-profile--notifications--message--right p{
-  font-size: small;
-}
-  .wd-profile--notifications--message-content--text{
-    width: 80%;
-    padding-left: 5%;
+  .wd-profile--notifications--message--right{
+    display: flex;
+    flex-direction: column ;
+    align-items: center;
+    justify-content: center;
+    width: 101px;
+  }
+  .wd-profile--notifications--message--right p{
+    font-size: small;
   }
 
   .wd-profile--notifications--message-content--button{
@@ -97,34 +105,51 @@
   }
   
   @media screen and (max-width: 1100px) {
+    
     .wd-profile--notifications--message-content-title{
       font-size: medium;
     }
     .wd-profile--notifications--message-content--text{
       font-size: small;
+      padding-top: 0%;
+    }
+    .wd-profile--notifications--message--right p{
+      font-size: smaller;
+      width: 80px;
     }
   }
   
   @media screen and (max-width: 900px) {
     .wd-profile--notifications--message-content--text{
       overflow: hidden;
+      padding-top: 3%;
+    }
+    .wd-profile--notifications--message-content--unreadText{
+      padding: 0%;
     }
     .wd-profile--notifications--message-content{
       height: 45px;
     }
     .wd-profile--notifications--message-content-title{
-      padding-top: 5%;
-      font-size: small;
+      font-size: medium;
       font-weight: 600;
     }
     .wd-profile--notifications--message-content--text{
       font-size: small;
     }
+    .wd-profile--notifications--message--right p{
+      font-size: smaller;
+      width: 80px;
+    }
+    .wd-profile--notifications--message.opened .wd-profile--notifications--message-content--text{
+      padding-top: 2%;
+    }
   }
 
-  @media screen and (max-width: 650px) {
+  @media screen and (max-width: 700px) {
     .wd-profile--notifications--message-content--text{
       overflow: hidden;
+      padding-top: 4%;
     }
     .wd-profile--notifications--message-content{
       height: 45px;
