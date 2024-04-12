@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -6,22 +6,19 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import {
-  Home,
-  SearchOptions,
-  NewPosts,
-  CarPost,
-  Profile,
-  VerificationPage,
-  ResetPassword,
-  MyPost,
-  Onboarding,
-} from "./pages";
+import { Home, SearchOptions, ResetPassword, Onboarding } from "./pages";
 import { useSelector } from "react-redux";
 import { Comments, JwtAuth, Loading } from "./components";
 import { ToastContainer } from "react-toastify";
 import NotFound from "./pages/notFound/NotFound";
-import NewVehicle from "./pages/newVehicle/NewVehicle";
+const NewPosts = React.lazy(() => import("./pages/newPosts/NewPosts"));
+const NewVehicle = React.lazy(() => import("./pages/newVehicle/NewVehicle"));
+const Profile = React.lazy(() => import("./pages/profile/Profile"));
+const CarPost = React.lazy(() => import("./pages/carPost/CarPost"));
+const MyPost = React.lazy(() => import("./pages/myPost/MyPost"));
+const VerificationPage = React.lazy(() =>
+  import("./pages/verificationPage/VerificationPage")
+);
 
 const App = () => {
   const { accessToken } = useSelector((state) => state.user);
@@ -34,25 +31,67 @@ const App = () => {
       {!isLoading ? (
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/search-options"
-            element={<SearchOptions filter={1} />}
-          />
+          <Route path="/search-options" element={<SearchOptions />} />
           <Route
             path="/add-post"
-            element={accessToken ? <NewPosts /> : <Navigate to="/" replace />}
+            element={
+              accessToken ? (
+                <Suspense fallback={<Loading />}>
+                  <NewPosts />
+                </Suspense>
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
           />
           <Route
             path="/add-vehicle"
-            element={accessToken ? <NewVehicle /> : <Navigate to="/" replace />}
+            element={
+              accessToken ? (
+                <Suspense fallback={<Loading />}>
+                  <NewVehicle />
+                </Suspense>
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
           />
           <Route
             path="/profile"
-            element={accessToken ? <Profile /> : <Navigate to="/" replace />}
+            element={
+              accessToken ? (
+                <Suspense fallback={<Loading />}>
+                  <Profile />
+                </Suspense>
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
           />
-          <Route path="/post/:postId" element={<CarPost />} />
-          <Route path="/profile/:postId" element={<MyPost />} />
-          <Route path="/verify/:token" element={<VerificationPage />} />
+          <Route
+            path="/post/:postId"
+            element={
+              <Suspense fallback={<Loading />}>
+                <CarPost />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/profile/:postId"
+            element={
+              <Suspense fallback={<Loading />}>
+                <MyPost />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/verify/:token"
+            element={
+              <Suspense fallback={<Loading />}>
+                <VerificationPage />
+              </Suspense>
+            }
+          />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route
             path="/onboarding"

@@ -1,8 +1,8 @@
 import "./partners.css";
 import React from "react";
-import FON from "../../assets/Partners/FON.png";
-import IRC from "../../assets/Partners/IRC_FON.png";
-import R2L from "../../assets/Partners/Route2Launch.png";
+import FON from "../../assets/Partners/FON.webp";
+import IRC from "../../assets/Partners/IRC_FON.webp";
+import R2L from "../../assets/Partners/Route2Launch.webp";
 
 const Partners = () => {
   return (
