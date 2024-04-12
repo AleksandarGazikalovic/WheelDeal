@@ -1,17 +1,18 @@
-import { Box, Menu, MenuItem, Select, TextField } from "@mui/material";
+import { Box, MenuItem, Select } from "@mui/material";
 import "../filters.css";
 import carModelsArray from "../../../models/car-models.json";
-import React, { useEffect, useRef, useState } from "react";
 
-const BrandFilter = ({ onChange, brand, parent }) => {
+const BrandFilter = ({ onChange, brand, open, setOpen }) => {
   const handleChange = (newBrand) => {
     onChange(newBrand);
   };
 
-  const anchorRef = useRef(null);
-
   // don't remove, without this function the select jumps to top left on the desktop screen when you click/drag scrollbar with mouse
   function handleClick(e) {
+    if (!open) {
+      setOpen(true);
+    }
+
     if (e.clientX + 7 >= e.target.clientWidth) {
       e.stopPropagation();
       return;
@@ -26,33 +27,19 @@ const BrandFilter = ({ onChange, brand, parent }) => {
       }}
       noValidate
       autoComplete="off"
-      ref={anchorRef}
     >
-      <TextField
+      <Select
         id="searchBrand"
         type="search"
-        select
+        open={open}
         sx={{ width: 300 }}
         label="Search"
         value={brand}
         onChange={(e) => handleChange({ brand: e.target.value })}
         onMouseDown={(e) => handleClick(e)}
         onClose={(e) => {
-          e.preventDefault();
+          setOpen(false);
         }}
-        menuprops={{
-          anchorEl: anchorRef,
-          getContentAnchorEl: () => {
-            return anchorRef;
-          },
-        }}
-        // InputProps={{
-        //   endAdornment: (
-        //     <InputAdornment position="end">
-        //       <SearchIcon />
-        //     </InputAdornment>
-        //   ),
-        // }}
       >
         <MenuItem key={""} value={""}>
           {"- Clear choice -"}
@@ -64,7 +51,7 @@ const BrandFilter = ({ onChange, brand, parent }) => {
               {item.brand}
             </MenuItem>
           ))}
-      </TextField>
+      </Select>
     </Box>
   );
 };

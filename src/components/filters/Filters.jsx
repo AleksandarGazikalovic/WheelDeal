@@ -29,6 +29,8 @@ const Filters = ({
   filterChanged,
   setFilterChanged,
   isFilterReset,
+  open,
+  setOpen,
 }) => {
   let filterContent;
   const dispatch = useDispatch();
@@ -184,8 +186,8 @@ const Filters = ({
         <BrandFilter
           onChange={handleFilterChange}
           brand={filterValues.brand}
-          defaultBrand={filterState.brand}
-          parent={this}
+          open={open}
+          setOpen={setOpen}
         />
       );
       break;
