@@ -4,9 +4,9 @@ import filterReducer from "./filterSlice";
 import postsReducer from "./postsSlice";
 import postReducer from "./postSlice";
 import currencyReducer from "./currencySlice";
-import documentReducer from "./documentSlice";
 import vehicleReducer from "./vehicleSlice";
 import notificationsReducer from "./notificationsSlice";
+import { api } from "../services/api";
 
 export default configureStore({
   reducer: {
@@ -15,8 +15,10 @@ export default configureStore({
     posts: postsReducer,
     post: postReducer,
     currency: currencyReducer,
-    documents: documentReducer,
+    [api.reducerPath]: api.reducer,
     vehicle: vehicleReducer,
     notifications: notificationsReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
 });
