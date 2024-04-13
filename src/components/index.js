@@ -37,5 +37,6 @@ export { default as PopUpModel } from "./popUpModel/PopUpModel";
 export { default as ProfileNotification } from "./profileNotification/ProfileNotification";
 export { default as NotificationMessage } from "./notificationMessage/NotificationMessage";
 export { default as MuiPhone } from "./muiPhone/MuiPhone";
+export { default as OnboardingTableRow } from "./onboardingTableRow/OnboardingTableRow";
 
 export const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;

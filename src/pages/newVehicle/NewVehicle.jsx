@@ -206,7 +206,6 @@ const NewVehicle = () => {
     }
     return false;
   };
-
   const handleCreateVehicle = async () => {
     try {
       if (handleError1()) return;
@@ -218,7 +217,7 @@ const NewVehicle = () => {
               message: "You have successfully added your vehicle!",
             })
           );
-          navigate("/onboarding");
+          navigate(`/onboarding/${result.payload._id}`);
         } else if (createVehicle.rejected.match(result)) {
           dispatch(
             setCreatedNewVehicle({

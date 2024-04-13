@@ -55,7 +55,7 @@ const App = () => {
           <Route path="/verify/:token" element={<VerificationPage />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route
-            path="/onboarding"
+            path="/onboarding/:vehicleId"
             element={accessToken ? <Onboarding /> : <Navigate to="/" replace />}
           />
           <Route path="/comments/" element={<Comments />} />

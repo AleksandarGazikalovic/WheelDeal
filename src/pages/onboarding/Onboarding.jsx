@@ -1,12 +1,15 @@
-import React, { useCallback, useState } from "react";
-import { CustomButton, MuiPhone, Navbar } from "../../components";
+import React, { useState } from "react";
+import {
+  CustomButton,
+  MuiPhone,
+  Navbar,
+  OnboardingTableRow,
+} from "../../components";
 import {
   Box,
   Collapse,
   Divider,
-  Input,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -22,56 +25,62 @@ import "./onboarding.css";
 import { useDispatch, useSelector } from "react-redux";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import "react-international-phone/style.css";
-import { setUser, updateUser } from "../../redux/userSlice";
-import CircularProgress from "@mui/material/CircularProgress";
+import { updateUser } from "../../redux/userSlice";
 import { toast } from "react-toastify";
 import {
-  setIDCard,
-  setVehicleLicense,
-  setRegistrationExpiry,
-  setVehicleInsurance,
-  uploadDocument,
+  useFetchDocumentsQuery,
+  documentsSelectors,
 } from "../../redux/documentSlice";
-import { FaCircleCheck } from "react-icons/fa6";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Onboarding = () => {
   const { userInfo } = useSelector((state) => state.user);
+  const [idCard, setIdCard] = useState({});
+  const [vehicleLicense, setVehicleLicense] = useState({});
+  const [registrationExpiry, setRegistrationExpiry] = useState({});
+  // const [vehicleInsurance, setVehicleInsurance] = useState({});
+  const { vehicleId } = useParams();
   const [phone, setPhone] = useState("");
-  const [documents, pending, error] = useSelector((state) => [
-    state.documents.documents,
-    state.documents.pending,
-  ]);
-  const [IDCard, vehicleLicense, registrationExpiry] = useSelector((state) => [
-    state.documents.idCard,
-    state.documents.vehicleLicense,
-    state.documents.registrationExpiry,
-    // state.documents.vehicleInsurance,
-  ]);
+  useFetchDocumentsQuery(vehicleId);
+  const navigate = useNavigate();
+  const allDocumentsUploaded = useSelector((state) =>
+    documentsSelectors.areAllDocumentsUploaded(state, vehicleId)
+  );
 
   const inputFields = [
     {
       id: "idCard",
       label: "ID Card",
-      action: setIDCard,
-      image: IDCard,
+      action: setIdCard,
+      state: idCard,
+      existingDocument: useSelector((state) =>
+        documentsSelectors.selectIdCardForVehicle(state, vehicleId)
+      ),
     },
     {
       id: "vehicleLicense",
       label: "Vehicle License",
       action: setVehicleLicense,
-      image: vehicleLicense,
+      state: vehicleLicense,
+      existingDocument: useSelector((state) =>
+        documentsSelectors.selectVehicleLicenseForVehicle(state, vehicleId)
+      ),
     },
     {
-      id: "RegistrationExpiry",
+      id: "registrationExpiry",
       label: "Registration Expiry",
       action: setRegistrationExpiry,
-      image: registrationExpiry,
+      state: registrationExpiry,
+      existingDocument: useSelector((state) =>
+        documentsSelectors.selectRegistrationExpiryForVehicle(state, vehicleId)
+      ),
     },
     // {
     //   id: "vehicleInsurance",
     //   label: "Vehicle Insurance",
     //   action: setVehicleInsurance,
-    //   image: vehicleInsurance,
+    //   state: vehicleInsurance,
     // },
   ];
 
@@ -81,38 +90,8 @@ const Onboarding = () => {
     email: false,
     phone: false,
     license: false,
-    payment: false,
+    // payment: false,
   });
-
-  const handleImageChange = (e, actionCreator) => {
-    if (e.target.files && e.target.files[0]) {
-      const img = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        dispatch(
-          actionCreator({
-            file: reader.result,
-            status: "idle",
-            error: null,
-            size: img.size,
-            name: img.name,
-          })
-        );
-      };
-      reader.readAsDataURL(img);
-    }
-  };
-
-  const handleImageUpload = (field) => {
-    dispatch(uploadDocument(field.image.file)).then((res) => {
-      console.log(res);
-      if (res.error) {
-        toast.error("Failed to upload document");
-      } else {
-        toast.success("Document uploaded successfully");
-      }
-    });
-  };
 
   const toggleListItem = (item) => {
     setOpen((prevOpen) => ({ ...prevOpen, [item]: !prevOpen[item] }));
@@ -136,6 +115,18 @@ const Onboarding = () => {
     } catch (err) {
       console.log(err);
       toast.error("Failed to update phone number");
+    }
+  };
+
+  const handleFinish = () => {
+    // Assuming dispatch success since there's no async operation
+    if (userInfo.isAccountVerified && userInfo.phone && allDocumentsUploaded) {
+      navigate("/profile");
+      toast.info(
+        "You are all set! You can browse our vehicles until our team validates your documents. 🚗🎉"
+      );
+    } else {
+      toast.warning("Please complete all the steps before finishing.");
     }
   };
 
@@ -224,7 +215,7 @@ const Onboarding = () => {
                 <CustomButton
                   text="Continue"
                   action={submitPhone}
-                  disabled={userInfo.phone !== ""}
+                  disabled={phone.length < 10 || phone === "" || phone === null}
                 />
               </Box>
             </Box>
@@ -236,7 +227,7 @@ const Onboarding = () => {
           />
           <ListItemButton
             sx={{
-              height: userInfo.isLicenceVerified ? "50px" : "70px",
+              height: allDocumentsUploaded ? "50px" : "70px",
               transition: "height 0.3s",
             }}
             onClick={() => toggleListItem("license")}
@@ -248,14 +239,14 @@ const Onboarding = () => {
             <ListItemIcon>
               <IoCheckmarkDoneCircle
                 size={35}
-                color={userInfo.isLicenceVerified ? "green" : "grey"}
+                color={allDocumentsUploaded ? "green" : "grey"}
               />
             </ListItemIcon>
           </ListItemButton>
           <Collapse in={open.license} timeout="auto" unmountOnExit>
-            <Box className="wd-onboarding--list-item-box">
+            <Box className="wd-onboarding--list-item-box" alignItems={"center"}>
               <ListItemText secondary="Please provide a valid driver's license so we can verify your identity." />
-              <TableContainer sx={{ width: 800 }} component={Paper}>
+              <TableContainer sx={{ width: "100%" }} component={Paper}>
                 <Table>
                   <TableHead>
                     <TableRow sx={{ backgroundColor: "#e5e5e5" }}>
@@ -275,97 +266,25 @@ const Onboarding = () => {
                         sx={{ fontWeight: 600, textTransform: "uppercase" }}
                         align="center"
                       >
-                        File name
-                      </TableCell>
-                      <TableCell
-                        sx={{ fontWeight: 600, textTransform: "uppercase" }}
-                        align="center"
-                      >
-                        Size
-                      </TableCell>
-                      <TableCell
-                        sx={{ fontWeight: 600, textTransform: "uppercase" }}
-                        align="center"
-                      >
                         Status
                       </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {inputFields.map((field) => (
-                      <TableRow
-                        key={field.id}
-                        sx={{
-                          height: "100px",
-                        }}
-                      >
-                        <TableCell align="center" component="th" scope="row">
-                          {field.image.file ? (
-                            <img
-                              src={field.image.file}
-                              alt="licence card"
-                              width="100%"
-                              height="100%"
-                            />
-                          ) : (
-                            <ListItemButton
-                              sx={{
-                                height: "100%",
-                                width: "100%",
-                                flexDirection: "column",
-                                border: "2px dashed #b1b1b1",
-                                borderRadius: "5px",
-                                backgroundColor: "#e5e5e5a3",
-                                cursor: "pointer",
-                              }}
-                              component="label"
-                            >
-                              <ListItemText
-                                className="wd-onboarding--list-item-title"
-                                sx={{ textAlign: "center" }}
-                                primary={field.label}
-                              />
-                              <input
-                                type="file"
-                                hidden
-                                onChange={(e) =>
-                                  handleImageChange(e, field.action)
-                                }
-                              />
-                            </ListItemButton>
-                          )}
-                        </TableCell>
-                        <TableCell align="center">
-                          {field.image.file ? field.label : ""}
-                        </TableCell>
-                        <TableCell align="center">
-                          {field.image.file ? field.image.name : ""}
-                        </TableCell>
-                        <TableCell align="center">
-                          {field.image.file
-                            ? (field.image.size / 1000).toFixed(0) + "KB"
-                            : ""}
-                        </TableCell>
-                        <TableCell align="center">
-                          {field.image.file ? (
-                            true ? (
-                              <CustomButton
-                                text="Upload"
-                                action={() => handleImageUpload(field)}
-                              />
-                            ) : pending ? (
-                              <CircularProgress size={20} />
-                            ) : (
-                              <FaCircleCheck size={20} color="green" />
-                            )
-                          ) : null}
-                        </TableCell>
-                      </TableRow>
+                    {inputFields.map((field, index) => (
+                      <OnboardingTableRow field={field} key={index} />
                     ))}
                   </TableBody>
                 </Table>
               </TableContainer>
-              <CustomButton text="Continue" disabled={true} />
+              <CustomButton
+                text="Continue"
+                disabled={!allDocumentsUploaded}
+                action={() => {
+                  setOpen((prevOpen) => ({ ...prevOpen, license: false }));
+                  // setOpen((prevOpen) => ({ ...prevOpen, payment: true }));
+                }}
+              />
             </Box>
           </Collapse>
           <Divider
@@ -402,7 +321,7 @@ const Onboarding = () => {
             sx={{ width: "100%", margin: "0 auto" }}
           /> */}
         </List>
-        <CustomButton text="Continue" disabled={true} />
+        <CustomButton text="Finish" action={() => handleFinish()} />
       </div>
     </>
   );

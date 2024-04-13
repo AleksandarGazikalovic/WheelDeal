@@ -5,10 +5,7 @@ import { API_ENDPOINT } from "../components";
 export const createVehicle = createAsyncThunk(
   "vehicle/createVehicle",
   async (vehicle, { getState }) => {
-    console.log(getState().user);
-    console.log(getState().user.userInfo._id);
     vehicle.userId = getState().user.userInfo._id;
-    console.log("vehicle", vehicle);
     const res = await axios.post(API_ENDPOINT + "/vehicles/", vehicle, {
       headers: { "Content-Type": "multipart/form-data" },
     });
