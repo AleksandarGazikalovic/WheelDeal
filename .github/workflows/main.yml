@@ -21,7 +21,11 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           docker login --username ${{github.actor}} --password ${{secrets.GH_PAT}} ghcr.io
-          docker build -t ghcr.io/aleksandargazikalovic/wheeldeal:latest -f Dockerfile.frontend .
+          docker build -t ghcr.io/aleksandargazikalovic/wheeldeal:latest \
+            --build-arg REACT_APP_API_URL=${{ secrets.DANGEROUSLY_DISABLE_HOST_CHECK }} \
+            --build-arg REACT_APP_API_ENDPOINT=${{ secrets.REACT_APP_API_ENDPOINT }} \
+            --build-arg REACT_APP_GOOGLE_MAPS_API_KEY=${{ secrets.REACT_APP_GOOGLE_MAPS_API_KEY }} \
+            -f Dockerfile.frontend .
           docker push ghcr.io/aleksandargazikalovic/wheeldeal:latest
 
       - name: Deploy to DigitalOcean Droplet
@@ -36,7 +40,7 @@ jobs:
             docker pull ${{secrets.DOCKER_IMAGE}}
 
             # Check if a container is already running on the specified port
-            EXISTING_CONTAINER=$(docker ps -q --filter "name=wheel-deal" --filter "expose=3000")
+            EXISTING_CONTAINER=$(docker ps -q --filter "name=wheel-deal" --filter "expose=80")
             if [ ! -z "$EXISTING_CONTAINER" ]; then
               echo "Stopping and removing existing container..."
               docker stop $EXISTING_CONTAINER
@@ -44,4 +48,4 @@ jobs:
             fi
 
             CONTAINER_NAME="wheel-deal-$(date +"%Y%m%d%H%M%S")"
-            docker run -d -p 3000:3000 --name $CONTAINER_NAME -v /root/env/.env:/app/.env ${{ secrets.DOCKER_IMAGE }}
+            docker run -d -p 8080:80 --name $CONTAINER_NAME -v /etc/letsencrypt:/certs -v /root/env/.env:/app/.env.production ${{ secrets.DOCKER_IMAGE }}
