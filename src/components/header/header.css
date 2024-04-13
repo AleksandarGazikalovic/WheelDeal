@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  background-image: url("../../assets/firstCar.png");
+  background-image: url("../../assets/firstCar.webp");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: right;
