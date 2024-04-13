@@ -47,7 +47,7 @@ const ProfileInfoEdit = ({
       [name]: value,
     });
   };
-
+  console.log(userData);
   const handleUpdate = async () => {
     try {
       if (profileImage !== null) {
