@@ -1,4 +1,4 @@
-.wd-adminProfile {
+.wd--admin-profile {
     background-color: #f9fafb;
     height: 200vh;
     width: 100%;
@@ -8,7 +8,7 @@
     overflow-y: hidden;
   }
   
-  .wd-adminProfile-wrapper {
+  .wd--admin-profile-wrapper {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -18,7 +18,7 @@
     margin: 1rem 0rem;
   }
   
-  .wd-adminProfile--main {
+  .wd--admin-profile--main {
     width: 100%;
     height: 100%;
     background-color: #f6f8f9;
@@ -35,12 +35,12 @@
     gap: 5%;
   }
 
-  .wd-adminProfile--main-header{
+  .wd--admin-profile--main-header{
     width: 100%;
     padding-top: 2%;
   }
 
-  .wd-adminProfile--main-properties{
+  .wd--admin-profile--main-properties{
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -50,7 +50,7 @@
     margin-right: 5%;
   }
 
-  .wd-adminProfile--main--users{
+  .wd--admin-profile--main--users{
     display: flex;
     flex-direction: column;
     align-items: center ;
@@ -67,7 +67,7 @@
     cursor: pointer;
   }
 
-  .wd-adminProfile--main--users:hover{
+  .wd--admin-profile--main--users:hover{
     border-left: 4px solid #243550;
     border-right: 4px solid #243550;
     border-bottom: 4px solid #243550;

@@ -3,6 +3,7 @@ import { IoMailUnreadSharp, IoMailOpenSharp } from "react-icons/io5";
 import "./notificationMessage.css";
 import { updateNotification } from "../../redux/notificationsSlice";
 import { useDispatch } from "react-redux";
+import { format } from "date-fns";
 
 const NotificationMessage = ({ message, key }) => {
   const [showMessage, setShowMessage] = useState(false);
@@ -28,19 +29,7 @@ const NotificationMessage = ({ message, key }) => {
     }
   };
 
-  var date = new Date(message.createdAt);
-
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
-  var day = date.getDate();
-
-  if (month < 10) {
-    month = "0" + month;
-  }
-  if (day < 10) {
-    day = "0" + day;
-  }
-  var formattedDate = year + "-" + month + "-" + day;
+  var formattedDate = format(new Date(message.createdAt), "dd/mm/yyyy");
 
   return (
     <div
