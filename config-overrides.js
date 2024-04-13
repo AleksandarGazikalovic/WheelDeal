@@ -1,7 +1,7 @@
 const {
   override,
   addWebpackAlias,
-  addBabelPlugin,
+  addBabelPlugins,
   addWebpackPlugin,
 } = require("customize-cra");
 const TerserPlugin = require("terser-webpack-plugin");
@@ -18,7 +18,7 @@ module.exports = override(
   }),
 
   // Add Babel plugin for optimization
-  addBabelPlugin(["@babel/plugin-transform-runtime"]),
+  ...addBabelPlugins(["@babel/plugin-transform-runtime"]),
 
   // Add TerserPlugin for minification
   addWebpackPlugin(
@@ -44,11 +44,11 @@ module.exports = override(
   ),
 
   // Add PurgeCSSPlugin to remove unused CSS
-  addWebpackPlugin(
-    new PurgeCSSPlugin({
-      paths: glob.sync(`src/**/*`, { nodir: true }),
-    })
-  ),
+  // addWebpackPlugin(
+  //   new PurgeCSSPlugin({
+  //     paths: glob.sync(`${path.join(__dirname, "src")}/**/*`, { nodir: true }),
+  //   })
+  // ),
 
   //   // Add Webpack Bundle Analyzer to analyze JavaScript bundle
   //   addWebpackPlugin(new BundleAnalyzerPlugin()),
