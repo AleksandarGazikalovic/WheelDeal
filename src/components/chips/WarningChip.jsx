@@ -25,4 +25,5 @@ const Wrapper = styled.div`
   font-family: ${(props) => props.theme.font.warning};
   font-size: 14px;
   color: ${(props) => props.theme.text.warning};
+  text-align: center;
 `;
