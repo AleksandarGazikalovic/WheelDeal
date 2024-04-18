@@ -139,7 +139,7 @@
 
 @media screen and (max-width: 900px) {
   .wd-profile--profile-info-wrapper {
-    grid-area: 2 / 1 / 6 / 5;
+    grid-area: 2 / 1 / 6 / 13;
   }
   .wd-profile--profile-info--name {
     font-size: 1rem;
@@ -159,9 +159,6 @@
 }
 
 @media screen and (max-width: 800px) {
-  .wd-profile--profile-info-wrapper {
-    grid-area: 2 / 1 / 6 / 6;
-  }
   .wd-profile--profile-info--bottom {
     padding: 1rem 0;
   }

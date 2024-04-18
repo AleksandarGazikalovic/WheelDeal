@@ -7,7 +7,7 @@ import {
   ProfileStatistics,
   TabBar,
 } from "../../components";
-import { Navbar, SmallPostCard } from "../../components";
+import { Navbar, SmallVehicleCard } from "../../components";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -23,7 +23,7 @@ const ProfileMobile = ({ setConnectionError }) => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const [showProfileInfoEdit, setShowProfileInfoEdit] = useState(false);
   const [likedPosts, setLikedPosts] = useState([]);
-  const [userPosts, setUserPosts] = useState([]);
+  const [userVehicles, setUserVehicles] = useState([]);
   const [activeTab, setActiveTab] = useState(
     <ProfileInfo setShowProfileInfoEdit={setShowProfileInfoEdit} />
   );
@@ -41,21 +41,21 @@ const ProfileMobile = ({ setConnectionError }) => {
         break;
       case "car":
         setActiveTab(
-          <div className="wd-profile--your-posts-wrapper" id="style-7">
-            <div className="wd-profile--your-posts">
-              <p className="wd-profile--your-posts-title">Your posts</p>
-              {userPosts.length > 0 ? (
-                userPosts.map((post) => (
-                  <SmallPostCard key={post._id} post={post} />
+          <div className="wd-profile--your-vehicles-wrapper" id="style-7">
+            <div className="wd-profile--your-vehicles">
+              <p className="wd-profile--your-vehicles-title">Your vehicles</p>
+              {userVehicles.length > 0 ? (
+                userVehicles.map((vehicle) => (
+                  <SmallVehicleCard key={vehicle._id} vehicle={vehicle} />
                 ))
               ) : (
                 <>
-                  <p className="wd-profile--your-posts-no-posts">
-                    You have no posts
+                  <p className="wd-profile--your-vehicles-no-vehicles">
+                    You have no vehicles
                   </p>
                   <Link to={"/add-post"}>
                     <CustomButton
-                      className="wd-profile--your-posts-no-posts-button"
+                      className="wd-profile--your-vehicles-no-vehicles-button"
                       text={"Add post"}
                     />
                   </Link>
@@ -119,19 +119,19 @@ const ProfileMobile = ({ setConnectionError }) => {
         setConnectionError("Greška prilikom učitavanja stranice.");
       }
     };
-    const fetchUserPosts = async () => {
+    const fetchUserVehicles = async () => {
       try {
         const res = await axios.get(
-          API_ENDPOINT + `/posts/profile/${userInfo._id}`
+          API_ENDPOINT + `/vehicles/profile/${userInfo._id}`
         );
-        setUserPosts(res.data);
+        setUserVehicles(res.data);
       } catch (error) {
         console.log("Error in fetching users posts: " + error);
         setConnectionError("Greška prilikom učitavanja stranice.");
       }
     };
-    fetchUserPosts();
     fetchLikedPosts();
+    fetchUserVehicles();
   }, [userInfo._id]);
 
   useEffect(() => {

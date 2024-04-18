@@ -13,8 +13,7 @@
 }
 
 .wd-profile--calculations-title,
-.wd-profile--statistics-title,
-.wd-profile--your-posts-title {
+.wd-profile--statistics-title {
   display: flex;
   align-items: center;
   justify-content: flex-start;

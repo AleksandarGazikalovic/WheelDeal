@@ -35,14 +35,14 @@
   box-shadow: 0px 0px 10px 0px #ededed;
 }
 
-.wd-profile--your-posts-wrapper {
+.wd-profile--your-vehicles-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   padding: 2rem 0;
   width: 100%;
-  grid-area: 2 / 10 / 6 / 13;
+  grid-area: 2 / 4 / 6 / 13;
   background-color: #fff;
   border-radius: 20px;
   color: #243550;
@@ -51,13 +51,24 @@
   border: 0.5px solid #d9d9d9;
 }
 
-.wd-profile--your-posts {
+.wd-profile--your-vehicles {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 80%;
   gap: 1rem;
+}
+
+.wd-profile--your-vehicles-title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  border-bottom: 1px solid #d9d9d9;
+  font-size: 1.5rem;
+  font-weight: 800;
+  padding-bottom: 0.5rem;
 }
 
 .wd-profile--liked-posts-wrapper {
@@ -108,16 +119,22 @@
   text-align: center;
 }
 
+@media screen and (max-width: 1400px) {
+  .wd-profile--your-vehicles-wrapper {
+    grid-area: 2 / 5 / 6 / 13;
+  }
+}
+
 @media screen and (max-width: 1100px) {
-  .wd-profile--your-posts-wrapper {
-    grid-area: 2 / 9 / 7 / 13;
+  .wd-profile--your-vehicles-wrapper {
+    grid-area: 2 / 5 / 7 / 13;
   }
 
   .wd-profile--liked-posts-wrapper {
     grid-area: 7 / 1 / 12 / 9;
   }
 
-  .wd-profile--your-posts-title {
+  .wd-profile--your-vehicles-title {
     justify-content: center;
   }
 }
@@ -126,7 +143,7 @@
   .wd-profile {
     height: 300vh;
   }
-  .wd-profile--your-posts-wrapper {
+  .wd-profile--your-vehicles-wrapper {
     grid-area: 6/ 1 / 8 / 13;
     padding: 0;
   }
@@ -134,13 +151,13 @@
   .wd-profile--liked-posts-wrapper {
     grid-area: 8 / 1 / 11 / 13;
   }
-  .wd-profile--your-posts {
+  .wd-profile--your-vehicles {
     padding: 1.5rem 0;
   }
 }
 
 @media screen and (max-width: 800px) {
-  .wd-profile--your-posts-wrapper {
+  .wd-profile--your-vehicles-wrapper {
     grid-area: 6 / 1 / 9 / 13;
     padding: 0;
   }
@@ -150,19 +167,19 @@
   .wd-profile {
     display: none;
   }
-  .wd-profile--your-posts-wrapper,
+  .wd-profile--your-vehicles-wrapper,
   .wd-profile--liked-posts-wrapper {
     height: 70vh;
     box-shadow: none;
   }
 
   .wd-profile--liked-posts-title,
-  .wd-profile--your-posts-title {
+  .wd-profile--your-vehicles-title {
     justify-content: center;
     text-align: center;
   }
 
-  .wd-profile--your-posts-no-posts,
+  .wd-profile--your-vehicles-no-vehicles,
   .wd-profile--liked-posts-no-posts {
     display: flex;
     align-items: center;
