@@ -1,87 +1,84 @@
 .wd-profile--notifications-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    grid-area: 2 / 4 / 6 / 10;
-    background-color: #fff;
-    border-radius: 20px;
-    color: #243550;
-    padding: 2rem 0rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  grid-area: 2 / 4 / 6 / 10;
+  background-color: #fff;
+  border-radius: 20px;
+  color: #243550;
+  padding: 2rem 0rem;
+  border: 0.5px solid #d9d9d9;
+}
+
+.wd-profile--notifications--container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 0.5rem;
+  overflow: auto;
+  align-items: center;
+}
+
+.wd-profile--notifications--title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 90%;
+  border-bottom: 1px solid #d9d9d9;
+  font-size: 1.5rem;
+  font-weight: 800;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 1400px) {
+  .wd-profile--notifications-wrapper {
+    grid-area: 2 / 5 / 6 / 10;
   }
-
-  .wd-profile--notifications--container{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    gap: 0.5rem;
-    overflow: auto;
-    align-items: center;
+  svg.icon {
+    width: 20px;
+    height: 20px;
   }
+}
 
-
+@media screen and (max-width: 1100px) {
+  .wd-profile--notifications-wrapper {
+    grid-area: 2 / 5 / 7 / 9;
+  }
   .wd-profile--notifications--title {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 90%;
-    border-bottom: 1px solid #d9d9d9;
-    font-size: 1.5rem;
-    font-weight: 800;
-    padding-bottom: 0.5rem;
-    margin-bottom: 0.5rem;
+    justify-content: center;
   }
+  .wd-profile--notifications--message-content-title {
+    font-size: medium;
+  }
+  .wd-profile--notifications--message-content--text {
+    font-size: small;
+  }
+}
 
+@media screen and (max-width: 900px) {
+  .wd-profile--notifications-wrapper {
+    grid-area: 2 / 5 / 6 / 13;
+  }
+  .wd-profile--notifications--message-content--text {
+    overflow: hidden;
+  }
+  .wd-profile--notifications--message-content {
+    height: 45px;
+  }
+}
 
-  @media screen and (max-width: 1400px) {
-    .wd-profile--notifications-wrapper {
-      grid-area: 2 / 5 / 6 / 10;
-    }
-    svg.icon{
-      width: 20px;
-      height: 20px;
-    }
+@media screen and (max-width: 800px) {
+  .wd-profile--notifications-wrapper {
+    grid-area: 2 / 6 / 6 / 13;
+  }
+}
 
+@media screen and (max-width: 426px) {
+  .wd-profile--notifications-wrapper {
+    height: 80vh;
   }
-  
-  @media screen and (max-width: 1100px) {
-    .wd-profile--notifications-wrapper {
-      grid-area: 2 / 5 / 7 / 9;
-    }
-    .wd-profile--notifications--title{
-      justify-content: center;
-    }
-    .wd-profile--notifications--message-content-title{
-      font-size: medium;
-    }
-    .wd-profile--notifications--message-content--text{
-      font-size: small;
-    }
-  }
-  
-  @media screen and (max-width: 900px) {
-    .wd-profile--notifications-wrapper {
-      grid-area: 2 / 5 / 6 / 13;;
-    }
-    .wd-profile--notifications--message-content--text{
-      overflow: hidden;
-    }
-    .wd-profile--notifications--message-content{
-      height: 45px;
-    }
-  }
-  
-  @media screen and (max-width: 800px) {
-    .wd-profile--notifications-wrapper {
-      grid-area: 2 / 6 / 6 / 13;
-    }
-  }
-  
-  @media screen and (max-width: 426px) {
-    .wd-profile--notifications-wrapper {
-      height: 80vh;
-    }
-  }
-  
+}

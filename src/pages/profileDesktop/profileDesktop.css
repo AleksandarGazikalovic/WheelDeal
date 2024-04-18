@@ -32,7 +32,7 @@
   margin-left: calc(
     1rem + 100px
   ); /* Adjust the width of your sidebar as needed */
-box-shadow: 0px 0px 10px 0px #ededed;
+  box-shadow: 0px 0px 10px 0px #ededed;
 }
 
 .wd-profile--your-posts-wrapper {
@@ -48,6 +48,7 @@ box-shadow: 0px 0px 10px 0px #ededed;
   color: #243550;
   overflow-y: auto;
   box-shadow: 0px 0px 10px 0px #e5e5e5;
+  border: 0.5px solid #d9d9d9;
 }
 
 .wd-profile--your-posts {
@@ -73,6 +74,7 @@ box-shadow: 0px 0px 10px 0px #ededed;
   color: #243550;
   overflow-y: auto;
   box-shadow: 0px 0px 10px 0px #e5e5e5;
+  border: 0.5px solid #d9d9d9;
 }
 
 .wd-profile--liked-posts-title {
@@ -121,11 +123,11 @@ box-shadow: 0px 0px 10px 0px #ededed;
 }
 
 @media screen and (max-width: 900px) {
-  .wd-profile{
+  .wd-profile {
     height: 300vh;
   }
   .wd-profile--your-posts-wrapper {
-    grid-area: 6/ 1 / 8 / 13;  
+    grid-area: 6/ 1 / 8 / 13;
     padding: 0;
   }
 
@@ -139,7 +141,7 @@ box-shadow: 0px 0px 10px 0px #ededed;
 
 @media screen and (max-width: 800px) {
   .wd-profile--your-posts-wrapper {
-    grid-area: 6 / 1 / 9 / 13;  
+    grid-area: 6 / 1 / 9 / 13;
     padding: 0;
   }
 }

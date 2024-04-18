@@ -9,6 +9,7 @@
   color: #243550;
   padding: 2rem 0;
   box-shadow: 0px 0px 10px 0px #e5e5e5;
+  border: 0.5px solid #d9d9d9;
 }
 
 .wd-profile--calculations-title,
@@ -24,7 +25,7 @@
   padding-bottom: 0.5rem;
 }
 
-.wd-profile--calculations{
+.wd-profile--calculations {
   margin-bottom: 15%;
 }
 .wd-profile--calculations,
@@ -36,7 +37,6 @@
   width: 90%;
   gap: 1rem;
 }
-
 
 .wd-profile--calculations-link {
   display: flex;
