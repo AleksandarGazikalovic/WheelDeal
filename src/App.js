@@ -100,6 +100,7 @@ const App = () => {
           <Route path="/comments/" element={<Comments />} />
           <Route path="/not-found" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       ) : (
         <Loading />
