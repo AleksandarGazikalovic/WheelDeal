@@ -11,15 +11,13 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Loading } from "../../components";
 import Cookies from "universal-cookie";
-import { clearFilter, setFilter } from "../../redux/filterSlice";
+import { setFilter } from "../../redux/filterSlice";
 import { clearPosts, fetchPosts } from "../../redux/postsSlice";
 
 const SearchOptions = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const dispatch = useDispatch();
   const { posts, pending, hasMore } = useSelector((state) => state.posts);
-  const cookies = new Cookies(null, { path: "/" });
-  const cookieFilter = cookies.get("filter") || null;
   const filterState = useSelector((state) => state.filter);
 
   useEffect(() => {
