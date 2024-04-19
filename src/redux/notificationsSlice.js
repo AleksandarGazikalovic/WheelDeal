@@ -48,7 +48,7 @@ export const notificationsSlice = createSlice({
       state.error = false;
     },
     [fetchNotifications.fulfilled]: (state, action) => {
-      state.notifications = action.payload.allNotifications;
+      state.notifications = action.payload;
       state.pending = false;
     },
     [fetchNotifications.rejected]: (state, action) => {
