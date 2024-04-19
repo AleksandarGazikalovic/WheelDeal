@@ -16,6 +16,7 @@ const NewVehicle = React.lazy(() => import("./pages/newVehicle/NewVehicle"));
 const Profile = React.lazy(() => import("./pages/profile/Profile"));
 const CarPost = React.lazy(() => import("./pages/carPost/CarPost"));
 const MyPost = React.lazy(() => import("./pages/myPost/MyPost"));
+const AdminPage = React.lazy(() => import("./pages/adminPage/AdminPage"));
 const VerificationPage = React.lazy(() =>
   import("./pages/verificationPage/VerificationPage")
 );
@@ -100,7 +101,14 @@ const App = () => {
           <Route path="/comments/" element={<Comments />} />
           <Route path="/not-found" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/admin" element={<AdminPage />} />
+          <Route
+            path="/admin"
+            element={
+              <Suspense fallback={<Loading />}>
+                <AdminPage />
+              </Suspense>
+            }
+          />
         </Routes>
       ) : (
         <Loading />
