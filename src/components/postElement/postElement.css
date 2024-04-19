@@ -19,19 +19,20 @@
 .wd--search-content--elements-element:hover {
   transform: scale(1.03);
   transition: all 0.3s ease-in-out;
+  box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 15px;
 }
 
 .wd--search-content--elements-element-image {
   display: flex;
   justify-self: center;
   align-self: center;
-  width: 310px;
-  height: 250px;
+  width: fit-content;
   position: relative;
 }
 
 .wd--search-content--elements-element-image img {
-  border-radius: 25px;
+  border-radius: 15px;
   width: 100%;
   height: 100%;
   object-fit: cover;

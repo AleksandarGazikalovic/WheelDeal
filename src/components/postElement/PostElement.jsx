@@ -4,7 +4,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { RiAccountCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { likePost } from "../../redux/userSlice";
@@ -142,7 +141,7 @@ const PostElement = React.forwardRef(({ post, setShowLoginForm }, ref) => {
               {formattedFromDate + "-" + formattedToDate}
             </p>
             <p className="wd--search-content--elements-element-text--left-price">
-              {Math.round(price)} {currency.name === "EUR" ? "€" : "RSD"} / dan
+              {Math.round(price)} {currency.name === "EUR" ? "€" : "RSD"} / day
             </p>
           </div>
           <div className="wd--search-content--elements-element-text--right">

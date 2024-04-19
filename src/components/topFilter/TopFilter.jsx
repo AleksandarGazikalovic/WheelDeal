@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { clearPosts } from "../../redux/postsSlice";
 import { clearFilter } from "../../redux/filterSlice";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
-import Cookies from "universal-cookie";
 
 const TopFilter = () => {
   const [activeFilter, setActiveFilter] = useState(""); // Initial form value

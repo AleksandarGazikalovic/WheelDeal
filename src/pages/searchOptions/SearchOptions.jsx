@@ -13,6 +13,7 @@ import { Loading } from "../../components";
 import Cookies from "universal-cookie";
 import { setFilter } from "../../redux/filterSlice";
 import { clearPosts, fetchPosts } from "../../redux/postsSlice";
+import { Link } from "react-router-dom";
 
 const SearchOptions = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -61,12 +62,14 @@ const SearchOptions = () => {
           <div className="wd--search-content--elements">
             {posts.length !== 0
               ? posts.map((p, index) => (
+                <Link to={`/post/${p._id}`} key={p._id}>
                   <PostElement
                     post={p}
                     key={p._id}
                     setShowLoginForm={setShowLoginForm}
                     ref={index === posts.length - 1 ? lastPostElementRef : null}
                   />
+                </Link>
                 ))
               : !pending && (
                   <div className="wd--search-content--elements-title">
