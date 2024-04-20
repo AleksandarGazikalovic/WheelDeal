@@ -135,7 +135,7 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
         />
       )}
       {showInbox && (
-        <div className="wd-profile--navbar--messageInbox">
+        <div className="wd--navbar--message-inbox">
           <ProfileNotification />
         </div>
       )}

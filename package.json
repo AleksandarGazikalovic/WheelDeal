@@ -48,7 +48,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set REACT_APP_ENV=development&& react-app-rewired start",
+    "start": "react-scripts start",
     "build:dev": "set REACT_APP_ENV=development&& react-app-rewired build",
     "build:prod": "set REACT_APP_ENV=production&& react-app-rewired build",
     "test": "react-app-rewired test"

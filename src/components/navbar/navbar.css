@@ -125,7 +125,7 @@
   z-index: 9999;
 }
 
-.wd-profile--navbar--messageInbox{
+.wd--navbar--message-inbox {
   position: absolute;
   width: 30%;
   max-height: 65%;
@@ -137,7 +137,7 @@
   border-radius: 10px;
 }
 
-.wd-profile--navbar-notifications{
+.wd-profile--navbar-notifications {
   margin-left: 1%;
 }
 
@@ -167,16 +167,8 @@
   .wd--navbar-links-logo {
     margin-right: 0;
   }
-  .wd-profile--navbar--messageInbox{
-    position: absolute;
+  .wd--navbar--message-inbox {
     width: 50%;
-    height: 65%;
-    top: 89px;
-    right: 0px;
-    z-index: 99999;
-    overflow: auto;
-    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
   }
 }
 
@@ -204,15 +196,7 @@
   .wd--navbar-menu-container-links-sign {
     display: block;
   }
-  .wd-profile--navbar--messageInbox{
-    position: absolute;
+  .wd--navbar--message-inbox {
     width: 60%;
-    height: 65%;
-    top: 89px;
-    right: 0px;
-    z-index: 99999;
-    overflow: auto;
-    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
   }
 }

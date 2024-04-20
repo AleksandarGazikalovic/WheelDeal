@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./profileNavbar.css";
 import { IoSearchOutline, IoNotificationsOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -10,11 +10,13 @@ import { logout } from "../../redux/userSlice";
 import { logoutUser } from "../../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import ProfileNotification from "../profileNotification/ProfileNotification";
 
 const ProfileNavbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.userInfo);
+  const [showInbox, setShowInbox] = useState(false);
 
   useEffect(() => {}, [user]);
 
@@ -40,9 +42,17 @@ const ProfileNavbar = () => {
       <div className="wd-profile--navbar-right">
         <CustomButton text="Sign out" action={handleLogout} width={"120px"} />
         <div className="wd-profile--navbar-notifications">
-          <IoNotificationsOutline size={25} />
+          <IoNotificationsOutline
+            size={25}
+            onClick={() => setShowInbox(!showInbox)}
+          />
         </div>
         <ProfileAccount size={"small"} />
+        {showInbox && (
+          <div className="wd-profile--navbar--message-inbox">
+            <ProfileNotification />
+          </div>
+        )}
       </div>
     </div>
   );
