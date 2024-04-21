@@ -27,11 +27,14 @@ import {
   OutlinedInput,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePost, updatePost } from "../../redux/postSlice";
 import { MdOutlinePhotoLibrary } from "react-icons/md";
 import { DateRange } from "react-date-range";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  useDeletePostMutation,
+  useUpdatePostMutation,
+} from "../../redux/postSlice";
 
 const MyPost = () => {
   const { postId } = useParams();
@@ -50,12 +53,27 @@ const MyPost = () => {
       key: "selection",
     },
   ]);
-  const { pending, postInfo, error } = useSelector((state) => state.post);
   const [postInfoEditMessage, setPostInfoEditMessage] = useState({
     status: null,
     message: null,
   });
-
+  const [
+    updatePost,
+    {
+      isLoading: isUpdateLoading,
+      isSuccess: isUpdateSuccess,
+      isError: isUpdateError,
+    },
+  ] = useUpdatePostMutation();
+  const [
+    deletePost,
+    {
+      isLoading: isDeleteLoading,
+      isSuccess: isDeleteSuccess,
+      isError: isDeleteError,
+    },
+  ] = useDeletePostMutation();
+  const isLoading = isUpdateLoading || isDeleteLoading;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -136,56 +154,52 @@ const MyPost = () => {
 
   //forbidden for now
   const handleEdit = () => {
-    setEdit(false);
-    // setEdit(!edit);
+    setEdit(!edit);
     setDisableUpdate(true);
-    toast.warn("Edit is disabled for now", {
-      autoClose: 5000,
-    });
+    // toast.warn("Edit is disabled for now", {
+    //   autoClose: 5000,
+    // });
   };
 
   const handleUpdate = async () => {
-    try {
-      dispatch(
-        updatePost({
-          ...newPost,
-          _id: postId,
-          userId: post.userId,
-        })
-      ).then((result) => {
-        if (updatePost.fulfilled.match(result)) {
-          setEdit(!edit);
-          setDisableUpdate(true);
-          setPostInfoEditMessage({
-            status: "success",
-            message: "Uspešno ste ažurirali Vaš oglas.",
-          });
-        } else if (updatePost.rejected.match(result)) {
-          setPostInfoEditMessage({
-            status: "error",
-            message: "Došlo je do greške prilikom ažuriranja Vašeg oglasa.",
-          });
-        }
+    await updatePost({
+      ...newPost,
+      _id: postId,
+      userId: post.userId,
+    })
+      .unwrap()
+      .then((res) => {
+        setEdit(!edit);
+        setDisableUpdate(true);
+        setPostInfoEditMessage({
+          status: "success",
+          message: "You have successfully updated your post.",
+        });
+      })
+      .catch((error) => {
+        setPostInfoEditMessage({
+          status: "error",
+          message: "Error updating post. Please try again.",
+        });
       });
-    } catch (error) {
-      console.error("Error updating post:", error);
-    }
   };
 
   const handleDelete = async () => {
-    try {
-      dispatch(deletePost({ _id: postId, userId: post.userId })).then(
-        (result) => {
-          if (deletePost.fulfilled.match(result)) {
-            navigate("/profile");
-          } else {
-            console.log(result.payload.message);
-          }
-        }
-      );
-    } catch (error) {
-      console.error("Error deleting post:", error);
-    }
+    deletePost({ _id: postId, userId: post.userId })
+      .unwrap()
+      .then((res) => {
+        setPostInfoEditMessage({
+          status: "success",
+          message: "You have successfully deleted your post.",
+        });
+        navigate("/profile");
+      })
+      .catch((isDeleteError) => {
+        setPostInfoEditMessage({
+          status: "error",
+          message: "Error deleting post. Please try again.",
+        });
+      });
   };
 
   const handleChange = (name, value) => {
@@ -270,7 +284,7 @@ const MyPost = () => {
     });
   }, [state]);
 
-  if (loading || pending) {
+  if (loading || isLoading) {
     return <Loading />;
   }
 
@@ -290,11 +304,15 @@ const MyPost = () => {
               onClick={handlePreviousImage}
             />
             <button
-              disabled={!edit}
+              // disabled={!edit}
+              disabled
               className="wd--my-post--content--upload-photos"
             >
               <label
-                style={edit ? { cursor: "pointer" } : { cursor: "not-allowed" }}
+                // style={edit ? { cursor: "pointer" } : { cursor: "not-allowed" }}
+                style={
+                  false ? { cursor: "pointer" } : { cursor: "not-allowed" }
+                }
               >
                 <span>Upload photos</span>
                 <MdOutlinePhotoLibrary />
@@ -303,7 +321,8 @@ const MyPost = () => {
                   type="file"
                   name="images"
                   onChange={onSelectFile}
-                  disabled={!edit}
+                  // disabled={!edit}
+                  disabled
                   multiple
                   accept="image/png , image/jpeg, image/webp"
                 />
@@ -328,7 +347,8 @@ const MyPost = () => {
               <TextField
                 size="small"
                 select
-                disabled={!edit}
+                // disabled={!edit}
+                disabled
                 label="Brand"
                 value={post.vehicle.brand}
                 name="brand"
@@ -347,7 +367,8 @@ const MyPost = () => {
               <TextField
                 size="small"
                 select
-                disabled={!edit}
+                // disabled={!edit}
+                disabled
                 label="Model"
                 value={post.vehicle.carModel}
                 name="carModel"
@@ -372,7 +393,8 @@ const MyPost = () => {
               </TextField>
               <TextField
                 size="small"
-                disabled={!edit}
+                // disabled={!edit}
+                disabled
                 label="Year"
                 type="number"
                 value={post.vehicle.year}
@@ -383,7 +405,8 @@ const MyPost = () => {
               ></TextField>
               <TextField
                 size="small"
-                disabled={!edit}
+                // disabled={!edit}
+                disabled
                 label="Mileage"
                 type="number"
                 value={post.vehicle.mileage}
@@ -395,7 +418,8 @@ const MyPost = () => {
               <TextField
                 size="small"
                 select
-                disabled={!edit}
+                // disabled={!edit}
+                disabled
                 label="Transmission"
                 value={post.vehicle.transmission}
                 name="transmission"
@@ -409,7 +433,8 @@ const MyPost = () => {
               <TextField
                 size="small"
                 select
-                disabled={!edit}
+                // disabled={!edit}
+                disabled
                 label="Fuel"
                 value={post.vehicle.fuel}
                 name="fuel"
@@ -427,7 +452,8 @@ const MyPost = () => {
               <TextField
                 size="small"
                 select
-                disabled={!edit}
+                // disabled={!edit}
+                disabled
                 label="Drive"
                 value={post.vehicle.drive}
                 name="drive"
@@ -441,7 +467,8 @@ const MyPost = () => {
               </TextField>
               <TextField
                 size="small"
-                disabled={!edit}
+                // disabled={!edit}
+                disabled
                 label="HP"
                 type="number"
                 value={post.vehicle.engine}
@@ -456,7 +483,8 @@ const MyPost = () => {
                 </InputLabel>
                 <OutlinedInput
                   size="small"
-                  disabled={!edit}
+                  // disabled={!edit}
+                  disabled
                   label="Price"
                   type="number"
                   value={post.price}
@@ -472,7 +500,8 @@ const MyPost = () => {
               </FormControl>
               <TextField
                 size="small"
-                disabled={!edit}
+                // disabled={!edit}
+                disabled
                 multiline
                 rows={5.9}
                 label="Description"

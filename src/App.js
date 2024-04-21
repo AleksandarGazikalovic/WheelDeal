@@ -32,8 +32,20 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search-options" element={<SearchOptions />} />
-          <Route
+          {/* <Route
             path="/add-post"
+            element={
+              accessToken ? (
+                <Suspense fallback={<Loading />}>
+                  <NewPosts />
+                </Suspense>
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          /> */}
+          <Route
+            path="/add-post/:vehicleId"
             element={
               accessToken ? (
                 <Suspense fallback={<Loading />}>

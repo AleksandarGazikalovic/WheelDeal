@@ -1,38 +1,43 @@
 import React from "react";
 import "./smallVehicleCard.css";
 import { Link, useNavigate } from "react-router-dom";
-import { SuccessChip, WarningChip } from "../chips";
-import CustomButton from "../customButton/CustomButton";
+import { ButtonPrimary, ChipSuccess, ChipWarning, Loading } from "../";
 import { GiCartwheel } from "react-icons/gi";
 import { MdOutlineDriveEta } from "react-icons/md";
 import { PiEngineLight, PiGasPump } from "react-icons/pi";
+import { useGetPostByVehicleIdQuery } from "../../redux/postSlice";
 
 const SmallVehicleCard = ({ vehicle }) => {
   const navigate = useNavigate();
+  const { data, isLoading } = useGetPostByVehicleIdQuery(vehicle?._id);
 
   const renderStatus = () => {
     if (vehicle?.documents?.length < 3) {
-      return <WarningChip label="Upload documents" />;
+      return <ChipWarning label="Upload documents" />;
     }
     if (!vehicle?.isVerified) {
-      return <WarningChip label="Pending" />;
+      return <ChipWarning label="Pending" />;
     }
-    return <SuccessChip label="Verified" />;
+    return <ChipSuccess label="Verified" />;
   };
 
   const disableCreatePost =
     vehicle?.documents?.length < 3 || !vehicle?.isVerified;
 
   const handleCreatePost = () => {
-    console.log("Create Post");
+    navigate(`/add-post/${vehicle?._id}`);
   };
 
+  const handleViewPost = () => {
+    navigate(`/profile/${data?._id}`);
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <Link
-      to={`/profile/${vehicle?._id}`}
-      key={vehicle?._id}
-      className="wd-profile--vehicles-vehicle"
-    >
+    <div key={vehicle?._id} className="wd-profile--vehicles-vehicle">
       <div className="wd-profile--vehicles-vehicle-header">
         <h4 className="wd-profile--vehicles-vehicle-header-title">
           {vehicle?.brand} {vehicle?.carModel} {vehicle?.year}
@@ -65,13 +70,15 @@ const SmallVehicleCard = ({ vehicle }) => {
             <span>Mileage: </span> {vehicle?.mileage}
           </li>
         </ul>
-        <CustomButton
-          text={"Create Post"}
+        <ButtonPrimary
           disabled={disableCreatePost}
-          action={handleCreatePost}
-        />
+          onClick={data !== null ? handleViewPost : handleCreatePost}
+          sm
+        >
+          {data !== null ? "View post" : "Create Post"}
+        </ButtonPrimary>
       </div>
-    </Link>
+    </div>
   );
 };
 
