@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./myPost.css";
 import {
   Loading,
-  CustomButton,
   ProfileNavbar,
   Sidebar,
   LocationAutocomplete,
   GoogleMaps,
   Navbar,
+  ButtonDanger,
+  ButtonPrimary,
+  ButtonSuccess,
 } from "../../components";
 import { API_ENDPOINT } from "..";
 import axios from "axios";
@@ -510,30 +512,25 @@ const MyPost = () => {
           </div>
         </div>
         <div className="wd--my-post--buttons">
-          <CustomButton
-            text="Delete"
-            action={handleDelete}
-            width={"100px"}
-            backgroundColor={"#D62828"}
-          />
+          <ButtonDanger onClick={handleDelete} backgroundColor={"#D62828"} md>
+            Delete
+          </ButtonDanger>
           <div className="wd--my-post--buttons-right">
-            <CustomButton
-              text="Edit"
-              action={handleEdit}
-              disabled={edit}
-              width={"70px"}
-            />
-            <CustomButton
-              text="Update"
-              action={handleUpdate}
-              width={"100px"}
+            <ButtonPrimary onClick={handleEdit} disabled={edit} sm>
+              Edit
+            </ButtonPrimary>
+            <ButtonSuccess
+              onClick={handleUpdate}
               disabled={disableUpdate}
               backgroundColor={"#1fb538"}
               disabledBackgroundColor={"#80c28b"}
               hoverText={
                 disableUpdate ? "Please fill all the fields" : "Submit the form"
               }
-            />
+              md
+            >
+              Update
+            </ButtonSuccess>
           </div>
         </div>
       </div>

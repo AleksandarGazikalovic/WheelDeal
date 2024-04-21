@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CustomButton, PasswordInput } from "../../components";
+import { ButtonPrimary, PasswordInput } from "../../components";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import "./resetPassword.css";
@@ -112,10 +112,9 @@ const ResetPassword = () => {
           <>
             <h2>Success!</h2>
             <p>Your password has been reset successfully.</p>
-            <CustomButton
-              text={"Go back"}
-              action={() => window.location.replace("/")}
-            />
+            <ButtonPrimary onClick={() => window.location.replace("/")} md>
+              Go back
+            </ButtonPrimary>
           </>
         ) : (
           <>
@@ -134,7 +133,9 @@ const ResetPassword = () => {
             <span className="wd--reset-password--container-error">
               {errorMessage}
             </span>
-            <CustomButton text={"Reset Password"} action={resetPassword} />
+            <ButtonPrimary onClick={resetPassword} lg>
+              Reset Password
+            </ButtonPrimary>
           </>
         )}
       </div>

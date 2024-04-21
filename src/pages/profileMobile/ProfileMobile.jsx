@@ -1,13 +1,14 @@
 import "./profileMobile.css";
 import {
-  CustomButton,
+  ButtonPrimary,
   PostElement,
   ProfileInfo,
   ProfileInfoEdit,
   ProfileStatistics,
   TabBar,
+  Navbar,
+  SmallVehicleCard,
 } from "../../components";
-import { Navbar, SmallVehicleCard } from "../../components";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -54,10 +55,7 @@ const ProfileMobile = ({ setConnectionError }) => {
                     You have no vehicles
                   </p>
                   <Link to={"/add-post"}>
-                    <CustomButton
-                      className="wd-profile--your-vehicles-no-vehicles-button"
-                      text={"Add post"}
-                    />
+                    <ButtonPrimary md>Add vehicle</ButtonPrimary>
                   </Link>
                 </>
               )}

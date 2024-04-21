@@ -3,14 +3,12 @@ import "./profileNavbar.css";
 import { IoSearchOutline, IoNotificationsOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import noAvatar from "../../assets/noAvatar.png";
-import ProfileAccount from "../profileAccount/ProfileAccount";
-import CustomButton from "../customButton/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/userSlice";
 import { logoutUser } from "../../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import ProfileNotification from "../profileNotification/ProfileNotification";
+import { ProfileNotification, ButtonPrimary, ProfileAccount } from "../";
 
 const ProfileNavbar = () => {
   const dispatch = useDispatch();
@@ -40,7 +38,9 @@ const ProfileNavbar = () => {
         <input type="text" placeholder="Search" />
       </div>
       <div className="wd-profile--navbar-right">
-        <CustomButton text="Sign out" action={handleLogout} width={"120px"} />
+        <ButtonPrimary onClick={handleLogout} md>
+          Sign out
+        </ButtonPrimary>
         <div className="wd-profile--navbar-notifications">
           <IoNotificationsOutline
             size={25}

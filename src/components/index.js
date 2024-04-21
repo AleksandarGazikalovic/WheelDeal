@@ -21,7 +21,6 @@ export { default as ProfileAccount } from "./profileAccount/ProfileAccount";
 export { default as ProfileAccountBig } from "./profileAccountBig/ProfileAccountBig";
 export { default as ProfileAccountSmall } from "./profileAccountSmall/ProfileAccountSmall";
 export { default as Menu } from "./menu/Menu";
-export { default as CustomButton } from "./customButton/CustomButton";
 export { default as PostElementSkeleton } from "./postElementSkeleton/PostElementSkeleton";
 export { default as EmailVerification } from "./emailVerification/EmailVerification";
 export { default as RegistrationInput } from "./registrationInput/RegistrationInput";
@@ -38,5 +37,7 @@ export { default as ProfileNotification } from "./profileNotification/ProfileNot
 export { default as NotificationMessage } from "./notificationMessage/NotificationMessage";
 export { default as MuiPhone } from "./muiPhone/MuiPhone";
 export { default as OnboardingTableRow } from "./onboardingTableRow/OnboardingTableRow";
+export * from "./chips";
+export * from "./buttons";
 
 export const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;

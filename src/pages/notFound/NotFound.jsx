@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { CustomButton, Navbar } from "../../components";
+import { ButtonPrimary, Navbar } from "../../components";
 import "./notFound.css";
 
 const NotFound = () => {
@@ -17,12 +17,12 @@ const NotFound = () => {
         <div className="wd-not-found--redirect-buttons">
           <div className="wd-not-found--redirect-buttons--left-button">
             <Link to="/">
-              <CustomButton text="Back to home page" />
+              <ButtonPrimary lg>Back to home page</ButtonPrimary>
             </Link>
           </div>
           <div className="wd-not-found--redirect-buttons--right-button">
             <Link to="/search-options">
-              <CustomButton text="Back to search page" />
+              <ButtonPrimary lg>Back to search page</ButtonPrimary>
             </Link>
           </div>
         </div>

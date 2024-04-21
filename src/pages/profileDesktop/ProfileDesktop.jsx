@@ -4,7 +4,7 @@ import { GoHome, GoPlus } from "react-icons/go";
 import Logo from "../../assets/logoDark.png";
 import { useSelector } from "react-redux";
 import {
-  CustomButton,
+  ButtonPrimary,
   PostElement,
   ProfileInfo,
   ProfileInfoEdit,
@@ -105,10 +105,7 @@ const ProfileDesktop = ({ setConnectionError }) => {
                     You have no vehicles
                   </p>
                   <Link to={"/add-vehicle"}>
-                    <CustomButton
-                      className="wd-profile--your-vehicles-no-vehicles-button"
-                      text={"Add Vehicle"}
-                    />
+                    <ButtonPrimary md>Add vehicle</ButtonPrimary>
                   </Link>
                 </>
               )}

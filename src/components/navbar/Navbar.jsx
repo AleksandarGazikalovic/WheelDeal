@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./navbar.css";
 import { RiMenu3Line } from "react-icons/ri";
 import logo from "../../assets/logoDark.png";
-import RegistrationForm from "../registrationForm/RegistrationForm";
-import LoginForm from "../loginForm/LoginForm";
+import {
+  RegistrationForm,
+  ProfileAccount,
+  ButtonPrimary,
+  Menu,
+  LoginForm,
+} from "../";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { GoPlus } from "react-icons/go";
-import ProfileAccount from "../profileAccountBig/ProfileAccountBig";
-import Menu from "../menu/Menu";
-import CustomButton from "../customButton/CustomButton";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { ProfileNotification } from "../";
 
@@ -88,10 +90,9 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
                 >
                   Log in
                 </button>
-                <CustomButton
-                  text="Sign up"
-                  action={handleShowRegistrationForm}
-                />
+                <ButtonPrimary onClick={handleShowRegistrationForm} md>
+                  Sign up
+                </ButtonPrimary>
               </div>
             </>
           )}

@@ -1,3 +1,5 @@
+import { css } from "styled-components";
+
 const withOpacity = (hex, opacity) => {
   const [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
@@ -5,8 +7,8 @@ const withOpacity = (hex, opacity) => {
 
 const defaultTheme = {
   color: {
-    primary: withOpacity("#ffc107", 0.4),
-    secondary: withOpacity("#6c757d", 0.4),
+    primary: withOpacity("#f77f00", 0.4),
+    secondary: withOpacity("#003049", 0.4),
     success: withOpacity("#28a745", 0.4),
     info: withOpacity("#17a2b8", 0.4),
     warning: withOpacity("#FFCE00", 0.2),
@@ -16,8 +18,8 @@ const defaultTheme = {
   },
   // same colors but with no opacity
   text: {
-    primary: "#ffc107",
-    secondary: "#6c757d",
+    primary: "#f77f00",
+    secondary: "#003049",
     success: "#28a745",
     info: "#17a2b8",
     warning: "#FFCE00",
@@ -35,6 +37,20 @@ const defaultTheme = {
     md: "15px",
     lg: "20px",
     xl: "25px",
+  },
+  size: {
+    sm: css`
+      padding: 0.6rem 0.6rem;
+      font-size: 12px;
+    `,
+    md: css`
+      padding: 0.7rem 0.7rem;
+      font-size: 14px;
+    `,
+    lg: css`
+      padding: 0.8rem 0.8rem;
+      font-size: 16px;
+    `,
   },
   border: {
     width: "1px",
@@ -62,6 +78,16 @@ const invertedTheme = {
     danger: defaultTheme.text.danger,
     light: defaultTheme.text.light,
     dark: defaultTheme.text.dark,
+    disabled: {
+      primary: withOpacity("#f77f00", 0.6),
+      secondary: withOpacity("#003049", 0.6),
+      success: withOpacity("#28a745", 0.6),
+      info: withOpacity("#17a2b8", 0.6),
+      warning: withOpacity("#FFCE00", 0.6),
+      danger: withOpacity("#FF0000", 0.6),
+      light: withOpacity("#f8f9fa", 0.6),
+      dark: withOpacity("#343a40", 0.6),
+    },
   },
   text: {
     primary: defaultTheme.text.light,
@@ -79,6 +105,8 @@ const invertedTheme = {
   },
   padding: { ...defaultTheme.padding },
   border: { ...defaultTheme.border },
+  size: { ...defaultTheme.size },
+  shadow: { ...defaultTheme.shadow },
 };
 
 invertedTheme.margin = { ...invertedTheme.padding };

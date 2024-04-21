@@ -1,10 +1,9 @@
 import React from "react";
 import "./menu.css";
-import ProfileAccount from "../profileAccount/ProfileAccount";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logoDark.png";
 import { useRef, useEffect } from "react";
-import CustomButton from "../customButton/CustomButton";
+import { ButtonPrimary, ProfileAccount } from "../";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/userSlice";
 import { logoutUser } from "../../redux/userSlice";
@@ -91,7 +90,9 @@ const Menu = ({
                 </div>
                 {loggedIn && (
                   <div className="wd--menu-links-container-item">
-                    <CustomButton text="Sign out" action={handleLogout} />
+                    <ButtonPrimary onClick={handleLogout} sm>
+                      Sign out
+                    </ButtonPrimary>
                   </div>
                 )}
               </div>

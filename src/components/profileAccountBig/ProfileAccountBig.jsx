@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { RiAccountCircleFill, RiArrowDownSLine } from "react-icons/ri";
+import { RiArrowDownSLine } from "react-icons/ri";
 import "./profileAccountBig.css";
 import { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/userSlice";
-import CustomButton from "../customButton/CustomButton";
+import { ButtonPrimary } from "../";
 import { Avatar } from "@mui/material";
 import { logoutUser } from "../../redux/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -77,7 +77,9 @@ const ProfileAccountBig = ({ color }) => {
                 <Link to="settings">Settings</Link>
               </p>
             </div>
-            <CustomButton text="Sign out" action={handleLogout} />
+            <ButtonPrimary onClick={handleLogout} md>
+              Sign out
+            </ButtonPrimary>
           </div>
         )}
       </div>

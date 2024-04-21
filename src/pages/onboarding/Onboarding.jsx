@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  CustomButton,
+  ButtonPrimary,
   MuiPhone,
   Navbar,
   OnboardingTableRow,
@@ -212,11 +212,13 @@ const Onboarding = () => {
                   value={phone}
                   onChange={onPhoneChange}
                 />
-                <CustomButton
-                  text="Continue"
-                  action={submitPhone}
+                <ButtonPrimary
+                  onClick={submitPhone}
                   disabled={phone.length < 10 || phone === "" || phone === null}
-                />
+                  sm
+                >
+                  Continue
+                </ButtonPrimary>
               </Box>
             </Box>
           </Collapse>
@@ -277,14 +279,16 @@ const Onboarding = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <CustomButton
-                text="Continue"
+              <ButtonPrimary
                 disabled={!allDocumentsUploaded}
-                action={() => {
+                onClick={() => {
                   setOpen((prevOpen) => ({ ...prevOpen, license: false }));
                   // setOpen((prevOpen) => ({ ...prevOpen, payment: true }));
                 }}
-              />
+                sm
+              >
+                Continue
+              </ButtonPrimary>
             </Box>
           </Collapse>
           <Divider
@@ -321,7 +325,9 @@ const Onboarding = () => {
             sx={{ width: "100%", margin: "0 auto" }}
           /> */}
         </List>
-        <CustomButton text="Finish" action={() => handleFinish()} />
+        <ButtonPrimary onClick={() => handleFinish()} lg>
+          Finish
+        </ButtonPrimary>
       </div>
     </>
   );

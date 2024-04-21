@@ -1,10 +1,8 @@
 import React from "react";
-import ProfileAccountBig from "../profileAccountBig/ProfileAccountBig";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import "./profileAccount.css";
-import CustomButton from "../customButton/CustomButton";
-import ProfileAccountSmall from "../profileAccountSmall/ProfileAccountSmall";
+import { ButtonPrimary, ProfileAccountSmall, ProfileAccountBig } from "../";
 
 const ProfileAccount = ({
   size,
@@ -42,7 +40,9 @@ const ProfileAccount = ({
           >
             Log in
           </button>
-          <CustomButton text="Sign up" action={handleShowRegistrationForm} />
+          <ButtonPrimary onClick={handleShowRegistrationForm} md>
+            Sign up
+          </ButtonPrimary>
         </div>
       )}
     </>

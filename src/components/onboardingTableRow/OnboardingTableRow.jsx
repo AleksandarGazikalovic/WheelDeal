@@ -9,7 +9,7 @@ import {
 import { useAddDocumentMutation } from "../../redux/documentSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import { FaCircleCheck } from "react-icons/fa6";
-import CustomButton from "../customButton/CustomButton";
+import { ButtonPrimary } from "../";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -30,7 +30,9 @@ const OnboardingTableRow = ({ field }) => {
         return <FaCircleCheck color="green" size={30} />;
       } else {
         return (
-          <CustomButton text="Upload" action={() => handleImageUpload(field)} />
+          <ButtonPrimary onClick={() => handleImageUpload(field)} sm>
+            Upload
+          </ButtonPrimary>
         );
       }
     }
