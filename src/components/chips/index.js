@@ -1,4 +1,4 @@
-export { default as DangerChip } from "./DangerChip";
-export { default as WarningChip } from "./WarningChip";
-export { default as PrimaryChip } from "./PrimaryChip";
-export { default as SuccessChip } from "./SuccessChip";
+export { default as ChipPrimary } from "./ChipPrimary";
+export { default as ChipWarning } from "./ChipWarning";
+export { default as ChipDanger } from "./ChipDanger";
+export { default as ChipSuccess } from "./ChipSuccess";

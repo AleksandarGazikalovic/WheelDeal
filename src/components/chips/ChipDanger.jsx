@@ -2,15 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import Theme from "../../theme/Theme";
 
-const SuccessChip = (props) => {
+const ChipDanger = (props) => {
   return (
-    <Theme dark={props.style}>
+    <Theme dark={props.dark}>
       <Wrapper>{props.label}</Wrapper>
     </Theme>
   );
 };
 
-export default SuccessChip;
+export default ChipDanger;
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,11 +19,12 @@ const Wrapper = styled.div`
   width: auto;
   padding: 0px ${(props) => props.theme.padding.sm};
   height: 2rem;
-  background-color: ${(props) => props.theme.color.success};
+  background-color: ${(props) => props.theme.color.danger};
   border-radius: ${(props) => props.theme.border.radius.lg};
-  border: 1px solid ${(props) => props.theme.border.color.success};
-  font-family: ${(props) => props.theme.font.success};
+  border: 1px solid ${(props) => props.theme.border.color.danger};
+  font-family: ${(props) => props.theme.font.danger};
   font-size: 14px;
-  color: ${(props) => props.theme.text.success};
+  color: ${(props) => props.theme.text.danger};
   text-align: center;
+  user-select: none;
 `;
