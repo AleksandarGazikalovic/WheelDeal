@@ -14,7 +14,7 @@ const Profile = () => {
   const [connectionErrorDesktop, setConnectionErrorDesktop] = useState(null);
   const [connectionErrorMobile, setConnectionErrorMobile] = useState(null);
   const [errorRendered, setErrorRendered] = useState(false);
-  const { createdNewPost, createdNewVehicle } = useSelector(
+  const { createdNewPost, createdNewVehicle, deletedPost } = useSelector(
     (state) => state.notifications
   );
 
@@ -55,6 +55,25 @@ const Profile = () => {
     showNewVehicleToast();
     dispatch(setCreatedNewVehicle({ status: null, message: null }));
   }, [createdNewVehicle.status]);
+
+  useEffect(() => {
+    const showDeletedPostToast = async () => {
+      if (deletedPost.status != null) {
+        if (deletedPost.status === "success") {
+          toast.success(deletedPost.message, {
+            autoClose: 5000,
+          });
+        }
+        if (deletedPost.status === "error") {
+          toast.error(deletedPost.message, {
+            autoClose: 5000,
+          });
+        }
+      }
+    };
+    showDeletedPostToast();
+    dispatch(setCreatedNewVehicle({ status: null, message: null }));
+  }, [deletedPost.status]);
 
   useEffect(() => {
     if (

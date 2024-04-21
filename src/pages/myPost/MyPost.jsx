@@ -35,6 +35,7 @@ import {
   useDeletePostMutation,
   useUpdatePostMutation,
 } from "../../redux/postSlice";
+import { setDeletedPost } from "../../redux/notificationsSlice";
 
 const MyPost = () => {
   const { postId } = useParams();
@@ -188,17 +189,21 @@ const MyPost = () => {
     deletePost({ _id: postId, userId: post.userId })
       .unwrap()
       .then((res) => {
-        setPostInfoEditMessage({
-          status: "success",
-          message: "You have successfully deleted your post.",
-        });
+        dispatch(
+          setDeletedPost({
+            status: "success",
+            message: "You have successfully deleted your post.",
+          })
+        );
         navigate("/profile");
       })
-      .catch((isDeleteError) => {
-        setPostInfoEditMessage({
-          status: "error",
-          message: "Error deleting post. Please try again.",
-        });
+      .catch((error) => {
+        dispatch(
+          setDeletedPost({
+            status: "error",
+            message: "Error deleting post. Please try again.",
+          })
+        );
       });
   };
 
@@ -553,7 +558,7 @@ const MyPost = () => {
               disabled={disableUpdate}
               backgroundColor={"#1fb538"}
               disabledBackgroundColor={"#80c28b"}
-              hoverText={
+              title={
                 disableUpdate ? "Please fill all the fields" : "Submit the form"
               }
               md
