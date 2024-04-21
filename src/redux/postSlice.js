@@ -1,100 +1,80 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { API_ENDPOINT } from "../components";
+import { api } from "../services/api";
+import { createSelector } from "@reduxjs/toolkit";
 
-export const createPost = createAsyncThunk("post/createPost", async (post) => {
-  const res = await axios.post(API_ENDPOINT + "/posts", post);
-  return res.data;
-});
-
-export const deletePost = createAsyncThunk(
-  "post/deletePost",
-  async (post, { getState }) => {
-    try {
-      const userId = post.userId;
-
-      const res = await axios.delete(API_ENDPOINT + `/posts/${post._id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        data: { userId },
-      });
-
-      return res.data;
-    } catch (error) {
-      console.error("Error deleting post:", error);
-      throw error;
-    }
-  }
-);
-
-export const updatePost = createAsyncThunk("post/updatePost", async (post) => {
-  const res = await axios.put(API_ENDPOINT + `/posts/${post._id}`, post, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
-  return res.data;
-});
-
-export const postSlice = createSlice({
-  name: "post",
-  initialState: {
-    postInfo: {
-      id: "",
-      userId: "",
-      vehicleId: "",
-      price: "",
-      from: "",
-      to: "",
-      isArchived: false,
-      location: {
-        address: "",
-        searchAddress: "",
-        searchStreet: "",
-        searchCity: "",
-        lat: "",
-        lng: "",
+export const postSlice = api.injectEndpoints({
+  endpoints: (builder) => ({
+    // fetchPosts: builder.query({
+    //   query: () => ({
+    //     url: `/posts/`,
+    //     method: "GET",
+    //   }),
+    //   providesTags: ["Post"],
+    // }),
+    getPost: builder.query({
+      query: (postId) => ({
+        url: `/posts/${postId}`,
+        method: "GET",
+      }),
+      providesTags: ["Post"],
+    }),
+    createPost: builder.mutation({
+      query: ({ userId, vehicleId, price, from, to, location }) => ({
+        url: `/posts`,
+        method: "POST",
+        body: {
+          userId,
+          vehicleId,
+          price,
+          from,
+          to,
+          location,
+        },
+      }),
+      invalidatesTags: ["Post"],
+    }),
+    updatePost: builder.mutation({
+      query: ({ userId, vehicleId, price, from, to, location, _id }) => ({
+        url: `/posts/${_id}`,
+        method: "PUT",
+        body: {
+          userId,
+          vehicleId,
+          price,
+          from,
+          to,
+          location,
+        },
+      }),
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-    },
-    pending: null,
-    error: false,
-  },
-  reducers: {},
-  extraReducers: {
-    [createPost.pending]: (state) => {
-      state.pending = true;
-      state.error = false;
-    },
-    [createPost.fulfilled]: (state, action) => {
-      state.pending = false;
-      state.postInfo = action.payload;
-    },
-    [createPost.rejected]: (state, action) => {
-      state.pending = false;
-      state.error = action.error.message;
-    },
-    [deletePost.pending]: (state) => {
-      state.pending = true;
-      state.error = false;
-    },
-    [deletePost.fulfilled]: (state, action) => {
-      state.pending = false;
-      state.postInfo = action.payload;
-    },
-    [deletePost.rejected]: (state, action) => {
-      state.pending = false;
-      state.error = action.error.message;
-    },
-    [updatePost.pending]: (state) => {
-      state.pending = true;
-      state.error = false;
-    },
-    [updatePost.fulfilled]: (state, action) => {
-      state.pending = false;
-      state.postInfo = action.payload;
-    },
-    [updatePost.rejected]: (state, action) => {
-      state.pending = false;
-      state.error = action.error.message;
-    },
-  },
+      invalidatesTags: ["Post"],
+    }),
+    deletePost: builder.mutation({
+      query: ({ userId, _id }) => ({
+        url: `/posts/${_id}`,
+        method: "DELETE",
+        body: {
+          userId,
+        },
+      }),
+      invalidatesTags: ["Post"],
+    }),
+    getPostByVehicleId: builder.query({
+      query: (vehicleId) => ({
+        url: `/posts/vehicle/${vehicleId}`,
+        method: "GET",
+      }),
+    }),
+  }),
 });
 
-export default postSlice.reducer;
+export default postSlice;
+
+export const {
+  useGetPostMutation,
+  useCreatePostMutation,
+  useUpdatePostMutation,
+  useDeletePostMutation,
+  useGetPostByVehicleIdQuery,
+} = postSlice;

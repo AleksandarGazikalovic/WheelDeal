@@ -13,7 +13,7 @@ const baseQuery = fetchBaseQuery({
 
 export const api = createApi({
   reducerPath: "api",
-  providerTags: () => ["Document"],
+  tagTypes: () => ["Document", "Post"],
   baseQuery: async (args, api, extraOptions) => {
     const result = await baseQuery(args, api, extraOptions);
     return result;
