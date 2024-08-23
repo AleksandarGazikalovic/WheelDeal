@@ -11,12 +11,20 @@ import {
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const [connectionErrorDesktop, setConnectionErrorDesktop] = useState(null);
-  const [connectionErrorMobile, setConnectionErrorMobile] = useState(null);
-  const [errorRendered, setErrorRendered] = useState(false);
   const { createdNewPost, createdNewVehicle, deletedPost } = useSelector(
     (state) => state.notifications
   );
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 600); // Adjust the breakpoint as needed
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize); // Listen for window resize events
+    return () => window.removeEventListener("resize", handleResize); // Clean up event listener
+  }, []);
 
   useEffect(() => {
     const showNewPostToast = async () => {
@@ -75,39 +83,7 @@ const Profile = () => {
     dispatch(setCreatedNewVehicle({ status: null, message: null }));
   }, [deletedPost.status]);
 
-  useEffect(() => {
-    if (
-      connectionErrorDesktop != null &&
-      connectionErrorDesktop != connectionErrorMobile
-    ) {
-      toast.error(connectionErrorDesktop, {
-        autoClose: 5000,
-      });
-      setErrorRendered(true);
-    }
-    if (
-      connectionErrorMobile != null &&
-      connectionErrorMobile != connectionErrorDesktop
-    ) {
-      toast.error(connectionErrorMobile, {
-        autoClose: 5000,
-      });
-      setErrorRendered(true);
-    }
-    // in case both errors got caught at the same time
-    if (!errorRendered && connectionErrorDesktop === connectionErrorMobile) {
-      toast.error(connectionErrorDesktop, {
-        autoClose: 5000,
-      });
-    }
-  }, [connectionErrorDesktop, connectionErrorMobile]);
-
-  return (
-    <>
-      <ProfileDesktop setConnectionError={setConnectionErrorDesktop} />
-      <ProfileMobile setConnectionError={setConnectionErrorMobile} />
-    </>
-  );
+  return <>{isMobile ? <ProfileMobile /> : <ProfileDesktop />}</>;
 };
 
 export default Profile;

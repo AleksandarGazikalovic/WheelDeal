@@ -1,7 +1,13 @@
 import React from "react";
 import "./smallVehicleCard.css";
 import { Link, useNavigate } from "react-router-dom";
-import { ButtonPrimary, ChipSuccess, ChipWarning, Loading } from "../";
+import {
+  ButtonPrimary,
+  ChipDanger,
+  ChipSuccess,
+  ChipWarning,
+  Loading,
+} from "../";
 import { GiCartwheel } from "react-icons/gi";
 import { MdOutlineDriveEta } from "react-icons/md";
 import { PiEngineLight, PiGasPump } from "react-icons/pi";
@@ -13,12 +19,41 @@ const SmallVehicleCard = ({ vehicle }) => {
 
   const renderStatus = () => {
     if (vehicle?.documents?.length < 3) {
-      return <ChipWarning label="Upload documents" />;
+      return <ChipDanger label="Finish onboarding" />;
     }
     if (!vehicle?.isVerified) {
       return <ChipWarning label="Pending" />;
     }
     return <ChipSuccess label="Verified" />;
+  };
+
+  const renderButton = () => {
+    if (vehicle?.documents?.length < 3) {
+      return (
+        <ButtonPrimary
+          onClick={() => navigate(`/onboarding/${vehicle?._id}`)}
+          sm
+        >
+          Upload documents
+        </ButtonPrimary>
+      );
+    }
+    if (data !== null) {
+      return (
+        <ButtonPrimary onClick={() => navigate(`/profile/${data?._id}`)} sm>
+          View post
+        </ButtonPrimary>
+      );
+    }
+    return (
+      <ButtonPrimary
+        disabled={vehicle?.documents?.length < 3 || !vehicle?.isVerified}
+        onClick={() => navigate(`/add-post/${vehicle?._id}`)}
+        sm
+      >
+        Create Post
+      </ButtonPrimary>
+    );
   };
 
   const disableCreatePost =
@@ -70,13 +105,7 @@ const SmallVehicleCard = ({ vehicle }) => {
             <span>Mileage: </span> {vehicle?.mileage}
           </li>
         </ul>
-        <ButtonPrimary
-          disabled={disableCreatePost}
-          onClick={data !== null ? handleViewPost : handleCreatePost}
-          sm
-        >
-          {data !== null ? "View post" : "Create Post"}
-        </ButtonPrimary>
+        {renderButton()}
       </div>
     </div>
   );

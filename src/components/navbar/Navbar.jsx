@@ -65,7 +65,7 @@ const Navbar = ({ showLoginForm, setShowLoginForm }) => {
         <div className="wd--navbar-sign">
           {loggedIn ? (
             <>
-              <Link to="/add-post">
+              <Link to="/add-vehicle">
                 <GoPlus
                   style={{ color: "white" }}
                   className="wd--navbar-sign--add-post"

@@ -20,7 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
-const ProfileMobile = ({ setConnectionError }) => {
+const ProfileMobile = () => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const [showProfileInfoEdit, setShowProfileInfoEdit] = useState(false);
   const [likedPosts, setLikedPosts] = useState([]);
@@ -114,7 +114,6 @@ const ProfileMobile = ({ setConnectionError }) => {
         setLikedPosts(res.data);
       } catch (error) {
         console.log("Error in fetching liked posts: " + error);
-        setConnectionError("Greška prilikom učitavanja stranice.");
       }
     };
     const fetchUserVehicles = async () => {
@@ -125,7 +124,6 @@ const ProfileMobile = ({ setConnectionError }) => {
         setUserVehicles(res.data);
       } catch (error) {
         console.log("Error in fetching users posts: " + error);
-        setConnectionError("Greška prilikom učitavanja stranice.");
       }
     };
     fetchLikedPosts();

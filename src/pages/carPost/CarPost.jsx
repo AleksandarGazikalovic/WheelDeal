@@ -326,8 +326,8 @@ const CarPost = () => {
                   <div className="wd--post-wrapper--info-bottom-left--profile-info-image">
                     <Avatar
                       sx={{
-                        width: "inherit",
-                        height: "inherit",
+                        width: "100px",
+                        height: "100px",
                         backgroundColor: owner.profileImage ? "" : "#003049",
                       }}
                       src={owner.profileImage}

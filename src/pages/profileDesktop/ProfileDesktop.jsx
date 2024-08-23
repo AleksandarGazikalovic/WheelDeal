@@ -26,7 +26,7 @@ import { API_ENDPOINT } from "..";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ProfileDesktop = ({ setConnectionError }) => {
+const ProfileDesktop = () => {
   const { userInfo, pending, error } = useSelector((state) => state.user);
   const [likedPosts, setLikedPosts] = useState([]);
   const [userVehicles, setUserVehicles] = useState([]);
@@ -48,7 +48,6 @@ const ProfileDesktop = ({ setConnectionError }) => {
         setLikedPosts(res.data);
       } catch (error) {
         console.log("Error in fetching liked posts: " + error);
-        setConnectionError("Greška prilikom učitavanja stranice.");
       }
     };
     const fetchUserVehicles = async () => {
@@ -59,7 +58,6 @@ const ProfileDesktop = ({ setConnectionError }) => {
         setUserVehicles(res.data);
       } catch (error) {
         console.log("Error in fetching users posts: " + error);
-        setConnectionError("Greška prilikom učitavanja stranice.");
       }
     };
     fetchLikedPosts();
