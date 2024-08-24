@@ -39,6 +39,7 @@ import {
 import { DateRange } from "react-date-range";
 import { likePost } from "../../redux/userSlice";
 import { MdOutlineDriveEta } from "react-icons/md";
+import BookingConfirmationModal from "../../components/bookingConfirmationModal/BookingConfirmationModal";
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
@@ -59,6 +60,7 @@ const CarPost = () => {
     startDate: new Date(post.from),
     endDate: new Date(post.to),
   };
+  const [bookDates, setBookDates] = useState();
   const [disabledDates, setDisabledDates] = useState([]);
 
   useEffect(() => {
@@ -69,7 +71,10 @@ const CarPost = () => {
 
         setPost(postResponse.data);
         setImages(postResponse.data.vehicle.images);
-
+        setBookDates({
+          startDate: dayjs(new Date(postResponse.data.from)),
+          endDate: dayjs(new Date(postResponse.data.from)).add(7, "day"),
+        });
         // Fetch the owner data using the post data
         const ownerResponse = await axios.get(
           API_ENDPOINT + `/users/${postResponse.data.userId}`
@@ -118,6 +123,7 @@ const CarPost = () => {
       console.error("Error liking post:", error);
     }
   };
+
   useEffect(() => {
     const fetchLikes = async () => {
       try {
@@ -130,12 +136,30 @@ const CarPost = () => {
     fetchLikes();
   }, [post._id]);
 
-  const reserveACar = () => {
+  const reserveACar = async () => {
     if (userInfo._id) {
-      if (userInfo.isLicenceVerified === false) {
+      try {
+        const daysDifference = dayjs(bookDates.endDate).diff(
+          dayjs(bookDates.startDate),
+          "day"
+        );
+        console.log(
+          bookDates.startDate.toDate(),
+          bookDates.endDate.toDate(),
+          daysDifference
+        );
+        const response = await axios.post(API_ENDPOINT + `/bookings/`, {
+          hostId: post.userId,
+          clientId: userInfo._id,
+          postId: post._id,
+          startDate: bookDates.startDate.toDate(),
+          endDate: bookDates.endDate.toDate(),
+          price: post.price * (daysDifference === 0 ? 1 : daysDifference),
+        });
+        console.log("Booking successful", response.data);
         setShowPopUp(true);
-      } else {
-        alert("Car booked successfully!");
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
       }
     } else {
       setShowLoginForm(true);
@@ -206,18 +230,30 @@ const CarPost = () => {
                     <DateTimePicker
                       className="wd--post-wrapper--info-top-right--start-date"
                       label="Trip start"
-                      defaultValue={dayjs(postDates.startDate)}
                       ampm={false}
                       format="DD/MM/YYYY HH:mm"
+                      value={bookDates?.startDate}
+                      onChange={(newValue) => {
+                        setBookDates((prev) => ({
+                          ...prev,
+                          startDate: newValue,
+                        }));
+                      }}
                     />
                   </DemoContainer>
                   <DemoContainer components={["DateTimePicker"]}>
                     <DateTimePicker
                       className="wd--post-wrapper--info-top-right--end-date"
                       label="Trip end"
-                      defaultValue={dayjs(postDates.startDate).add(7, "day")}
                       ampm={false}
                       format="DD/MM/YYYY HH:mm"
+                      value={bookDates?.endDate}
+                      onChange={(newValue) => {
+                        setBookDates((prev) => ({
+                          ...prev,
+                          endDate: newValue,
+                        }));
+                      }}
                     />
                   </DemoContainer>
                 </LocalizationProvider>
@@ -227,17 +263,19 @@ const CarPost = () => {
                 >
                   Book
                 </button>
+                {showPopUp && (
+                  <BookingConfirmationModal closeModal={setShowPopUp} />
+                )}
                 {
-                  /* Show the popup if the user hasn't accepted the terms and conditions */
-                  showPopUp && (
-                    <PopUpModel
-                      title="Terms and conditions"
-                      textContent="Ukoliko se slazete sa svim pravilima i obavezama, molim Vas cekirajte da biste nastavili."
-                      checkedBox={true}
-                      closePopup={setShowPopUp}
-                      accepted={setShowPopUp}
-                    />
-                  )
+                  // showPopUp && (
+                  //   <PopUpModel
+                  //     title="Terms and conditions"
+                  //     textContent="By clicking the 'Accept' button you agree to the terms and conditions of the website."
+                  //     checkedBox={true}
+                  //     closePopup={setShowPopUp}
+                  //     accepted={setShowPopUp}
+                  //   />
+                  // )
                 }
                 <div className="wd--post-wrapper--info-top-right--offers">
                   <Link to="/search-options">
