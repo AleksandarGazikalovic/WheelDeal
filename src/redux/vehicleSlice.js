@@ -3,7 +3,7 @@ import axios from "axios";
 import { API_ENDPOINT } from "../components";
 
 export const createVehicle = createAsyncThunk(
-  "vehicle/createVehicle",
+  "vehicles/createVehicle",
   async (vehicle, { getState }) => {
     vehicle.userId = getState().user.userInfo._id;
     const res = await axios.post(API_ENDPOINT + "/vehicles/", vehicle, {
@@ -15,11 +15,11 @@ export const createVehicle = createAsyncThunk(
 );
 
 export const deleteVehicle = createAsyncThunk(
-  "vehicle/deleteVehicle",
+  "vehicles/deleteVehicle",
   async (vehicle, { getState }) => {
     try {
       const userId = vehicle.userId;
-
+      console.log(vehicle);
       const res = await axios.delete(
         API_ENDPOINT + `/vehicles/${vehicle._id}`,
         {
@@ -37,7 +37,7 @@ export const deleteVehicle = createAsyncThunk(
 );
 
 export const updateVehicle = createAsyncThunk(
-  "vehicle/updateVehicle",
+  "vehicles/updateVehicle",
   async (vehicle) => {
     const res = await axios.put(
       API_ENDPOINT + `/vehicles/${vehicle._id}`,

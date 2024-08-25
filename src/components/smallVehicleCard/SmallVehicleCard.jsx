@@ -10,16 +10,24 @@ import {
 } from "../";
 import { GiCartwheel } from "react-icons/gi";
 import { MdOutlineDriveEta } from "react-icons/md";
-import { PiEngineLight, PiGasPump } from "react-icons/pi";
+import { PiEngineLight, PiGasPump, PiNotePencilLight } from "react-icons/pi";
 import { useGetPostByVehicleIdQuery } from "../../redux/postSlice";
 
 const SmallVehicleCard = ({ vehicle }) => {
   const navigate = useNavigate();
   const { data, isLoading } = useGetPostByVehicleIdQuery(vehicle?._id);
-
+  console.log(vehicle?._id);
   const renderStatus = () => {
     if (vehicle?.documents?.length < 3) {
-      return <ChipDanger label="Finish onboarding" />;
+      return (
+        <div className="wd-profile--vehicles-vehicle-edit">
+          <PiNotePencilLight
+            size={20}
+            onClick={() => navigate(`/vehicle/${vehicle?._id}`)}
+          />
+          <ChipDanger label="Finish onboarding" />{" "}
+        </div>
+      );
     }
     if (!vehicle?.isVerified) {
       return <ChipWarning label="Pending" />;

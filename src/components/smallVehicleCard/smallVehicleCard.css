@@ -74,6 +74,21 @@
   font-size: 16px;
 }
 
+.wd-profile--vehicles-vehicle-edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.wd-profile--vehicles-vehicle-edit svg {
+  cursor: pointer;
+}
+
+.wd-profile--vehicles-vehicle-edit svg:hover {
+  color: #000;
+}
+
 .wd-profile--vehicles-vehicle-status {
   display: flex;
   align-items: center;

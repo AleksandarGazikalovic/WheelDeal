@@ -8,6 +8,7 @@ export const notificationsSlice = createSlice({
     createdNewVehicle: { status: "", message: "" },
     createdNewPost: { status: "", message: "" },
     deletedPost: { status: "", message: "" },
+    deletedVehicle: { status: "", message: "" },
   },
   reducers: {
     setCreatedNewVehicle: (state, action) => {
@@ -19,10 +20,17 @@ export const notificationsSlice = createSlice({
     setDeletedPost: (state, action) => {
       state.deletedPost = action.payload;
     },
+    setDeletedVehicle: (state, action) => {
+      state.deletedVehicle = action.payload;
+    },
   },
 });
 
-export const { setCreatedNewVehicle, setCreatedNewPost, setDeletedPost } =
-  notificationsSlice.actions;
+export const {
+  setCreatedNewVehicle,
+  setCreatedNewPost,
+  setDeletedPost,
+  setDeletedVehicle,
+} = notificationsSlice.actions;
 
 export default notificationsSlice.reducer;

@@ -16,6 +16,7 @@ const NewVehicle = React.lazy(() => import("./pages/newVehicle/NewVehicle"));
 const Profile = React.lazy(() => import("./pages/profile/Profile"));
 const CarPost = React.lazy(() => import("./pages/carPost/CarPost"));
 const MyPost = React.lazy(() => import("./pages/myPost/MyPost"));
+const EditVehicle = React.lazy(() => import("./pages/editVehicle/EditVehicle"));
 const VerificationPage = React.lazy(() =>
   import("./pages/verificationPage/VerificationPage")
 );
@@ -83,17 +84,37 @@ const App = () => {
           <Route
             path="/post/:postId"
             element={
-              <Suspense fallback={<Loading />}>
-                <CarPost />
-              </Suspense>
+              accessToken ? (
+                <Suspense fallback={<Loading />}>
+                  <CarPost />
+                </Suspense>
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/vehicle/:vehicleId"
+            element={
+              accessToken ? (
+                <Suspense fallback={<Loading />}>
+                  <EditVehicle />
+                </Suspense>
+              ) : (
+                <Navigate to="/" replace />
+              )
             }
           />
           <Route
             path="/profile/:postId"
             element={
-              <Suspense fallback={<Loading />}>
-                <MyPost />
-              </Suspense>
+              accessToken ? (
+                <Suspense fallback={<Loading />}>
+                  <MyPost />
+                </Suspense>
+              ) : (
+                <Navigate to="/" replace />
+              )
             }
           />
           <Route
